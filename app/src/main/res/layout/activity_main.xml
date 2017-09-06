@@ -5,26 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.onyx.test.styletest.MainActivity">
+    tools:context="com.onyx.test.styletest.activity.MainActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFFFF"
+        android:background="@android:color/white"
+        app:navigationIcon="?android:attr/homeAsUpIndicator"
         app:logo="@mipmap/ic_launcher"
-        app:navigationIcon="@mipmap/ic_launcher"
         app:title="@string/app_name"
-        app:titleMarginStart="8dp"
+        app:contentInsetStartWithNavigation="0dp"
+        app:contentInsetStart="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetEnd="0dp"
+        app:navigationContentDescription="导航"
         app:titleTextAppearance="?android:attr/textAppearanceLarge"
-        android:elevation="10dp">
+        android:elevation="4dp">
 
     </android.support.v7.widget.Toolbar>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#FF000000" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"

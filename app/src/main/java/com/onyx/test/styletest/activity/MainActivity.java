@@ -1,4 +1,4 @@
-package com.onyx.test.styletest;
+package com.onyx.test.styletest.activity;
 
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+
+import com.onyx.test.styletest.R;
+import com.onyx.test.styletest.adapter.ViewPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        initToolbar();
         initData();
+        initToolbar();
         initTabPage();
     }
 
@@ -58,7 +61,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initToolbar() {
-        toolbar.inflateMenu(R.menu.home_option_menu);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        toolbar.inflateMenu(R.menu.menu_main);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

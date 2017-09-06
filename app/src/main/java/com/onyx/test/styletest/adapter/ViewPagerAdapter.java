@@ -1,4 +1,4 @@
-package com.onyx.test.styletest;
+package com.onyx.test.styletest.adapter;
 
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
