@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tab_title_items">
+	    <item>字体</item>
+	    <item>控件</item>
+	    <item>主题</item>
+	    <item>窗体</item>
+	    <item>其他</item>
+	</string-array>
+
+	<string-array name="tab_layout_items">
+		<item>@layout/tab01</item>
+		<item>@layout/tab02</item>
+		<item>@layout/tab03</item>
+		<item>@layout/tab04</item>
+		<item>@layout/tab05</item>
+	</string-array>
+</resources>
