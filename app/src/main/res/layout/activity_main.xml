@@ -12,14 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
-        app:navigationIcon="?android:attr/homeAsUpIndicator"
         app:logo="@mipmap/ic_launcher"
         app:title="@string/app_name"
         app:contentInsetStartWithNavigation="0dp"
         app:contentInsetStart="0dp"
         app:contentInsetRight="0dp"
         app:contentInsetEnd="0dp"
-        app:navigationContentDescription="导航"
         app:titleTextAppearance="?android:attr/textAppearanceLarge"
         android:elevation="4dp">
 

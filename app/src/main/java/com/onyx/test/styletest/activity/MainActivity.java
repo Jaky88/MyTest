@@ -1,17 +1,16 @@
 package com.onyx.test.styletest.activity;
 
-import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 
 import com.onyx.test.styletest.R;
 import com.onyx.test.styletest.adapter.ViewPagerAdapter;
+import com.onyx.test.styletest.fragment.FragmentFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    private List<View> viewList;
+    private List<Fragment> fragments;
     private List<String> titleList;
     private ViewPagerAdapter viewPagerAdapter;
 
@@ -47,26 +46,19 @@ public class MainActivity extends AppCompatActivity {
         titleList = new ArrayList<>();
         titleList = Arrays.asList(getResources().getStringArray(R.array.tab_title_items));
 
-        viewList = new ArrayList<>();
-        TypedArray array = getResources().obtainTypedArray(R.array.tab_layout_items);
-        for (int i = 0; i < array.length(); i++) {
-            viewList.add(LayoutInflater.from(this).inflate(array.getResourceId(i, 0), null));
+        fragments = new ArrayList<>();
+        for (int i = 0; i < titleList.size(); i++) {
+            fragments.add(FragmentFactory.createFragment(i));
         }
     }
 
     private void initTabPage() {
-        viewPagerAdapter = new ViewPagerAdapter(viewList, titleList);
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments, titleList);
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
 
     private void initToolbar() {
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
         toolbar.inflateMenu(R.menu.menu_main);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
