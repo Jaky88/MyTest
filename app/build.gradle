@@ -4,6 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "26.0.1"
     defaultConfig {
+        multiDexEnabled true
         applicationId "com.onyx.test.styletest"
         minSdkVersion 15
         targetSdkVersion 25
@@ -16,6 +17,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
     }
 }
 
@@ -32,5 +37,5 @@ dependencies {
     //design
     compile 'com.android.support:design:25.+'
 
-    compile 'com.alibaba:fastjson:1.1.34.android'
+//    compile 'com.alibaba:fastjson:1.1.34.android'
 }
