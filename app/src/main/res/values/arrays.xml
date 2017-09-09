@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="system_theme">
+		<item>Theme.Light</item>
+		<item>Theme.Holo.Light</item>
+		<item>Theme.Material.Light</item>
+		<item>Theme.DeviceDefault.Light</item>
+		<!--<item>Theme</item>-->
+		<!--<item>Theme.Holo</item>-->
+		<!--<item>Theme.Material</item>-->
+		<!--<item>Theme.DeviceDefault</item>-->
+		<item>自定义主题</item>
+	</string-array>
+</resources>
