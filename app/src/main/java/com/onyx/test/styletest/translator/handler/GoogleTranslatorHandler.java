@@ -1,9 +1,9 @@
 package com.onyx.test.styletest.translator.handler;
 
 import com.alibaba.fastjson.JSON;
-import com.onyx.test.styletest.translator.Language;
+import com.onyx.test.styletest.translator.config.Language;
 import com.onyx.test.styletest.translator.result.GoogleTranslateResult;
-import com.onyx.test.styletest.translator.utils.Constants;
+import com.onyx.test.styletest.translator.config.Constants;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

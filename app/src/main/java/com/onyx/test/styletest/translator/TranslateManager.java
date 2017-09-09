@@ -1,11 +1,13 @@
 package com.onyx.test.styletest.translator;
 
-import com.onyx.test.styletest.translator.utils.Constants;
+import android.util.Log;
+
+import com.onyx.test.styletest.translator.config.Constants;
+import com.onyx.test.styletest.translator.config.Language;
 import com.onyx.test.styletest.translator.xmlImpl.XMLTranslator;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -62,6 +64,7 @@ public class TranslateManager {
     }
 
     private void innerTranslate(String path, Language src, Language target) {
+        Log.d("=========","=====innerTranslate=================");
         Class<? extends XMLTranslator> translatorClass = Constants.platformConfig.get(platform);
         try {
             Constructor<? extends XMLTranslator> constructor = translatorClass.getDeclaredConstructor(String.class);

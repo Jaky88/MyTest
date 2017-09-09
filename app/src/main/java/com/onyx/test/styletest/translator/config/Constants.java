@@ -1,6 +1,5 @@
-package com.onyx.test.styletest.translator.utils;
+package com.onyx.test.styletest.translator.config;
 
-import com.onyx.test.styletest.translator.Language;
 import com.onyx.test.styletest.translator.TranslatePlatform;
 import com.onyx.test.styletest.translator.xmlImpl.BaiduXMLTranslator;
 import com.onyx.test.styletest.translator.xmlImpl.GoogleXMLTranslator;
@@ -15,10 +14,16 @@ import java.util.Map;
  * 常用变量集中配置管理
  */
 public class Constants {
-
+//    APP ID:20170909000081638
+//    密钥: FCqdxwWJ_4WFhmcnEId0
+//    创建时间: 2017-09-09 12:30:22
+//
+//    网站或应用名称: StyleTest
+//    网站或应用简介:
+//    服务器地址:
     //百度翻译平台账号信息
-    public static final String BAIDU_APP_ID = "";
-    public static final String BAIDU_APP_SECRET = "";
+    public static final String BAIDU_APP_ID = "20170909000081638";
+    public static final String BAIDU_APP_SECRET = "FCqdxwWJ_4WFhmcnEId0";
     //google翻译平台所有api key
     public static final String GOOGLE_API_KEY = "";
     //有道翻译平台api key

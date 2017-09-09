@@ -2,13 +2,14 @@ package com.onyx.test.styletest.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.onyx.test.styletest.R;
-import com.onyx.test.styletest.translator.Language;
+import com.onyx.test.styletest.translator.config.Language;
 import com.onyx.test.styletest.translator.TranslateManager;
 import com.onyx.test.styletest.translator.TranslatePlatform;
 
@@ -54,9 +55,8 @@ public class Tab3Fragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void translate() {
-        File currentPath = new File("");
-        googleAll(currentPath, true);
-        baidu(currentPath, true);
+        File currentPath = new File("/sdcard/translate");
+        baidu(currentPath, false);
     }
 
     private static void youdao(File currentPath, boolean translateAllXml) {
@@ -82,10 +82,11 @@ public class Tab3Fragment extends BaseFragment implements View.OnClickListener {
     }
 
     private static void baidu(File currentPath, boolean translateAllXml) {
-        TranslateManager.getInstance().
-                init(currentPath.getAbsolutePath(), translateAllXml, TranslatePlatform.BAIDU);
+        Log.d("=========","=====translate=========baidu====");
+        TranslateManager.getInstance().init(currentPath.getAbsolutePath(), translateAllXml, TranslatePlatform.BAIDU);
+//        TranslateManager.getInstance().translate(Language.EN, Language.ES);//英语转西班牙语
         TranslateManager.getInstance().translate(Language.ZH_CN, Language.EN);
-        TranslateManager.getInstance().translate(Language.ZH_CN, Language.JA);
-        TranslateManager.getInstance().translate(Language.ZH_CN, Language.ZH_TW);
+//        TranslateManager.getInstance().translate(Language.ZH_CN, Language.JA);
+//        TranslateManager.getInstance().translate(Language.ZH_CN, Language.ZH_TW);
     }
 }

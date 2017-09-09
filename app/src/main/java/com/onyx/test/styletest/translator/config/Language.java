@@ -1,4 +1,4 @@
-package com.onyx.test.styletest.translator;
+package com.onyx.test.styletest.translator.config;
 
 /**
  * Created by lion on 2016/10/28.

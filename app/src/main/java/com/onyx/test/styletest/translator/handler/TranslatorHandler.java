@@ -1,6 +1,6 @@
 package com.onyx.test.styletest.translator.handler;
 
-import com.onyx.test.styletest.translator.Language;
+import com.onyx.test.styletest.translator.config.Language;
 
 /**
  * Created by lion on 2016/10/30.

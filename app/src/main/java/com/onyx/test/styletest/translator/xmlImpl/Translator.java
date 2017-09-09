@@ -1,4 +1,6 @@
-package com.onyx.test.styletest.translator;
+package com.onyx.test.styletest.translator.xmlImpl;
+
+import com.onyx.test.styletest.translator.config.Language;
 
 import java.util.List;
 

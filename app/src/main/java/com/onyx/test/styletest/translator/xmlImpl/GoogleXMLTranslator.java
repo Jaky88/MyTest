@@ -1,6 +1,6 @@
 package com.onyx.test.styletest.translator.xmlImpl;
 
-import com.onyx.test.styletest.translator.Language;
+import com.onyx.test.styletest.translator.config.Language;
 import com.onyx.test.styletest.translator.handler.GoogleTranslatorHandler;
 
 import java.util.ArrayList;
