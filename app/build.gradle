@@ -31,4 +31,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     //design
     compile 'com.android.support:design:25.+'
+
+    compile 'com.alibaba:fastjson:1.1.34.android'
 }
