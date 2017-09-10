@@ -1,5 +1,6 @@
 package com.onyx.test.styletest.translator.network;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -9,8 +10,26 @@ import retrofit2.http.Query;
  */
 
 public interface TranslateService {
-    @GET("translate")
-    Call<String> getTop250(
-            @Query("src") int start,
-            @Query("dest") int count);
+    @GET("api/trans/vip/translate")
+    Call<ResponseBody> getBaiduTranslation(@Query("from") String srcLanguage,
+                                          @Query("to") String targetLanguage,
+                                          @Query("appid") String appId,
+                                          @Query("salt") String randomInt,
+                                          @Query("q") String encode,
+                                          @Query("sign") String sign);
+
+    @GET("language/translate/v2")
+    Call<ResponseBody> getGoogleTranslation(@Query("key") String key,
+                                      @Query("source") String srcLanguage,
+                                      @Query("target") String targetLanguage,
+                                      @Query("q") String encode);
+
+    @GET("openapi.do")
+    Call<ResponseBody> getYouDaoTranslation(@Query("keyfrom") String keyfrom,
+                                      @Query("key") String key,
+                                      @Query("type") String type,
+                                      @Query("doctype") String doctype,
+                                      @Query("version") String version,
+                                      @Query("q") String encode);
+
 }

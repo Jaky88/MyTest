@@ -1,6 +1,7 @@
 package com.onyx.test.styletest.fragment;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,14 +10,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.onyx.test.styletest.R;
-import com.onyx.test.styletest.translator.config.Language;
 import com.onyx.test.styletest.translator.TranslateManager;
-import com.onyx.test.styletest.translator.TranslatePlatform;
+import com.onyx.test.styletest.translator.config.Language;
+import com.onyx.test.styletest.translator.config.TranslatePlatform;
 
 import java.io.File;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Observer;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by jaky on 2017/9/7 0007.
@@ -55,8 +61,40 @@ public class Tab3Fragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void translate() {
-        File currentPath = new File("/sdcard/translate");
-        baidu(currentPath, false);
+        String base = Environment.getExternalStorageDirectory().getAbsolutePath();
+        final File currentPath = new File(base + "/translate");
+        btnTranslate.setEnabled(false);
+        Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+//                baidu(currentPath, false);
+                google(currentPath, false);
+                subscriber.onNext("OK!");
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        Log.d("====", "========onError========");
+                        btnTranslate.setEnabled(true);
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        Log.d("====", "========" + s + "========");
+                        btnTranslate.setEnabled(true);
+
+                    }
+                });
+
     }
 
     private static void youdao(File currentPath, boolean translateAllXml) {

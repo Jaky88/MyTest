@@ -1,4 +1,4 @@
-package com.onyx.test.styletest.translator.result;
+package com.onyx.test.styletest.translator.entity;
 
 import java.util.List;
 

@@ -1,10 +1,23 @@
-package com.onyx.test.styletest.translator.xmlImpl;
+package com.onyx.test.styletest.translator.core;
 
+import android.util.Log;
+
+import com.alibaba.fastjson.JSON;
+import com.onyx.test.styletest.translator.config.Constants;
 import com.onyx.test.styletest.translator.config.Language;
-import com.onyx.test.styletest.translator.handler.GoogleTranslatorHandler;
+import com.onyx.test.styletest.translator.entity.GoogleParams;
+import com.onyx.test.styletest.translator.entity.GoogleTranslateResult;
+import com.onyx.test.styletest.translator.entity.Params;
+import com.onyx.test.styletest.translator.network.RetrofitWrapper;
+import com.onyx.test.styletest.translator.network.TranslateService;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 
 /**
  * Created by lion on 2016/10/28.
@@ -106,25 +119,57 @@ public class GoogleXMLTranslator extends XMLTranslator {
         languages.add(Language.ZU);
     }
 
-    private GoogleTranslatorHandler handler;
-
     public GoogleXMLTranslator(String filePath) {
         super(filePath);
-        handler = new GoogleTranslatorHandler();
-    }
-
-    @Override
-    public String onGenerateUrl(String content, Language src, Language target) {
-        return handler.onGenerateUrl(content, src, target);
     }
 
     @Override
     public String onTranslateFinished(String result) {
-        return handler.handleJsonString(result);
+        return handleJsonString(result);
     }
 
     @Override
     public List<Language> getSupportLanguage() {
         return languages;
+    }
+
+    @Override
+    public Call<ResponseBody> getNetTranslate(Params param) {
+        GoogleParams params = (GoogleParams) param;
+        Log.d("========","=======params========="+params.toString());
+        TranslateService sevice = (TranslateService) RetrofitWrapper.getInstance("Google").create(TranslateService.class);
+        return sevice.getGoogleTranslation(
+                params.getKey(), params.getSrcLanguage(),
+                params.getTargetLanguage(), params.getEncode());
+    }
+
+    @Override
+    public Params initParams(String content, Language src, Language target) {
+        String encode = content;
+        try {
+            encode = URLEncoder.encode(content, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } finally {
+            return new GoogleParams(Constants.GOOGLE_API_KEY,
+                    src.getValue(), target.getValue(), content);
+        }
+    }
+
+    @Override
+    public String handleJsonString(String result) {
+        GoogleTranslateResult json = JSON.parseObject(result, GoogleTranslateResult.class);
+        if (json != null && json.getData() != null &&
+                json.getData().getTranslations() != null &&
+                json.getData().getTranslations().size() > 0) {
+            return json.getData().getTranslations().get(0).getTranslatedText();
+        }
+
+        return null;
+    }
+
+    @Override
+    public String handleXMLString(String result) {
+        return null;
     }
 }

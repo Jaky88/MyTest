@@ -1,10 +1,9 @@
 package com.onyx.test.styletest.translator.config;
 
-import com.onyx.test.styletest.translator.TranslatePlatform;
-import com.onyx.test.styletest.translator.xmlImpl.BaiduXMLTranslator;
-import com.onyx.test.styletest.translator.xmlImpl.GoogleXMLTranslator;
-import com.onyx.test.styletest.translator.xmlImpl.XMLTranslator;
-import com.onyx.test.styletest.translator.xmlImpl.YouDaoXMLTranslator;
+import com.onyx.test.styletest.translator.core.BaiduXMLTranslator;
+import com.onyx.test.styletest.translator.core.GoogleXMLTranslator;
+import com.onyx.test.styletest.translator.core.XMLTranslator;
+import com.onyx.test.styletest.translator.core.YouDaoXMLTranslator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,24 +13,26 @@ import java.util.Map;
  * 常用变量集中配置管理
  */
 public class Constants {
-//    APP ID:20170909000081638
-//    密钥: FCqdxwWJ_4WFhmcnEId0
-//    创建时间: 2017-09-09 12:30:22
-//
-//    网站或应用名称: StyleTest
-//    网站或应用简介:
-//    服务器地址:
-    //百度翻译平台账号信息
+
     public static final String BAIDU_APP_ID = "20170909000081638";
     public static final String BAIDU_APP_SECRET = "FCqdxwWJ_4WFhmcnEId0";
-    //google翻译平台所有api key
-    public static final String GOOGLE_API_KEY = "";
-    //有道翻译平台api key
+    public static final String GOOGLE_API_KEY = "AIzaSyAUoSnO_8k-3D4-fOp-CFopA_NQAkoVCLw";
     public static final String YOUDAO_API_KEY = "";
 
-    //翻译平台配置，方便拓展所以放在这里
     public static final Map<TranslatePlatform, Class<? extends XMLTranslator>>
             platformConfig = new HashMap<>();
+
+    public static String getBaseUrl(String platform) {
+        if ("Google".equals(platform)) {
+            return "https://www.googleapis.com/";
+        } else if ("Baidu".equals(platform)) {
+            return "http://api.fanyi.baidu.com/";
+        } else if ("YouDao".equals(platform)) {
+            return "http://fanyi.youdao.com/";
+        } else {
+            return "http://api.fanyi.baidu.com/";
+        }
+    }
 
     static {
         platformConfig.put(TranslatePlatform.BAIDU, BaiduXMLTranslator.class);
@@ -226,4 +227,5 @@ public class Constants {
         valuesFolders.put(Language.YO, VALUES_YO);
         valuesFolders.put(Language.ZU, VALUES_ZU);
     }
+
 }

@@ -1,4 +1,4 @@
-package com.onyx.test.styletest.translator.result;
+package com.onyx.test.styletest.translator.entity;
 
 import java.util.List;
 
@@ -6,11 +6,6 @@ import java.util.List;
  * Created by lion on 2016/9/23.
  */
 public class YouDaoTranslateResult {
-    /**
-     * translation : ["The test translation"]
-     * query : 测试翻译
-     * errorCode : 0
-     */
 
     private String query;
     private int errorCode;

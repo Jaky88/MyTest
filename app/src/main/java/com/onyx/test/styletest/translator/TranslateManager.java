@@ -4,7 +4,8 @@ import android.util.Log;
 
 import com.onyx.test.styletest.translator.config.Constants;
 import com.onyx.test.styletest.translator.config.Language;
-import com.onyx.test.styletest.translator.xmlImpl.XMLTranslator;
+import com.onyx.test.styletest.translator.config.TranslatePlatform;
+import com.onyx.test.styletest.translator.core.XMLTranslator;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -18,12 +19,9 @@ public class TranslateManager {
 
     //翻译扫描路径
     private String translatePath = "";
-    //是否翻译扫描路径下的所有xml文件
     private boolean translateAllXml = false;
-    //翻译平台
-    private com.onyx.test.styletest.translator.TranslatePlatform platform;
+    private TranslatePlatform platform;
 
-    //如果translateAllXml==false则默认翻译strings.xml文件
     private static final String XML_FILE_NAME = "strings.xml";
 
     private static TranslateManager instance;
@@ -35,7 +33,7 @@ public class TranslateManager {
         return instance;
     }
 
-    public void init(String translatePath, boolean translateAllXml, com.onyx.test.styletest.translator.TranslatePlatform platform) {
+    public void init(String translatePath, boolean translateAllXml, TranslatePlatform platform) {
         this.translatePath = translatePath;
         this.translateAllXml = translateAllXml;
         this.platform = platform;
@@ -44,7 +42,7 @@ public class TranslateManager {
     public void init(String translatePath, boolean translateAllXml) {
         this.translatePath = translatePath;
         this.translateAllXml = translateAllXml;
-        this.platform = com.onyx.test.styletest.translator.TranslatePlatform.GOOGLE;
+        this.platform = TranslatePlatform.GOOGLE;
     }
 
     public void translate(Language src, Language dest) {
