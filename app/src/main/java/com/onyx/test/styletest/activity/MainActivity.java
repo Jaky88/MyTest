@@ -1,5 +1,6 @@
 package com.onyx.test.styletest.activity;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -11,6 +12,7 @@ import android.view.Window;
 import com.onyx.test.styletest.R;
 import com.onyx.test.styletest.adapter.ViewPagerAdapter;
 import com.onyx.test.styletest.fragment.FragmentFactory;
+import com.onyx.test.styletest.utils.ActivityUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.add:
                         break;
                     case R.id.menu_setting:
+                        ActivityUtil.startActivity(MainActivity.this, SettingsActivity.class);
                         break;
                     case R.id.menu_clear_recent_reading:
                         break;
@@ -76,5 +79,11 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
     }
 }

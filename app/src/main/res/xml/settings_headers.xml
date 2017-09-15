@@ -1,0 +1,23 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="">
+        <ListPreference
+            android:key=""
+            android:title="" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title=""
+        android:key="dictionary_setting">
+        <PreferenceScreen
+            android:key=""
+            android:title="pref_download_dictionary_title" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_online_search_tittle"
+            android:title="pref_online_search_tittle"
+            />
+        <Preference
+            android:defaultValue="false"
+            android:key=""
+            android:title=""
+            android:summary=""/>
+    </PreferenceCategory>
+</PreferenceScreen>

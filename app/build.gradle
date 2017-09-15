@@ -1,9 +1,14 @@
 apply plugin: 'com.android.application'
 
+
 android {
+    dataBinding {
+        enabled = true
+    }
     compileSdkVersion 25
     buildToolsVersion "26.0.1"
     defaultConfig {
+        applicationId "com.moxi.test"
         multiDexEnabled true
         applicationId "com.onyx.test.styletest"
         minSdkVersion 15

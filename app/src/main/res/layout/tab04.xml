@@ -5,5 +5,48 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:text="Tab4"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+        <EditText
+            android:id="@+id/edt_file_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入文件名"/>
+        <Button
+            android:id="@+id/btn_select_file"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选择文件"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_start_kreader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="启动kreader"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+        <Button
+            android:id="@+id/btn_volume_down"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="声音减"/>
+        <Button
+            android:id="@+id/btn_volume_add"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="声音加"/>
+    </LinearLayout>
 </LinearLayout>

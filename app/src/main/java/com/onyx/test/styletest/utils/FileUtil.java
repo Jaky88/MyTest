@@ -1,6 +1,9 @@
 package com.onyx.test.styletest.utils;
 
 import android.database.Cursor;
+import android.media.MediaMetadataRetriever;
+import android.os.Environment;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -8,7 +11,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jaky on 2017/9/8 0008.
@@ -123,4 +129,53 @@ public class FileUtil {
         }
         return "";
     }
+
+    public static String getSDCardPath() {
+        return Environment.getExternalStorageDirectory().getPath();
+    }
+
+    public static List<String> getTFCardPath() {
+        List<String> lResult = new ArrayList<String>();
+        try {
+            Runtime rt = Runtime.getRuntime();
+            Process proc = rt.exec("mount");
+            InputStream is = proc.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(isr);
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (line.contains("extSdCard")) {
+                    String[] arr = line.split(" ");
+                    String path = arr[1];
+                    File file = new File(path);
+                    if (file.isDirectory()) {
+                        lResult.add(path);
+                    }
+                }
+            }
+            isr.close();
+        } catch (Exception e) {
+        }
+        return lResult;
+    }
+
+    public static String getMimeType(String filePath) {
+        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+        String mime = "text/plain";
+        if (filePath != null) {
+            try {
+                mmr.setDataSource(filePath);
+                mime = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_MIMETYPE);
+            } catch (IllegalStateException e) {
+                return mime;
+            } catch (IllegalArgumentException e) {
+                return mime;
+            } catch (RuntimeException e) {
+                return mime;
+            }
+        }
+        Log.d("==========", "============getMimeType=================" + mime);
+        return mime;
+    }
+
 }
