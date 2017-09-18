@@ -5,7 +5,7 @@
 	    <item>文件</item>
 	    <item>翻译</item>
 	    <item>测试</item>
-	    <item>其他</item>
+	    <item>信息</item>
 	</string-array>
 
 	<string-array name="tab_layout_items">

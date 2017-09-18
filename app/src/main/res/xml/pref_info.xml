@@ -1,23 +1,23 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="系统">
+    <PreferenceCategory android:title="硬件信息">
         <ListPreference
-            android:key="list1"
-            android:title="列表1" />
+            android:key=""
+            android:title="" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="应用"
+    <PreferenceCategory android:title="软件信息"
         android:key="dictionary_setting">
         <PreferenceScreen
             android:key=""
-            android:title="配置1" />
+            android:title="pref_download_dictionary_title" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="pref_online_search_tittle"
-            android:title="选项1"
+            android:title="pref_online_search_tittle"
             />
         <Preference
             android:defaultValue="false"
             android:key=""
-            android:title="配置2"
+            android:title=""
             android:summary=""/>
     </PreferenceCategory>
 </PreferenceScreen>
