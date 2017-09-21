@@ -15,12 +15,14 @@
         android:layout_marginBottom="8dp">
         <EditText
             android:id="@+id/edt_file_name"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="3"
             android:layout_height="wrap_content"
             android:hint="请输入文件名"/>
         <Button
             android:id="@+id/btn_select_file"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="选择文件"/>
     </LinearLayout>
@@ -49,4 +51,15 @@
             android:layout_height="wrap_content"
             android:text="声音加"/>
     </LinearLayout>
+    <Button
+        android:id="@+id/btn_file_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="文件读写测试"/>
+
+    <Button
+        android:id="@+id/btn_send_notification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="发通知"/>
 </LinearLayout>

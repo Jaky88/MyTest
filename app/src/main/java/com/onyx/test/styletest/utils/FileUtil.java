@@ -1,7 +1,9 @@
 package com.onyx.test.styletest.utils;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
@@ -13,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +24,8 @@ import java.util.List;
  */
 
 public class FileUtil {
+
+    private static final String TAG = FileUtil.class.getSimpleName();
 
     public static String readContentFromFile(String filePath) {
         BufferedReader breader = null;
@@ -57,6 +62,7 @@ public class FileUtil {
                     file.getParentFile().mkdirs();
                 }
                 if (!file.createNewFile()) {
+                    Log.d(TAG,"======createNewFile===failure====");
                     return false;
                 }
             }
@@ -68,6 +74,7 @@ public class FileUtil {
 
             return file.exists() && file.length() > 0;
         } catch (Exception e) {
+            Log.d(TAG,"============="+e.getMessage());
             return false;
         } finally {
             FileUtil.closeQuietly(fos);
@@ -177,5 +184,25 @@ public class FileUtil {
         Log.d("==========", "============getMimeType=================" + mime);
         return mime;
     }
+
+    public static String getPath(Context context, Uri uri) {
+        if ("content".equalsIgnoreCase(uri.getScheme())) {
+            String[] projection = { "_data" };
+            Cursor cursor = null;
+            try {
+                cursor = context.getContentResolver().query(uri, projection, null, null, null);
+                int column_index = cursor.getColumnIndexOrThrow("_data");
+                if (cursor.moveToFirst()) {
+                    return cursor.getString(column_index);
+                }
+            } catch (Exception e) {
+                // Eat it  Or Log it.
+            }
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+        return null;
+    }
+
 
 }

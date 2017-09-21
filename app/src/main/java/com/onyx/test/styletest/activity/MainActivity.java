@@ -1,11 +1,14 @@
 package com.onyx.test.styletest.activity;
 
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
 
@@ -13,6 +16,7 @@ import com.onyx.test.styletest.R;
 import com.onyx.test.styletest.adapter.ViewPagerAdapter;
 import com.onyx.test.styletest.fragment.FragmentFactory;
 import com.onyx.test.styletest.utils.ActivityUtil;
+import com.onyx.test.styletest.utils.FileUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +27,7 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int FILE_SELECT_CODE = 1;
     @Bind(R.id.tab_layout)
     android.support.design.widget.TabLayout tabLayout;
     @Bind(R.id.view_pager)
@@ -85,5 +90,26 @@ public class MainActivity extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
+    }
+
+    private static final String TAG = "ChooseFile";
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case FILE_SELECT_CODE:
+                if (resultCode == RESULT_OK) {
+                    // Get the Uri of the selected file
+                    Uri uri = data.getData();
+                    Log.d(TAG, "File Uri: " + uri.toString());
+                    // Get the path
+                    String path = FileUtil.getPath(this, uri);
+                    Log.d(TAG, "File Path: " + path);
+                    // Get the file instance
+                    // File file = new File(path);
+                    // Initiate the upload
+                }
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
