@@ -62,4 +62,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="发通知"/>
+    <CheckBox
+        android:id="@+id/cb_open_wifi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="打开Wifi"/>
+    <Button
+        android:id="@+id/btn_connect_wifi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="连接WIFI"/>
+
+    <Button
+        android:id="@+id/btn_enable_adb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="打开ADB"/>
 </LinearLayout>

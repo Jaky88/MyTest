@@ -1,7 +1,6 @@
 package com.onyx.test.styletest.fragment;
 
 import android.app.AlertDialog;
-import android.app.Instrumentation;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +18,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -26,6 +28,7 @@ import com.onyx.test.styletest.R;
 import com.onyx.test.styletest.activity.MainActivity;
 import com.onyx.test.styletest.utils.ActivityUtil;
 import com.onyx.test.styletest.utils.FileUtil;
+import com.onyx.test.styletest.utils.WifiConnector;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -35,7 +38,6 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by jaky on 2017/9/7 0007.
@@ -58,9 +60,19 @@ public class Tab4Fragment extends BaseFragment implements View.OnClickListener {
     Button btnVolumeDown;
     @Bind(R.id.btn_volume_add)
     Button btnVolumeAdd;
+    @Bind(R.id.btn_connect_wifi)
+    Button btnConnectWifi;
+    @Bind(R.id.cb_open_wifi)
+    CheckBox cbOpenWifi;
+    @Bind(R.id.btn_enable_adb)
+    Button btnEnableAdb;
     private AudioManager audiomanage;
     private NotificationManager notificationManager;
     private Context mContext = null;
+    private WifiManager wifiManager;
+    private WifiConnector wac;
+    private String mPwd = "OnyxWpa2017";
+    private String mSSID = "onyx-office1";
 
     @Nullable
     @Override
@@ -69,11 +81,26 @@ public class Tab4Fragment extends BaseFragment implements View.OnClickListener {
         mContext = getActivity();
         audiomanage = (AudioManager) (mContext.getSystemService(Context.AUDIO_SERVICE));
         notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+
         ButterKnife.bind(this, view);
         initEvent();
+        initWifiConnect();
         Log.d("", "");
 
         return view;
+    }
+
+    private void initWifiConnect() {
+        wifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
+        wac = new WifiConnector(wifiManager);
+//        wac.mHandler = new Handler() {
+//            @Override
+//            public void handleMessage(Message msg) {
+////                // 操作界面
+////                textView1.setText(textView1.getText()+"\n"+msg.obj+"");
+//                super.handleMessage(msg);
+//            }
+//        };
     }
 
     private void initEvent() {
@@ -83,6 +110,22 @@ public class Tab4Fragment extends BaseFragment implements View.OnClickListener {
         btnFileTest.setOnClickListener(this);
         btnSendNotification.setOnClickListener(this);
         btnSelectFile.setOnClickListener(this);
+        btnConnectWifi.setOnClickListener(this);
+        btnEnableAdb.setOnClickListener(this);
+        cbOpenWifi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    if (wac.openWifi()) {
+                        buttonView.setText("关闭wifi");
+                    }
+                } else {
+                    if (wac.closeWifi()) {
+                        buttonView.setText("打开wifi");
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -113,8 +156,26 @@ public class Tab4Fragment extends BaseFragment implements View.OnClickListener {
             case R.id.btn_select_file:
                 openCurDir("mnt/sdcard");
                 break;
+            case R.id.btn_connect_wifi:
+                connectWIFI();
+                break;
+            case R.id.btn_enable_adb:
+                openADB();
+                break;
             default:
                 break;
+        }
+    }
+
+    private void openADB() {
+
+    }
+
+    private void connectWIFI() {
+        try {
+            wac.connect(mSSID, mPwd, mPwd.equals("") ? WifiConnector.WifiCipherType.WIFICIPHER_NOPASS : WifiConnector.WifiCipherType.WIFICIPHER_WPA);
+        } catch (Exception e) {
+            Log.d("===", "============" + e.getMessage());
         }
     }
 

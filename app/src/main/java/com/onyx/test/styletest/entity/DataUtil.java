@@ -68,19 +68,40 @@ public class DataUtil {
             mDatas.add(new Pair<>("BRAND", Build.BRAND));
             mDatas.add(new Pair<>("DEVICE", Build.DEVICE));
             mDatas.add(new Pair<>("PRODUCT", Build.PRODUCT));
+            mDatas.add(new Pair<>("VERSION_CODES.BASE", "" + Build.VERSION_CODES.BASE));
+            mDatas.add(new Pair<>("VERSION.RELEASE", "" + Build.VERSION.RELEASE));
+            mDatas.add(new Pair<>("SDK", "" + Build.VERSION.SDK));
+            mDatas.add(new Pair<>("DISPLAY", "" + Build.DISPLAY));
+            mDatas.add(new Pair<>("FINGERPRINT", "" + Build.FINGERPRINT));
+            mDatas.add(new Pair<>("ID", "" + Build.ID));
+            mDatas.add(new Pair<>("USER", "" + Build.USER));
+            mDatas.add(new Pair<>("编译时间", "" + Build.TIME));
+            mDatas.add(new Pair<>("kernel version", System.getProperty("os.version")));
+            mDatas.add(new Pair<>("kernel name", System.getProperty("os.name")));
+            mDatas.add(new Pair<>("kernel arch", System.getProperty("os.arch")));
+            mDatas.add(new Pair<>("user.home", System.getProperty("user.home")));
+            mDatas.add(new Pair<>("user.name", System.getProperty("user.name")));
+            mDatas.add(new Pair<>("user.dir", System.getProperty("user.dir")));
+
+            mDatas.add(new Pair<>("java.home ", System.getProperty("java.home ")));
+            mDatas.add(new Pair<>("java.versio", System.getProperty("java.versio")));
+            mDatas.add(new Pair<>("java.class.version", System.getProperty("java.class.version")));
+            mDatas.add(new Pair<>("java.class.path", System.getProperty("java.class.path")));
+
             mDatas.add(new Pair<>("硬件信息：", ""));
             mDatas.add(new Pair<>("CPU概况：", CpuUtil.getCpuString()));
             mDatas.add(new Pair<>("CPU名字：", CpuUtil.getCpuName()));
             mDatas.add(new Pair<>("CPU类型：", CpuUtil.getCpuModel()));
+            mDatas.add(new Pair<>("CPU ABI：", Build.CPU_ABI));
             mDatas.add(new Pair<>("CPU特性：", CpuUtil.getCpuFeature()));
             mDatas.add(new Pair<>("CPU最大频率：", "" + CpuUtil.getMaxCpuFreq()));
             mDatas.add(new Pair<>("CPU最小频率：", "" + CpuUtil.getMinCpuFreq()));
             mDatas.add(new Pair<>("CPU当前频率：", "" + CpuUtil.getCurCpuFreq()));
             mDatas.add(new Pair<>("移动信息：", CpuUtil.getMobileInfo()));
             mDatas.add(new Pair<>("内存大小：", "" + getTotalMemory()));
-            mDatas.add(new Pair<>("Rom大小：", "" + getRomMemroy()));
+            mDatas.add(new Pair<>("Rom大小：", "" + getRomMemroy()[0]));
             mDatas.add(new Pair<>("内部存储大小：", "" + getTotalInternalMemorySize()));
-            mDatas.add(new Pair<>("SD卡大小：", "" + getSDCardMemory()));
+            mDatas.add(new Pair<>("SD卡大小：", "" + getSDCardMemory()[0]));
             mDatas.add(new Pair<>("IP地址：", getIpAddress(mContext)));
             mDatas.add(new Pair<>("版本信息：", getVersion()[0]));
             mDatas.add(new Pair<>("当前电量：", strLevel));
@@ -100,12 +121,12 @@ public class DataUtil {
         }
     };
 
-    public String[] getOtherInfo(){
-        String[] other={"null","null"};
+    public String[] getOtherInfo() {
+        String[] other = {"null", "null"};
         WifiManager wifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-        if(wifiInfo.getMacAddress()!=null){
-            other[0]=wifiInfo.getMacAddress();
+        if (wifiInfo.getMacAddress() != null) {
+            other[0] = wifiInfo.getMacAddress();
         } else {
             other[0] = "Fail";
         }
