@@ -1,5 +1,6 @@
 package com.onyx.test.styletest.fragment;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -85,7 +86,6 @@ public class Tab4Fragment extends BaseFragment implements View.OnClickListener {
         ButterKnife.bind(this, view);
         initEvent();
         initWifiConnect();
-        Log.d("", "");
 
         return view;
     }
@@ -93,14 +93,6 @@ public class Tab4Fragment extends BaseFragment implements View.OnClickListener {
     private void initWifiConnect() {
         wifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
         wac = new WifiConnector(wifiManager);
-//        wac.mHandler = new Handler() {
-//            @Override
-//            public void handleMessage(Message msg) {
-////                // 操作界面
-////                textView1.setText(textView1.getText()+"\n"+msg.obj+"");
-//                super.handleMessage(msg);
-//            }
-//        };
     }
 
     private void initEvent() {
@@ -193,11 +185,21 @@ public class Tab4Fragment extends BaseFragment implements View.OnClickListener {
         builder.setTicker("new message");
         builder.setOngoing(true);
         builder.setNumber(20);
+        builder.setPriority(Notification.PRIORITY_MIN);
+//        builder.setCustomBigContentView()
 
         Notification notification = builder.build();
         notification.flags = Notification.FLAG_NO_CLEAR;
+        setEventInfo(pendingIntent, notification);
         notificationManager.notify(0, notification);
         Toast.makeText(mContext, "发送成功！", Toast.LENGTH_SHORT).show();
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    private void setEventInfo(PendingIntent pendingIntent, Notification notification) {
+        if(Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR1){
+//            notification.setLatestEventInfo(this, this.getString(R.string.app_name), "===", pendingIntent);
+        }
     }
 
     private void readWriteFileTest() {
