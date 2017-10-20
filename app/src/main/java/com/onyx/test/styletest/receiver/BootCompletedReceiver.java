@@ -27,7 +27,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
             ConfigBean config = AppConfig.getConfig(context.getApplicationContext());
             if (config.isBootUpLastDocumentOpenChecked()) {
                 Log.d("=========", "==============" + config.toString());
-                File file = new File("mnt/sdcard/" + config.getSlideFileName());
+                File file = new File(config.getSlideFileName());
                 Intent in = ViewDocumentUtils.viewActionIntentWithMimeType(file);
                 in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 ActivityUtil.startActivitySafely(context, ViewDocumentUtils.autoSlideShowIntent(file, Integer.MAX_VALUE, config.getSlideInterval()));

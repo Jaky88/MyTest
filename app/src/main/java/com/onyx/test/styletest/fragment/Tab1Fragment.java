@@ -93,10 +93,10 @@ public class Tab1Fragment extends BaseFragment {
         new LFilePicker().withSupportFragment(Tab1Fragment.this)
                 .withRequestCode(REQUESTCODE_FROM_FRAGMENT)
                 .withTitle("选择文件")
-//                .withTitleColor("#FF000000")
+                .withTitleColor("#FF000000")
                 .withMutilyMode(false)
-//                .withFileFilter(new String[]{".txt", ".pdf",".epub",".fb2",".djvu"})
-//                .withBackIcon(Constant.BACKICON_STYLETHREE)
+                .withFileFilter(new String[]{".txt", ".pdf",".epub",".fb2",".djvu"})
+                .withBackIcon(Constant.BACKICON_STYLETHREE)
                 .start();
     }
 
@@ -117,7 +117,7 @@ public class Tab1Fragment extends BaseFragment {
         config.setBootUpLastDocumentOpenChecked(cbAutoOpenBook.isChecked());
         Log.d("======", "=======setConfig==========" + config.toString());
         AppConfig.saveConfig(getActivity());
-        File file = new File("mnt/sdcard/" + config.getSlideFileName());
+        File file = new File( config.getSlideFileName());
         Intent in = ViewDocumentUtils.viewActionIntentWithMimeType(file);
         in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         ActivityUtil.startActivitySafely(getActivity(), ViewDocumentUtils.autoSlideShowIntent(file, Integer.MAX_VALUE, config.getSlideInterval()));
@@ -130,7 +130,8 @@ public class Tab1Fragment extends BaseFragment {
             if (requestCode == REQUESTCODE_FROM_FRAGMENT) {
                 List<String> list = data.getStringArrayListExtra("paths");
                 for (String s : list) {
-                    Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+                    etFileName.setText(s);
                 }
             }
         }
