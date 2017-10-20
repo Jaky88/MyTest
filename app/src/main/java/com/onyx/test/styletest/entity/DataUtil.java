@@ -60,22 +60,24 @@ public class DataUtil {
         if (mDatas == null) {
             mDatas = new ArrayList<>();
             mDatas.add(new Pair<>("编译信息：", ""));
-            mDatas.add(new Pair<>("TYPE", Build.TYPE));
-            mDatas.add(new Pair<>("SERIAL", Build.SERIAL));
+            mDatas.add(new Pair<>("TYPE(类型)", Build.TYPE));
+            mDatas.add(new Pair<>("SERIAL（序列号）", Build.SERIAL));
             mDatas.add(new Pair<>("HARDWARE", Build.HARDWARE));
-            mDatas.add(new Pair<>("MODEL", Build.MODEL));
-            mDatas.add(new Pair<>("BOARD", Build.BOARD));
+            mDatas.add(new Pair<>("MODEL（型号）", Build.MODEL));
+            mDatas.add(new Pair<>("BOARD（主板）", Build.BOARD));
             mDatas.add(new Pair<>("BRAND", Build.BRAND));
-            mDatas.add(new Pair<>("DEVICE", Build.DEVICE));
-            mDatas.add(new Pair<>("PRODUCT", Build.PRODUCT));
-            mDatas.add(new Pair<>("VERSION_CODES.BASE", "" + Build.VERSION_CODES.BASE));
-            mDatas.add(new Pair<>("VERSION.RELEASE", "" + Build.VERSION.RELEASE));
-            mDatas.add(new Pair<>("SDK", "" + Build.VERSION.SDK));
-            mDatas.add(new Pair<>("DISPLAY", "" + Build.DISPLAY));
-            mDatas.add(new Pair<>("FINGERPRINT", "" + Build.FINGERPRINT));
-            mDatas.add(new Pair<>("ID", "" + Build.ID));
+            mDatas.add(new Pair<>("DEVICE（设备）", Build.DEVICE));
+            mDatas.add(new Pair<>("PRODUCT（产品）", Build.PRODUCT));
+            mDatas.add(new Pair<>("VERSION_CODES.BASE（系统版本）", "" + Build.VERSION_CODES.BASE));
+            mDatas.add(new Pair<>("VERSION.RELEASE（API等级）", "" + Build.VERSION.RELEASE));
+            mDatas.add(new Pair<>("FINGERPRINT（系统指纹）", "" + Build.FINGERPRINT));
+            mDatas.add(new Pair<>("SDK（sdk版本）", "" + Build.VERSION.SDK));
+
+            mDatas.add(new Pair<>("ID(版本ID)", "" + Build.ID));
+            mDatas.add(new Pair<>("DISPLAY（版本号）", "" + Build.DISPLAY));
             mDatas.add(new Pair<>("USER", "" + Build.USER));
             mDatas.add(new Pair<>("编译时间", "" + Build.TIME));
+
             mDatas.add(new Pair<>("kernel version", System.getProperty("os.version")));
             mDatas.add(new Pair<>("kernel name", System.getProperty("os.name")));
             mDatas.add(new Pair<>("kernel arch", System.getProperty("os.arch")));

@@ -11,9 +11,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.Toast;
 
 import com.onyx.test.styletest.R;
 import com.onyx.test.styletest.adapter.ViewPagerAdapter;
+import com.onyx.test.styletest.config.Constant;
 import com.onyx.test.styletest.fragment.FragmentFactory;
 import com.onyx.test.styletest.utils.ActivityUtil;
 import com.onyx.test.styletest.utils.FileUtil;
@@ -27,7 +29,6 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int FILE_SELECT_CODE = 1;
     @Bind(R.id.tab_layout)
     android.support.design.widget.TabLayout tabLayout;
     @Bind(R.id.view_pager)
@@ -93,23 +94,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private static final String TAG = "ChooseFile";
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        switch (requestCode) {
+//            case FILE_SELECT_CODE:
+//                if (resultCode == RESULT_OK) {
+//                    // Get the Uri of the selected file
+//                    Uri uri = data.getData();
+//                    Log.d(TAG, "File Uri: " + uri.toString());
+//                    // Get the path
+//                    String path = FileUtil.getPath(this, uri);
+//                    Log.d(TAG, "File Path: " + path);
+//                    // Get the file instance
+//                    // File file = new File(path);
+//                    // Initiate the upload
+//                }
+//                break;
+//        }
+//        super.onActivityResult(requestCode, resultCode, data);
+//    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case FILE_SELECT_CODE:
-                if (resultCode == RESULT_OK) {
-                    // Get the Uri of the selected file
-                    Uri uri = data.getData();
-                    Log.d(TAG, "File Uri: " + uri.toString());
-                    // Get the path
-                    String path = FileUtil.getPath(this, uri);
-                    Log.d(TAG, "File Path: " + path);
-                    // Get the file instance
-                    // File file = new File(path);
-                    // Initiate the upload
-                }
-                break;
-        }
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == Constant.REQUESTCODE_FROM_ACTIVITY) {
+                List<String> list = data.getStringArrayListExtra(Constant.RESULT_FILE_NAME);
+                Toast.makeText(getApplicationContext(), "选中了" + list.size() + "个文件", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

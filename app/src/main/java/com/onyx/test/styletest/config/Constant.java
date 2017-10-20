@@ -14,6 +14,11 @@ public class Constant {
     public static final String LOG_FILE_NAME = "resetfactory.log";
     public static final String CONFIG_FILE_NAME = "config.json";
 
+    public static final String RESULT_FILE_NAME = "file_name";
+    public static final int REQUESTCODE_FROM_ACTIVITY = 1;
+    public static final int REQUESTCODE_FROM_FRAGMENT = 2;
+
+
 
     public static String getConfigPath(Context context) {
         return getDiskCacheDir(context) + File.separator + CONFIG_FILE_NAME;

@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
+//apply plugin: 'com.neenbedankt.android-apt'
 
 
 android {
@@ -9,11 +9,11 @@ android {
     compileSdkVersion 25
     buildToolsVersion "26.0.1"
     defaultConfig {
-        applicationId "com.moxi.test"
+//        applicationId "com.moxi.test"
         multiDexEnabled true
         applicationId "com.onyx.test.styletest"
-        minSdkVersion 8
-        targetSdkVersion 17
+        minSdkVersion 15
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -24,6 +24,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+//    sourceSets {
+//        main{
+//            jniLibs.srcDirs = ['libs']
+//        }
+//
+//    }
+
+    repositories{
+        flatDir {
+            dirs 'libs'
+        }
+    }
 
     dexOptions {
         javaMaxHeapSize "4g"
@@ -32,14 +44,15 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile(name:'onyxsdk-base-release', ext:'aar')
+    compile(name:'onyxsdk-data-release', ext:'aar')
+    compile(name:'onyxsdk-reader-release', ext:'aar')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.+'
     //compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
-    //butterknife
-    compile 'com.jakewharton:butterknife:7.0.1'
     //design
     compile 'com.android.support:design:25.+'
 
@@ -51,6 +64,7 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'io.reactivex:rxandroid:1.1.0'
     //butterknife
+    compile 'com.jakewharton:butterknife:7.0.1'
 //    compile 'com.jakewharton:butterknife:8.4.0'
     //retrofit2
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
@@ -67,8 +81,14 @@ dependencies {
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3'
 
     //DBFlow
-    apt 'com.raizlabs.android:DBFlow-Compiler:2.2.1'
+    annotationProcessor 'com.raizlabs.android:DBFlow-Compiler:2.2.1'
     compile "com.raizlabs.android:DBFlow-Core:2.2.1"
     compile "com.raizlabs.android:DBFlow:2.2.1"
+//    apt "com.github.Raizlabs.DBFlow:dbflow-processor:3.0.1"
+//    compile "com.github.Raizlabs.DBFlow:dbflow-core:3.0.1"
+//    compile "com.github.Raizlabs.DBFlow:dbflow:3.0.1"
 
+//    compile 'com.leon:lfilepickerlibrary:1.0'
+
+    compile project(path: ':lfilepickerlibrary')
 }

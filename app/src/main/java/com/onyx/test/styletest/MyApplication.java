@@ -14,7 +14,7 @@ public class MyApplication extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
-        LeakCanary.install(this);
-        FlowManager.init(getApplicationContext());
+//        LeakCanary.install(this);
+//         FlowManager.init(getApplicationContext());
     }
 }

@@ -3,6 +3,7 @@ package com.onyx.test.styletest.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 
 import java.io.File;
 
@@ -11,6 +12,8 @@ import java.io.File;
  */
 
 public class ActivityUtil {
+
+    private static final String TAG = ActivityUtil.class.getSimpleName();
 
     public static void startActivityWithData(Context context, String pkgName, File file) {
         Intent intent = new Intent(Intent.ACTION_VIEW);

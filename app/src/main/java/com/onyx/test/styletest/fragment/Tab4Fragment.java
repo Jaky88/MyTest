@@ -67,6 +67,8 @@ public class Tab4Fragment extends BaseFragment implements View.OnClickListener {
     CheckBox cbOpenWifi;
     @Bind(R.id.btn_enable_adb)
     Button btnEnableAdb;
+    @Bind(R.id.btn_open_pdf)
+    Button btnOpenPdf;
     private AudioManager audiomanage;
     private NotificationManager notificationManager;
     private Context mContext = null;
@@ -104,6 +106,7 @@ public class Tab4Fragment extends BaseFragment implements View.OnClickListener {
         btnSelectFile.setOnClickListener(this);
         btnConnectWifi.setOnClickListener(this);
         btnEnableAdb.setOnClickListener(this);
+        btnOpenPdf.setOnClickListener(this);
         cbOpenWifi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -154,9 +157,16 @@ public class Tab4Fragment extends BaseFragment implements View.OnClickListener {
             case R.id.btn_enable_adb:
                 openADB();
                 break;
+            case R.id.btn_open_pdf:
+                openPDF();
+                break;
             default:
                 break;
         }
+    }
+
+    private void openPDF() {
+//        ActivityUtil.startActivity(mContext, MuPDFActivity.class);
     }
 
     private void openADB() {
@@ -197,7 +207,7 @@ public class Tab4Fragment extends BaseFragment implements View.OnClickListener {
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void setEventInfo(PendingIntent pendingIntent, Notification notification) {
-        if(Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR1){
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR1) {
 //            notification.setLatestEventInfo(this, this.getString(R.string.app_name), "===", pendingIntent);
         }
     }
