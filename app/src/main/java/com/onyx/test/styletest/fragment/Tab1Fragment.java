@@ -127,10 +127,11 @@ public class Tab1Fragment extends BaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
+            Log.d("========","========RESULT_OK=======");
             if (requestCode == REQUESTCODE_FROM_FRAGMENT) {
                 List<String> list = data.getStringArrayListExtra("paths");
                 for (String s : list) {
-//                    Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
                     etFileName.setText(s);
                 }
             }
