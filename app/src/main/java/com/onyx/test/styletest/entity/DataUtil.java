@@ -59,39 +59,43 @@ public class DataUtil {
     public List<Pair<String, String>> getData() {
         if (mDatas == null) {
             mDatas = new ArrayList<>();
-            mDatas.add(new Pair<>("编译信息：", ""));
+            mDatas.add(new Pair<>("软件信息：", "====================="));
             mDatas.add(new Pair<>("TYPE(类型)", Build.TYPE));
             mDatas.add(new Pair<>("SERIAL（序列号）", Build.SERIAL));
-            mDatas.add(new Pair<>("HARDWARE", Build.HARDWARE));
+            mDatas.add(new Pair<>("HARDWARE（硬件）", Build.HARDWARE));
             mDatas.add(new Pair<>("MODEL（型号）", Build.MODEL));
             mDatas.add(new Pair<>("BOARD（主板）", Build.BOARD));
-            mDatas.add(new Pair<>("BRAND", Build.BRAND));
+            mDatas.add(new Pair<>("BRAND（品牌）", Build.BRAND));
             mDatas.add(new Pair<>("DEVICE（设备）", Build.DEVICE));
             mDatas.add(new Pair<>("PRODUCT（产品）", Build.PRODUCT));
+            mDatas.add(new Pair<>("MANUFACTURER（制造商）", Build.MANUFACTURER));
             mDatas.add(new Pair<>("VERSION_CODES.BASE（系统版本）", "" + Build.VERSION_CODES.BASE));
             mDatas.add(new Pair<>("VERSION.RELEASE（API等级）", "" + Build.VERSION.RELEASE));
             mDatas.add(new Pair<>("FINGERPRINT（系统指纹）", "" + Build.FINGERPRINT));
             mDatas.add(new Pair<>("SDK（sdk版本）", "" + Build.VERSION.SDK));
-
             mDatas.add(new Pair<>("ID(版本ID)", "" + Build.ID));
-            mDatas.add(new Pair<>("DISPLAY（版本号）", "" + Build.DISPLAY));
-            mDatas.add(new Pair<>("USER", "" + Build.USER));
+            mDatas.add(new Pair<>("DISPLAY（显示版本号）", "" + Build.DISPLAY));
+            mDatas.add(new Pair<>("USER（用户）", "" + Build.USER));
             mDatas.add(new Pair<>("编译时间", "" + Build.TIME));
+            mDatas.add(new Pair<>("系统启动程序版本", "" + Build.BOOTLOADER));
+            mDatas.add(new Pair<>("cpu指令集", "" + Build.CPU_ABI));
 
-            mDatas.add(new Pair<>("kernel version", System.getProperty("os.version")));
-            mDatas.add(new Pair<>("kernel name", System.getProperty("os.name")));
-            mDatas.add(new Pair<>("kernel arch", System.getProperty("os.arch")));
-            mDatas.add(new Pair<>("user.home", System.getProperty("user.home")));
-            mDatas.add(new Pair<>("user.name", System.getProperty("user.name")));
-            mDatas.add(new Pair<>("user.dir", System.getProperty("user.dir")));
 
-            mDatas.add(new Pair<>("java.home ", System.getProperty("java.home ")));
-            mDatas.add(new Pair<>("java.versio", System.getProperty("java.versio")));
-            mDatas.add(new Pair<>("java.class.version", System.getProperty("java.class.version")));
-            mDatas.add(new Pair<>("java.class.path", System.getProperty("java.class.path")));
+            mDatas.add(new Pair<>("内核信息：", "====================="));
+            mDatas.add(new Pair<>("kernel version（OS版本）", System.getProperty("os.version")));
+            mDatas.add(new Pair<>("kernel name（OS名称）", System.getProperty("os.name")));
+            mDatas.add(new Pair<>("kernel arch（OS架构 ）", System.getProperty("os.arch")));
+            mDatas.add(new Pair<>("user.home（HOME）", System.getProperty("user.home")));
+            mDatas.add(new Pair<>("user.name（用户名）", System.getProperty("user.name")));
+            mDatas.add(new Pair<>("user.dir（根目录）", System.getProperty("user.dir")));
 
-            mDatas.add(new Pair<>("硬件信息：", ""));
-            mDatas.add(new Pair<>("CPU概况：", CpuUtil.getCpuString()));
+            mDatas.add(new Pair<>("java.home（Java Home属性）", System.getProperty("java.home ")));
+            mDatas.add(new Pair<>("java.version（Java 版本）", System.getProperty("java.versio")));
+            mDatas.add(new Pair<>("java.class.version（JavaClass版本）", System.getProperty("java.class.version")));
+            mDatas.add(new Pair<>("java.class.path（JavaClass路径）", System.getProperty("java.class.path")));
+            mDatas.add(new Pair<>("时区", "" + System.getProperty("persist.sys.timezone")));
+
+            mDatas.add(new Pair<>("硬件信息：", "====================="));
             mDatas.add(new Pair<>("CPU名字：", CpuUtil.getCpuName()));
             mDatas.add(new Pair<>("CPU类型：", CpuUtil.getCpuModel()));
             mDatas.add(new Pair<>("CPU ABI：", Build.CPU_ABI));
@@ -99,7 +103,6 @@ public class DataUtil {
             mDatas.add(new Pair<>("CPU最大频率：", "" + CpuUtil.getMaxCpuFreq()));
             mDatas.add(new Pair<>("CPU最小频率：", "" + CpuUtil.getMinCpuFreq()));
             mDatas.add(new Pair<>("CPU当前频率：", "" + CpuUtil.getCurCpuFreq()));
-            mDatas.add(new Pair<>("移动信息：", CpuUtil.getMobileInfo()));
             mDatas.add(new Pair<>("内存大小：", "" + getTotalMemory()));
             mDatas.add(new Pair<>("Rom大小：", "" + getRomMemroy()[0]));
             mDatas.add(new Pair<>("内部存储大小：", "" + getTotalInternalMemorySize()));
@@ -109,6 +112,8 @@ public class DataUtil {
             mDatas.add(new Pair<>("当前电量：", strLevel));
             mDatas.add(new Pair<>("开机时间：", getTimes()));
             mDatas.add(new Pair<>("MAC地址：", getOtherInfo()[0]));
+            mDatas.add(new Pair<>("CPU概况：", CpuUtil.getCpuString()));
+            mDatas.add(new Pair<>("移动信息：", CpuUtil.getMobileInfo()));
         }
         return mDatas;
     }
