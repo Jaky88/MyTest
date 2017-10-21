@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="tab_title_items">
-	    <item>Kreader</item>
+	    <item>KReader</item>
 	    <item>文件</item>
 	    <item>翻译</item>
 	    <item>测试</item>

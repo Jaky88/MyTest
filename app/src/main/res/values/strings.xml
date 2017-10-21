@@ -3,4 +3,10 @@
     <string name="add">添加</string>
     <string name="share">分享</string>
     <string name="open_failed">打开失败</string>
+    <string name="select">选择</string>
+    <string name="file_name">文件名</string>
+    <string name="auto_open_when_boot_completed">开机完成后自动打开书</string>
+    <string name="settings">设置</string>
+    <string name="slide_interval">翻页间隔</string>
+    <string name="slide_time">翻页次数</string>
 </resources>

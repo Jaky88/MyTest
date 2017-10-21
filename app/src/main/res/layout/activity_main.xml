@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.onyx.test.styletest.activity.MainActivity">
+    tools:context="com.onyx.test.mytest.activity.MainActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -47,5 +47,13 @@
         android:layout_weight="1">
 
     </android.support.v4.view.ViewPager>
+    <TextView
+        android:id="@+id/tv_version_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="版本号："/>
 
 </LinearLayout>

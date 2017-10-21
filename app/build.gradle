@@ -1,6 +1,21 @@
+import java.text.SimpleDateFormat
+
 apply plugin: 'com.android.application'
 //apply plugin: 'com.neenbedankt.android-apt'
 
+def verName = "1.0.0"
+
+def buildTime() {
+    def df = new SimpleDateFormat("yyMMddHHmm")
+    df.setTimeZone(TimeZone.getTimeZone("UTC+08:00"))
+    return df.format(new Date())
+}
+
+def apkSuffix() {
+    def df = new SimpleDateFormat("yyMMdd")
+    df.setTimeZone(TimeZone.getTimeZone("UTC+08:00"))
+    return df.format(new Date())
+}
 
 android {
     dataBinding {
@@ -11,13 +26,24 @@ android {
     defaultConfig {
 //        applicationId "com.moxi.test"
         multiDexEnabled true
-        applicationId "com.onyx.test.styletest"
+        applicationId "com.onyx.test.mytest"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName  "${verName}-beta-build-${buildTime()}"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('-debug.apk')) {
+                output.outputFile = new File(outputFile.parent, outputFile.name.replace(".apk", "-" + defaultConfig.versionName + ".apk"));
+                outputFile.delete()
+            }
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false

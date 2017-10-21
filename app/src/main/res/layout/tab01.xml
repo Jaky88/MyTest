@@ -10,22 +10,24 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="文件名" />
+            android:text="@string/file_name"
+            android:textSize="@dimen/title_level2_text_size" />
 
         <EditText
             android:id="@+id/et_file_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="mnt/sdcard/test.pdf"/>
+            android:layout_weight="1"
+            android:text="mnt/sdcard/test.pdf"
+            android:textSize="@dimen/title_level2_text_size" />
+
         <Button
             android:id="@+id/btn_file_select"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="..."/>
+            android:text="@string/select" />
 
     </LinearLayout>
 
@@ -35,18 +37,20 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="翻页间隔" />
+            android:text="@string/slide_interval"
+            android:textSize="@dimen/title_level2_text_size" />
 
         <EditText
             android:id="@+id/et_slide_interval"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:inputType="number"
-            android:text="6"/>
+            android:maxLength="2"
+            android:text="6"
+            android:textSize="@dimen/title_level2_text_size" />
 
 
     </LinearLayout>
@@ -57,29 +61,36 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="翻页次数"/>
+            android:maxLength="6"
+            android:text="@string/slide_time"
+            android:textSize="@dimen/title_level2_text_size" />
+
         <EditText
             android:id="@+id/et_slide_time"
-            android:inputType="number"
             android:layout_width="0dp"
-            android:layout_weight="2"
             android:layout_height="wrap_content"
-            android:text="3000"/>
+            android:layout_weight="1"
+            android:inputType="number"
+            android:text="3000"
+            android:textSize="@dimen/title_level2_text_size" />
 
     </LinearLayout>
+
     <CheckBox
         android:id="@+id/cb_auto_open_book"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:checked="true"
-        android:text="开机完成后自动打开书"/>
+        android:text="@string/auto_open_when_boot_completed"
+        android:textSize="@dimen/title_level2_text_size" />
+
     <Button
         android:id="@+id/btn_set"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="设置"/>
+        android:text="@string/settings"
+        android:textSize="@dimen/title_level2_text_size" />
 
 </LinearLayout>
