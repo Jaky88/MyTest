@@ -2,31 +2,28 @@ package com.onyx.test.mytest.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.leon.lfilepickerlibrary.LFilePicker;
 import com.leon.lfilepickerlibrary.utils.Constant;
 import com.onyx.android.sdk.utils.ActivityUtil;
-import com.onyx.android.sdk.utils.StringUtils;
 import com.onyx.android.sdk.utils.ViewDocumentUtils;
 import com.onyx.test.mytest.R;
 import com.onyx.test.mytest.config.AppConfig;
 import com.onyx.test.mytest.config.ConfigBean;
+import com.onyx.test.mytest.data.binding.DataTab01;
+import com.onyx.test.mytest.data.binding.EventHandler;
+import com.onyx.test.mytest.databinding.FragmentTab1Binding;
 
 import java.io.File;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by jaky on 2017/9/7 0007.
@@ -35,46 +32,22 @@ import butterknife.OnClick;
 public class Tab1Fragment extends BaseFragment {
 
 
-    @Bind(R.id.et_slide_interval)
-    EditText etSlideInterval;
-    @Bind(R.id.et_slide_time)
-    EditText etSlideTime;
-    @Bind(R.id.btn_set)
-    Button btnSet;
-    @Bind(R.id.et_file_name)
-    EditText etFileName;
     ConfigBean config;
-    @Bind(R.id.btn_file_select)
-    Button btnFileSelect;
-    @Bind(R.id.cb_auto_open_book)
-    CheckBox cbAutoOpenBook;
+    private DataTab01 bean;
+    private FragmentTab1Binding binding;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.tab01, null);
-        ButterKnife.bind(this, view);
         config = AppConfig.getConfig(getActivity());
-        return view;
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab1, container, false);
+        bean = new DataTab01();
+        binding.setBean(bean);
+        binding.setHandler(new EventHandler());
+        return binding.getRoot();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
-
-    @OnClick({R.id.btn_file_select, R.id.btn_set})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.btn_file_select:
-                selectFile();
-                break;
-            case R.id.btn_set:
-                setConfig();
-                break;
-        }
-    }
 
     private void selectFile() {
         new LFilePicker().withSupportFragment(Tab1Fragment.this)
@@ -88,20 +61,11 @@ public class Tab1Fragment extends BaseFragment {
     }
 
     private void setConfig() {
-        String strInterval = etSlideInterval.getText().toString().trim();
-        String strSlideTime = etSlideTime.getText().toString().trim();
-        String strFileName = etFileName.getText().toString().trim();
-        if (StringUtils.isNullOrEmpty(strInterval) || StringUtils.isNullOrEmpty(strSlideTime) || StringUtils.isNullOrEmpty(strFileName)) {
-            Toast.makeText(getActivity(), "值不能为空！", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        int interval = Integer.parseInt(strInterval);
-        int time = Integer.parseInt(strSlideTime);
 
-        config.setSlideFileName(strFileName);
-        config.setSlideInterval(interval);
-        config.setSlideTime(time);
-        config.setBootUpLastDocumentOpenChecked(cbAutoOpenBook.isChecked());
+        config.setSlideFileName(bean.getTestFilePath());
+        config.setSlideInterval(bean.getSlideshowInterval());
+        config.setSlideTime(bean.getSlideshowTotalPage());
+        config.setBootUpLastDocumentOpenChecked(bean.isBootCompletedAtoTest());
         AppConfig.saveConfig(getActivity());
 
         File file = new File(config.getSlideFileName());
@@ -118,7 +82,7 @@ public class Tab1Fragment extends BaseFragment {
                 List<String> list = data.getStringArrayListExtra("paths");
                 for (String s : list) {
                     Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
-                    etFileName.setText(s);
+                    bean.setTestFilePath(s);
                 }
             }
         }

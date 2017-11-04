@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable name="bean" type="com.onyx.test.mytest.data.binding.DataTab01"/>
+        <variable name="handler" type="com.onyx.test.mytest.data.binding.EventHandler"/>
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:text="@{bean.testProjectName}"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/file_name"
+                android:textSize="@dimen/title_level2_text_size" />
+
+            <EditText
+                android:id="@+id/et_file_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{bean.testFilePath}"
+                android:textSize="@dimen/title_level2_text_size" />
+
+            <Button
+                android:id="@+id/btn_file_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{bean.btnSelectFile}"
+                android:onClick="@{handler::selectFileOnClick}"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/slide_interval"
+                android:textSize="@dimen/title_level2_text_size" />
+
+            <EditText
+                android:id="@+id/et_slide_interval"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:maxLength="2"
+                android:text="@{bean.slideshowInterval}"
+                android:textSize="@dimen/title_level2_text_size" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="6"
+                android:text="@string/slide_start_page"
+                android:textSize="@dimen/title_level2_text_size" />
+
+            <EditText
+                android:id="@+id/et_slide_start_page"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:text="@{bean.slideshowStartPage}"
+                android:textSize="@dimen/title_level2_text_size" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="6"
+                android:text="@string/slide_total_page"
+                android:textSize="@dimen/title_level2_text_size" />
+
+            <EditText
+                android:id="@+id/et_slide_total_page"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:text="@{bean.slideshowTotalPage}"
+                android:textSize="@dimen/title_level2_text_size" />
+
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/cb_auto_open_book"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="@{bean.bootCompletedAtoTest}"
+            android:text="@string/auto_open_when_boot_completed"
+            android:textSize="@dimen/title_level2_text_size" />
+
+        <Button
+            android:id="@+id/btn_set"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{bean.btnSettings}"
+            android:onClick="@{handler::settingsOnClick}"
+            android:textSize="@dimen/title_level2_text_size" />
+
+    </LinearLayout>
+</layout>

@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">LFilePickerLibrary</string>
     <string name="NotFoundBooks">Please select a file at least</string>
     <string name="NotFoundPath">The sd card is not available</string>
     <string name="UpOneLevel">Up</string>

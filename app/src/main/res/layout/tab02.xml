@@ -1,64 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
+    android:layout_height="match_parent"
+    android:gravity="center">
+    <Button
+        android:id="@+id/btn_atart_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:layout_gravity="center_horizontal"
-        android:text="翻译拷贝"/>
+        android:text="启动"
+        />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/tv_info"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="源文件："/>
-        <EditText
-            android:id="@+id/src_file_path"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/src_file_select"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="..."/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="目标文件："/>
-        <EditText
-            android:id="@+id/dest_file_path"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/dest_file_select"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="..."/>
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/start_replace"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="开始替换"/>
+        android:layout_height="match_parent" />
 </LinearLayout>

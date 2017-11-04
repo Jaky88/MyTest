@@ -9,4 +9,6 @@
     <string name="settings">设置</string>
     <string name="slide_interval">翻页间隔</string>
     <string name="slide_time">翻页次数</string>
+    <string name="slide_start_page">起始页数</string>
+    <string name="slide_total_page">总页数</string>
 </resources>
