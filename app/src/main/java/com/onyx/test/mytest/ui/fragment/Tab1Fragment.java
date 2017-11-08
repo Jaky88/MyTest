@@ -10,17 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.leon.lfilepickerlibrary.LFilePicker;
 import com.leon.lfilepickerlibrary.utils.Constant;
-import com.onyx.android.sdk.utils.ActivityUtil;
-import com.onyx.android.sdk.utils.ViewDocumentUtils;
 import com.onyx.test.mytest.R;
 import com.onyx.test.mytest.config.AppConfig;
 import com.onyx.test.mytest.config.ConfigBean;
-import com.onyx.test.mytest.ui.viewmodel.DataTab01;
+import com.onyx.test.mytest.ui.viewmodel.FragmentTab01Model;
 import com.onyx.test.mytest.databinding.FragmentTab1Binding;
 
-import java.io.File;
 import java.util.List;
 
 
@@ -30,7 +26,7 @@ import java.util.List;
 
 public class Tab1Fragment extends BaseFragment {
 
-    private DataTab01 bean;
+    private FragmentTab01Model bean;
     private FragmentTab1Binding binding;
 
 
@@ -39,7 +35,7 @@ public class Tab1Fragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ConfigBean config = AppConfig.getConfig(getActivity());
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab1, container, false);
-        bean = new DataTab01(Tab1Fragment.this, config);
+        bean = new FragmentTab01Model(Tab1Fragment.this, config);
         binding.setBean(bean);
         return binding.getRoot();
     }

@@ -18,7 +18,7 @@ import java.io.File;
  * Created by jaky on 2017/11/4 0004.
  */
 
-public class DataTab01 implements Observable {
+public class FragmentTab01Model implements Observable {
 
     public String testProjectName = "Kreader自动翻页测试";
     public int slideshowInterval = 20;
@@ -32,7 +32,7 @@ public class DataTab01 implements Observable {
     public ConfigBean config;
 
 
-    public DataTab01(Fragment f, ConfigBean config) {
+    public FragmentTab01Model(Fragment f, ConfigBean config) {
         this.fragment = f;
         this.config = config;
     }
