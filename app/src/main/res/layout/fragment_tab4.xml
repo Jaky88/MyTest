@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
+
         <variable
             name="bean"
-            type="com.onyx.test.mytest.binding.FragmentTab04Model" />
+            type="com.onyx.test.mytest.binding.FragmentTab04Model"/>
     </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Tab4" />
+            android:text="Tab4"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,7 +39,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="选择文件" />
+                android:text="选择文件"/>
         </LinearLayout>
 
         <Button
@@ -44,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="@{bean::onStartKreaderClick}"
-            android:text="启动kreader" />
+            android:text="启动kreader"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="@{bean::onVolumeDownClick}"
-                android:text="声音减" />
+                android:text="声音减"/>
 
             <Button
                 android:id="@+id/btn_volume_add"
@@ -67,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="@{bean::onVolumeAddClick}"
-                android:text="声音加" />
+                android:text="声音加"/>
         </LinearLayout>
 
         <Button
@@ -75,41 +78,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="@{bean::onFileTestClick}"
-            android:text="文件读写测试" />
+            android:text="文件读写测试"/>
 
         <Button
             android:id="@+id/btn_send_notification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="@{bean::onSendNotificationClick}"
-            android:text="发通知" />
+            android:text="发通知"/>
 
         <CheckBox
             android:id="@+id/cb_open_wifi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:checked="@{bean.wifiChecked}"
             android:onClick="@{bean::onOpenWifiClick}"
-            android:text="打开Wifi" />
+            android:text="@{bean.wifiChecked ? @string/close_wifi:@string/open_wifi}"/>
 
         <Button
             android:id="@+id/btn_connect_wifi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="@{bean::onConnectWifiClick}"
-            android:text="连接WIFI" />
+            android:text="连接WIFI"/>
 
         <Button
             android:id="@+id/btn_enable_adb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="@{bean::onEnableAdbClick}"
-            android:text="打开ADB" />
+            android:text="打开ADB"/>
 
         <Button
             android:id="@+id/btn_open_pdf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="@{bean::onOpenPdfClick}"
-            android:text="打开PDF" />
+            android:text="打开PDF"/>
     </LinearLayout>
 </layout>

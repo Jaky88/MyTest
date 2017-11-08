@@ -41,6 +41,7 @@ public class FragmentTab04Model extends BaseObservable {
     private Fragment fragment;
     private ConfigBean config;
     private String selectfilePath;
+    private boolean wifiChecked = false;
 
     private AudioManager audiomanage;
     private NotificationManager notificationManager;
@@ -48,6 +49,29 @@ public class FragmentTab04Model extends BaseObservable {
     private WifiConnector wac;
     private String mPwd = "OnyxWpa2017";
     private String mSSID = "onyx-office1";
+
+
+    public FragmentTab04Model(Fragment f, ConfigBean config) {
+        this.fragment = f;
+        this.config = config;
+        audiomanage = (AudioManager) (fragment.getActivity().getSystemService(Context.AUDIO_SERVICE));
+        notificationManager = (NotificationManager) fragment.getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        initWifiConnect();
+    }
+
+        private void initWifiConnect() {
+        wifiManager = (WifiManager) (fragment.getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE));
+        wac = new WifiConnector(wifiManager);
+    }
+
+    @Bindable
+    public boolean isWifiChecked() {
+        return wifiChecked;
+    }
+
+    public void setWifiChecked(boolean wifiChecked) {
+        this.wifiChecked = wifiChecked;
+    }
 
     @Bindable
     public String getSelectfilePath() {
@@ -58,12 +82,6 @@ public class FragmentTab04Model extends BaseObservable {
         this.selectfilePath = selectfilePath;
     }
 
-    public FragmentTab04Model(Fragment f, ConfigBean config) {
-        this.fragment = f;
-        this.config = config;
-        audiomanage = (AudioManager) (fragment.getActivity().getSystemService(Context.AUDIO_SERVICE));
-        notificationManager = (NotificationManager) fragment.getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-    }
 
     public void onEnableAdbClick(View view) {
         openADB();
