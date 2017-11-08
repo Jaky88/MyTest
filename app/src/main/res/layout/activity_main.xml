@@ -5,7 +5,7 @@
     <data>
         <variable
             name="mainModel"
-            type="com.onyx.test.mytest.ui.viewmodel.ActivityMainModel" />
+            type="com.onyx.test.mytest.data.viewmodel.ActivityMainModel" />
     </data>
 
     <LinearLayout

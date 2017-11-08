@@ -14,7 +14,7 @@ import com.leon.lfilepickerlibrary.utils.Constant;
 import com.onyx.test.mytest.R;
 import com.onyx.test.mytest.config.AppConfig;
 import com.onyx.test.mytest.config.ConfigBean;
-import com.onyx.test.mytest.ui.viewmodel.FragmentTab01Model;
+import com.onyx.test.mytest.data.viewmodel.FragmentTab01Model;
 import com.onyx.test.mytest.databinding.FragmentTab1Binding;
 
 import java.util.List;

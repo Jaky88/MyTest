@@ -13,7 +13,7 @@ import com.onyx.test.mytest.R;
 import com.onyx.test.mytest.databinding.ActivityMainBinding;
 import com.onyx.test.mytest.ui.adapter.ViewPagerAdapter;
 import com.onyx.test.mytest.ui.fragment.FragmentFactory;
-import com.onyx.test.mytest.ui.viewmodel.ActivityMainModel;
+import com.onyx.test.mytest.data.viewmodel.ActivityMainModel;
 import com.onyx.test.mytest.utils.ActivityUtil;
 
 import java.util.ArrayList;

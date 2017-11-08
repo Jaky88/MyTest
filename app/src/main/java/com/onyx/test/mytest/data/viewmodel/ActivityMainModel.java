@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.ui.viewmodel;
+package com.onyx.test.mytest.data.viewmodel;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;

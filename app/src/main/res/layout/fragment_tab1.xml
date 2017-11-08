@@ -3,7 +3,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable name="bean" type="com.onyx.test.mytest.ui.viewmodel.FragmentTab01Model"/>
+        <variable name="bean" type="com.onyx.test.mytest.data.viewmodel.FragmentTab01Model"/>
     </data>
 
     <LinearLayout
