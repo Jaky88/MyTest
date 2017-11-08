@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.adapter;
+package com.onyx.test.mytest.ui.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

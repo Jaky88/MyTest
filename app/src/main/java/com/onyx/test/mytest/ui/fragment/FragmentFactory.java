@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.fragment;
+package com.onyx.test.mytest.ui.fragment;
 
 import android.support.v4.app.Fragment;
 
@@ -39,6 +39,10 @@ public class FragmentFactory {
             {
                 fragment = new Tab5Fragment();
             }
+//            else if(position == 5)
+//            {
+//                fragment = new StyleFragment();
+//            }
             if(fragment != null)
             {
                 mFragments.put(position, fragment);

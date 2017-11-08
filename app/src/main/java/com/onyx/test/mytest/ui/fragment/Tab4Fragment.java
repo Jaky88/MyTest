@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.fragment;
+package com.onyx.test.mytest.ui.fragment;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -26,7 +26,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.onyx.test.mytest.R;
-import com.onyx.test.mytest.activity.MainActivity;
+import com.onyx.test.mytest.ui.activity.MainActivity;
 import com.onyx.test.mytest.utils.ActivityUtil;
 import com.onyx.test.mytest.utils.FileUtil;
 import com.onyx.test.mytest.utils.WifiConnector;

@@ -3,9 +3,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable name="bean" type="com.onyx.test.mytest.data.binding.DataTab01"/>
-        <variable name="handler" type="com.onyx.test.mytest.data.binding.EventHandler"/>
+        <variable name="bean" type="com.onyx.test.mytest.ui.viewmodel.DataTab01"/>
     </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{bean.btnSelectFile}"
-                android:onClick="@{handler::selectFileOnClick}"/>
+                android:onClick="@{bean::onSelectFileClick}"/>
 
         </LinearLayout>
 
@@ -65,7 +65,7 @@
                 android:layout_weight="1"
                 android:inputType="number"
                 android:maxLength="2"
-                android:text="@{bean.slideshowInterval}"
+                android:text="@{String.valueOf(bean.slideshowInterval)}"
                 android:textSize="@dimen/title_level2_text_size" />
 
 
@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:inputType="number"
-                android:text="@{bean.slideshowStartPage}"
+                android:text="@{String.valueOf(bean.slideshowStartPage)}"
                 android:textSize="@dimen/title_level2_text_size" />
 
         </LinearLayout>
@@ -112,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:inputType="number"
-                android:text="@{bean.slideshowTotalPage}"
+                android:text="@{String.valueOf(bean.slideshowTotalPage)}"
                 android:textSize="@dimen/title_level2_text_size" />
 
         </LinearLayout>
@@ -130,7 +130,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{bean.btnSettings}"
-            android:onClick="@{handler::settingsOnClick}"
+            android:onClick="@{bean::onSettingsClick}"
             android:textSize="@dimen/title_level2_text_size" />
 
     </LinearLayout>

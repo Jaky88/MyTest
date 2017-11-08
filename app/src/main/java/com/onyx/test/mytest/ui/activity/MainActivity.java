@@ -1,76 +1,65 @@
-package com.onyx.test.mytest.activity;
+package com.onyx.test.mytest.ui.activity;
 
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.Window;
-import android.widget.TextView;
 
 import com.onyx.test.mytest.R;
-import com.onyx.test.mytest.adapter.ViewPagerAdapter;
-import com.onyx.test.mytest.fragment.FragmentFactory;
+import com.onyx.test.mytest.ui.adapter.ViewPagerAdapter;
+import com.onyx.test.mytest.databinding.ActivityMainBinding;
+import com.onyx.test.mytest.ui.fragment.FragmentFactory;
+import com.onyx.test.mytest.ui.viewmodel.ActivityMainModel;
 import com.onyx.test.mytest.utils.ActivityUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 public class MainActivity extends AppCompatActivity {
 
-    @Bind(R.id.tab_layout)
-    TabLayout tabLayout;
-    @Bind(R.id.view_pager)
-    ViewPager viewPager;
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
-    @Bind(R.id.tv_version_name)
-    TextView tvVersionName;
     private List<Fragment> fragments;
-    private List<String> titleList;
     private ViewPagerAdapter viewPagerAdapter;
+    private ActivityMainBinding binding;
+    private ActivityMainModel mainModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mainModel = new ActivityMainModel();
+        binding.setMainModel(mainModel);
         initData();
         initToolbar();
         initTabPage();
     }
 
     private void initData() {
-        titleList = new ArrayList<>();
-        titleList = Arrays.asList(getResources().getStringArray(R.array.tab_title_items));
+        mainModel.setTabTitleList(Arrays.asList(getResources().getStringArray(R.array.tab_title_items)));
 
         fragments = new ArrayList<>();
-        for (int i = 0; i < titleList.size(); i++) {
+        for (int i = 0; i < mainModel.getTabTitleList().size(); i++) {
             fragments.add(FragmentFactory.createFragment(i));
         }
     }
 
     private void initTabPage() {
-        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments, titleList);
-        viewPager.setAdapter(viewPagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments, mainModel.getTabTitleList());
+        binding.viewPager.setAdapter(viewPagerAdapter);
+        binding.tabLayout.setupWithViewPager(binding.viewPager);
     }
 
     private void initToolbar() {
-        tvVersionName.setText("版本号：" + getVersionName());
-        toolbar.inflateMenu(R.menu.menu_main);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        mainModel.setVersionName("版本号：" + getVersionName());
+        binding.toolbar.inflateMenu(R.menu.menu_main);
+        binding.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {

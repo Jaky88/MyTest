@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.fragment;
+package com.onyx.test.mytest.ui.fragment;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;

@@ -1,59 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.onyx.test.mytest.activity.MainActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <data>
+        <variable
+            name="mainModel"
+            type="com.onyx.test.mytest.ui.viewmodel.ActivityMainModel" />
+    </data>
+
+    <LinearLayout
+
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        app:logo="@mipmap/ic_launcher"
-        app:title="@string/app_name"
-        app:contentInsetStartWithNavigation="0dp"
-        app:contentInsetStart="0dp"
-        app:contentInsetRight="0dp"
-        app:contentInsetEnd="0dp"
-        app:titleTextAppearance="?android:attr/textAppearanceLarge"
-        android:elevation="4dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    </android.support.v7.widget.Toolbar>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:elevation="4dp"
+            app:contentInsetEnd="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetStart="0dp"
+            app:contentInsetStartWithNavigation="0dp"
+            app:logo="@mipmap/ic_launcher"
+            app:title="@{mainModel.title ?? @string/app_name}"
+            app:titleTextAppearance="?android:attr/textAppearanceLarge">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabGravity="fill"
-        app:tabIndicatorColor="@android:color/black"
-        app:tabIndicatorHeight="4dp"
-        app:tabTextAppearance="?android:attr/textAppearanceMedium"
-        app:tabTextColor="@android:color/black">
+        </android.support.v7.widget.Toolbar>
 
-    </android.support.design.widget.TabLayout>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@android:color/black"
+            app:tabIndicatorHeight="4dp"
+            app:tabTextAppearance="?android:attr/textAppearanceMedium"
+            app:tabTextColor="@android:color/black">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#FF000000" />
+        </android.support.design.widget.TabLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#FF000000" />
 
-    </android.support.v4.view.ViewPager>
-    <TextView
-        android:id="@+id/tv_version_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:gravity="center"
-        android:text="版本号："/>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-</LinearLayout>
+        </android.support.v4.view.ViewPager>
+
+        <TextView
+            android:id="@+id/tv_version_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@{mainModel.versionName}" />
+
+    </LinearLayout>
+</layout>
