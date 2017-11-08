@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.utils;
+package com.onyx.test.mytest.model.utils;
 
 import android.content.Context;
 import android.database.Cursor;

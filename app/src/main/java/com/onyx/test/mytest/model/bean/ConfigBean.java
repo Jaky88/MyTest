@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.config;
+package com.onyx.test.mytest.model.bean;
 
 /**
  * Created by jaky on 2017/8/16.

@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.onyx.test.mytest.R;
-import com.onyx.test.mytest.entity.DataUtil;
+import com.onyx.test.mytest.model.entity.DataUtil;
 
 import java.util.List;
 

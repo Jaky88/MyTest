@@ -27,9 +27,9 @@ import android.widget.Toast;
 
 import com.onyx.test.mytest.R;
 import com.onyx.test.mytest.ui.activity.MainActivity;
-import com.onyx.test.mytest.utils.ActivityUtil;
-import com.onyx.test.mytest.utils.FileUtil;
-import com.onyx.test.mytest.utils.WifiConnector;
+import com.onyx.test.mytest.model.utils.ActivityUtil;
+import com.onyx.test.mytest.model.utils.FileUtil;
+import com.onyx.test.mytest.model.utils.WifiConnector;
 
 import java.io.File;
 import java.util.ArrayList;

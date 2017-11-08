@@ -1,10 +1,11 @@
-package com.onyx.test.mytest.config;
+package com.onyx.test.mytest.model;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.onyx.test.mytest.utils.FileUtil;
-import com.onyx.test.mytest.utils.JsonUtil;
+import com.onyx.test.mytest.model.bean.ConfigBean;
+import com.onyx.test.mytest.model.utils.FileUtil;
+import com.onyx.test.mytest.model.utils.JsonUtil;
 
 import org.apache.commons.lang3.StringUtils;
 

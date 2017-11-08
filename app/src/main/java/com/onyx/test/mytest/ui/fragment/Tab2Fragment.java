@@ -10,8 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.onyx.test.mytest.R;
-import com.onyx.test.mytest.utils.ShellUtils;
-import com.onyx.test.mytest.utils.ShellUtils.CommandResult;
+import com.onyx.test.mytest.model.utils.ShellUtils;
+import com.onyx.test.mytest.model.utils.ShellUtils.CommandResult;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.entity;
+package com.onyx.test.mytest.model.entity;
 
 /**
  * @Copyright: Copyright © 2017 Onyx International Inc. All rights reserved.

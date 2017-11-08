@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.data.viewmodel;
+package com.onyx.test.mytest.viewmodel;
 
 import android.content.Intent;
 import android.databinding.BaseObservable;
@@ -10,8 +10,8 @@ import com.leon.lfilepickerlibrary.LFilePicker;
 import com.leon.lfilepickerlibrary.utils.Constant;
 import com.onyx.android.sdk.utils.ActivityUtil;
 import com.onyx.android.sdk.utils.ViewDocumentUtils;
-import com.onyx.test.mytest.config.AppConfig;
-import com.onyx.test.mytest.config.ConfigBean;
+import com.onyx.test.mytest.model.AppConfig;
+import com.onyx.test.mytest.model.bean.ConfigBean;
 
 import java.io.File;
 

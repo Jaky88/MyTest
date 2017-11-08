@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.utils;
+package com.onyx.test.mytest.model.utils;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

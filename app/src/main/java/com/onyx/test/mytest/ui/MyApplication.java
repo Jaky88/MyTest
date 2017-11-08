@@ -1,4 +1,4 @@
-package com.onyx.test.mytest;
+package com.onyx.test.mytest.ui;
 
 import android.app.Application;
 

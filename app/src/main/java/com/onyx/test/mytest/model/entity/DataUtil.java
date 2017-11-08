@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.entity;
+package com.onyx.test.mytest.model.entity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.data;
+package com.onyx.test.mytest.model;
 
 /**
  * Created by jaky on 2017/10/27 0027.

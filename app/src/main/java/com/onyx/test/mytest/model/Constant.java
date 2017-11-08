@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.config;
+package com.onyx.test.mytest.model;
 
 import android.content.Context;
 import android.os.Environment;

@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.receiver;
+package com.onyx.test.mytest.ui.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,8 +7,8 @@ import android.util.Log;
 
 import com.onyx.android.sdk.utils.ActivityUtil;
 import com.onyx.android.sdk.utils.ViewDocumentUtils;
-import com.onyx.test.mytest.config.AppConfig;
-import com.onyx.test.mytest.config.ConfigBean;
+import com.onyx.test.mytest.model.AppConfig;
+import com.onyx.test.mytest.model.bean.ConfigBean;
 
 import java.io.File;
 
