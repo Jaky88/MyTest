@@ -1,6 +1,7 @@
 package com.onyx.test.mytest.binding;
 
 import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -34,6 +35,7 @@ public class FragmentTab03Model extends BaseObservable {
         this.config = config;
     }
 
+    @Bindable
     public String getTranslatePath() {
         return translatePath;
     }

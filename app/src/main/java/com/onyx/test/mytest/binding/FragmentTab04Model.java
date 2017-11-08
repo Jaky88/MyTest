@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.media.AudioManager;
 import android.net.wifi.WifiManager;
 import android.os.Build;
@@ -48,6 +49,7 @@ public class FragmentTab04Model extends BaseObservable {
     private String mPwd = "OnyxWpa2017";
     private String mSSID = "onyx-office1";
 
+    @Bindable
     public String getSelectfilePath() {
         return selectfilePath;
     }
