@@ -1,28 +1,20 @@
 package com.onyx.test.mytest.view.activity;
 
-import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.Window;
 
 import com.onyx.test.mytest.R;
-import com.onyx.test.mytest.databinding.ActivityMainBinding;
-import com.onyx.test.mytest.view.adapter.ViewPagerAdapter;
-import com.onyx.test.mytest.view.fragment.FragmentFactory;
 import com.onyx.test.mytest.binding.ActivityMainModel;
+import com.onyx.test.mytest.databinding.ActivityMainBinding;
 import com.onyx.test.mytest.model.utils.ActivityUtil;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.onyx.test.mytest.view.adapter.ViewPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<Fragment> fragments;
     private ViewPagerAdapter viewPagerAdapter;
     private ActivityMainBinding binding;
     private ActivityMainModel mainModel;
@@ -34,23 +26,8 @@ public class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mainModel = new ActivityMainModel(MainActivity.this);
         binding.setMainModel(mainModel);
-        initData();
         initToolbar();
         initTabPage();
-    }
-
-    private void initData() {
-        mainModel.setTabTitleList(Arrays.asList(getResources().getStringArray(R.array.tab_title_items)));
-        fragments = new ArrayList<>();
-        for (int i = 0; i < mainModel.getTabTitleList().size(); i++) {
-            fragments.add(FragmentFactory.createFragment(i));
-        }
-    }
-
-    private void initTabPage() {
-        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments, mainModel.getTabTitleList());
-        binding.viewPager.setAdapter(viewPagerAdapter);
-        binding.tabLayout.setupWithViewPager(binding.viewPager);
     }
 
     private void initToolbar() {
@@ -74,12 +51,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
+    private void initTabPage() {
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), mainModel.getFragmentList(), mainModel.getTabTitleList());
+        binding.viewPager.setAdapter(viewPagerAdapter);
+        binding.tabLayout.setupWithViewPager(binding.viewPager);
     }
-
-
-
 }

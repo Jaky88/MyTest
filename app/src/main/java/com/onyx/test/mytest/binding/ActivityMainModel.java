@@ -1,11 +1,17 @@
 package com.onyx.test.mytest.binding;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.support.v4.app.Fragment;
 
+import com.onyx.test.mytest.R;
+import com.onyx.test.mytest.view.fragment.FragmentFactory;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -15,12 +21,38 @@ import java.util.List;
 public class ActivityMainModel extends BaseObservable{
     public String title ="";
     public String versionName ="版本号：";
-    public Context context;
-    public List tabTitleList;
+    public Activity activity;
+    public List<String> tabTitleList = new ArrayList();
+    public List<Fragment> fragmentList = new ArrayList();
 
-    public ActivityMainModel(Context context){
-        this.context = context;
+    public Activity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
+
+    public List getFragmentList() {
+        return fragmentList;
+    }
+
+    public void setFragmentList(List fragmentList) {
+        this.fragmentList = fragmentList;
+    }
+
+    public ActivityMainModel(Activity activity){
+        this.activity = activity;
         this.versionName = getVersionNameImpl();
+        initData();
+
+    }
+
+    private void initData() {
+        setTabTitleList(Arrays.asList(activity.getResources().getStringArray(R.array.tab_title_items)));
+        for (int i = 0; i < tabTitleList.size(); i++) {
+            fragmentList.add(FragmentFactory.createFragment(i));
+        }
     }
 
     @Bindable
@@ -51,9 +83,9 @@ public class ActivityMainModel extends BaseObservable{
     }
 
     public String getVersionNameImpl() {
-        PackageManager manager = context.getPackageManager();
+        PackageManager manager = activity.getPackageManager();
         try {
-            PackageInfo packageInfo = manager.getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES
+            PackageInfo packageInfo = manager.getPackageInfo(activity.getPackageName(), PackageManager.GET_ACTIVITIES
             );
             return packageInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
