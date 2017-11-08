@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        mainModel = new ActivityMainModel(MainActivity.this);
+        mainModel = new ActivityMainModel();
         binding.setMainModel(mainModel);
         initData();
         initToolbar();
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initToolbar() {
+        mainModel.setVersionName("版本号：" + getVersionName());
         binding.toolbar.inflateMenu(R.menu.menu_main);
         binding.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -81,6 +82,18 @@ public class MainActivity extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
+    }
+
+    public String getVersionName() {
+        PackageManager manager = getPackageManager();
+        try {
+            PackageInfo packageInfo = manager.getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES
+            );
+            return packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "1.0";
     }
 
 }

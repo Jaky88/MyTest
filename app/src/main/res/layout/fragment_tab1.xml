@@ -3,7 +3,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable name="bean" type="com.onyx.test.mytest.ui.viewmodel.FragmentTab01Model"/>
+        <variable name="bean" type="com.onyx.test.mytest.ui.viewmodel.DataTab01"/>
     </data>
 
     <LinearLayout
@@ -35,7 +35,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@{bean.testFilePath.get()}"
+                android:text="@{bean.testFilePath}"
                 android:textSize="@dimen/title_level2_text_size" />
 
             <Button
@@ -65,7 +65,7 @@
                 android:layout_weight="1"
                 android:inputType="number"
                 android:maxLength="2"
-                android:text="@{String.valueOf(bean.slideshowInterval.get())}"
+                android:text="@{String.valueOf(bean.slideshowInterval)}"
                 android:textSize="@dimen/title_level2_text_size" />
 
 
@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:inputType="number"
-                android:text="@{String.valueOf(bean.slideshowStartPage.get())}"
+                android:text="@{String.valueOf(bean.slideshowStartPage)}"
                 android:textSize="@dimen/title_level2_text_size" />
 
         </LinearLayout>
@@ -112,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:inputType="number"
-                android:text="@{String.valueOf(bean.slideshowTotalPage.get())}"
+                android:text="@{String.valueOf(bean.slideshowTotalPage)}"
                 android:textSize="@dimen/title_level2_text_size" />
 
         </LinearLayout>
@@ -121,7 +121,7 @@
             android:id="@+id/cb_auto_open_book"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="@{bean.bootCompletedAtoTest.get()}"
+            android:checked="@{bean.bootCompletedAtoTest}"
             android:text="@string/auto_open_when_boot_completed"
             android:textSize="@dimen/title_level2_text_size" />
 
