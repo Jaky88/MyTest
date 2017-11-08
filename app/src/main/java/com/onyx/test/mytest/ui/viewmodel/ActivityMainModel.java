@@ -1,17 +1,29 @@
 package com.onyx.test.mytest.ui.viewmodel;
 
-import java.util.ArrayList;
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
 import java.util.List;
 
 /**
  * Created by jaky on 2017/11/8 0008.
  */
 
-public class ActivityMainModel {
-    public String title ="";
-    public String versionName ="版本号：";
-    public List tabTitleList = new ArrayList();
+public class ActivityMainModel extends BaseObservable{
+    private String title ="";
+    private String versionName ="版本号：";
+    private Context context;
+    private List tabTitleList;
 
+    public ActivityMainModel(Context context){
+        this.context = context;
+        this.versionName = getVersionNameImpl();
+    }
+
+    @Bindable
     public List getTabTitleList() {
         return tabTitleList;
     }
@@ -20,6 +32,7 @@ public class ActivityMainModel {
         this.tabTitleList = tabTitleList;
     }
 
+    @Bindable
     public String getVersionName() {
         return versionName;
     }
@@ -28,11 +41,24 @@ public class ActivityMainModel {
         this.versionName = versionName;
     }
 
+    @Bindable
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getVersionNameImpl() {
+        PackageManager manager = context.getPackageManager();
+        try {
+            PackageInfo packageInfo = manager.getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES
+            );
+            return packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "1.0";
     }
 }

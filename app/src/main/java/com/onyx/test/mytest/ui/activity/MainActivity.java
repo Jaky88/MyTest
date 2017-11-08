@@ -1,7 +1,5 @@
 package com.onyx.test.mytest.ui.activity;
 
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -12,8 +10,8 @@ import android.view.MenuItem;
 import android.view.Window;
 
 import com.onyx.test.mytest.R;
-import com.onyx.test.mytest.ui.adapter.ViewPagerAdapter;
 import com.onyx.test.mytest.databinding.ActivityMainBinding;
+import com.onyx.test.mytest.ui.adapter.ViewPagerAdapter;
 import com.onyx.test.mytest.ui.fragment.FragmentFactory;
 import com.onyx.test.mytest.ui.viewmodel.ActivityMainModel;
 import com.onyx.test.mytest.utils.ActivityUtil;
@@ -34,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        mainModel = new ActivityMainModel();
+        mainModel = new ActivityMainModel(MainActivity.this);
         binding.setMainModel(mainModel);
         initData();
         initToolbar();
@@ -43,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void initData() {
         mainModel.setTabTitleList(Arrays.asList(getResources().getStringArray(R.array.tab_title_items)));
-
         fragments = new ArrayList<>();
         for (int i = 0; i < mainModel.getTabTitleList().size(); i++) {
             fragments.add(FragmentFactory.createFragment(i));
@@ -57,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initToolbar() {
-        mainModel.setVersionName("版本号：" + getVersionName());
         binding.toolbar.inflateMenu(R.menu.menu_main);
         binding.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -84,16 +80,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public String getVersionName() {
-        PackageManager manager = getPackageManager();
-        try {
-            PackageInfo packageInfo = manager.getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES
-            );
-            return packageInfo.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        return "1.0";
-    }
+
 
 }

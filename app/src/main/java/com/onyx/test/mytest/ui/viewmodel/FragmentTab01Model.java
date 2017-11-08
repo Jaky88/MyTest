@@ -1,7 +1,8 @@
 package com.onyx.test.mytest.ui.viewmodel;
 
 import android.content.Intent;
-import android.databinding.Observable;
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
@@ -18,7 +19,7 @@ import java.io.File;
  * Created by jaky on 2017/11/4 0004.
  */
 
-public class FragmentTab01Model implements Observable {
+public class FragmentTab01Model extends BaseObservable {
 
     public String testProjectName = "Kreader自动翻页测试";
     public int slideshowInterval = 20;
@@ -70,6 +71,7 @@ public class FragmentTab01Model implements Observable {
                 .start();
     }
 
+    @Bindable
     public String getTestProjectName() {
         return testProjectName;
     }
@@ -78,6 +80,7 @@ public class FragmentTab01Model implements Observable {
         this.testProjectName = testProjectName;
     }
 
+    @Bindable
     public int getSlideshowInterval() {
         return slideshowInterval;
     }
@@ -86,6 +89,7 @@ public class FragmentTab01Model implements Observable {
         this.slideshowInterval = slideshowInterval;
     }
 
+    @Bindable
     public String getTestFilePath() {
         return testFilePath;
     }
@@ -94,6 +98,7 @@ public class FragmentTab01Model implements Observable {
         this.testFilePath = testFilePath;
     }
 
+    @Bindable
     public int getSlideshowTotalPage() {
         return slideshowTotalPage;
     }
@@ -102,6 +107,7 @@ public class FragmentTab01Model implements Observable {
         this.slideshowTotalPage = slideshowTotalPage;
     }
 
+    @Bindable
     public int getSlideshowStartPage() {
         return slideshowStartPage;
     }
@@ -110,6 +116,7 @@ public class FragmentTab01Model implements Observable {
         this.slideshowStartPage = slideshowStartPage;
     }
 
+    @Bindable
     public boolean isBootCompletedAtoTest() {
         return isBootCompletedAtoTest;
     }
@@ -118,6 +125,7 @@ public class FragmentTab01Model implements Observable {
         isBootCompletedAtoTest = bootCompletedAtoTest;
     }
 
+    @Bindable
     public String getBtnSelectFile() {
         return btnSelectFile;
     }
@@ -126,6 +134,7 @@ public class FragmentTab01Model implements Observable {
         this.btnSelectFile = btnSelectFile;
     }
 
+    @Bindable
     public String getBtnSettings() {
         return btnSettings;
     }

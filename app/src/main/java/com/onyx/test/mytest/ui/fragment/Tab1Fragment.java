@@ -49,6 +49,7 @@ public class Tab1Fragment extends BaseFragment {
                 List<String> list = data.getStringArrayListExtra("paths");
                 for (String s : list) {
                     Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+                    binding.etFileName.setText(s);
                     bean.setTestFilePath(s);
                 }
             }
