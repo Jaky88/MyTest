@@ -37,16 +37,16 @@ import java.util.Map;
  */
 
 public class FragmentTab04Model extends BaseObservable {
-    public Fragment fragment;
-    public ConfigBean config;
-    public String selectfilePath;
+    private Fragment fragment;
+    private ConfigBean config;
+    private String selectfilePath;
 
-    public AudioManager audiomanage;
-    public NotificationManager notificationManager;
-    public WifiManager wifiManager;
-    public WifiConnector wac;
-    public String mPwd = "OnyxWpa2017";
-    public String mSSID = "onyx-office1";
+    private AudioManager audiomanage;
+    private NotificationManager notificationManager;
+    private WifiManager wifiManager;
+    private WifiConnector wac;
+    private String mPwd = "OnyxWpa2017";
+    private String mSSID = "onyx-office1";
 
     public String getSelectfilePath() {
         return selectfilePath;

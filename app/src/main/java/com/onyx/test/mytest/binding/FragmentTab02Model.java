@@ -13,9 +13,9 @@ import com.onyx.test.mytest.model.utils.ShellUtils;
 
 public class FragmentTab02Model extends BaseObservable {
 
-    public Fragment fragment;
-    public ConfigBean config;
-    public String info;
+    private Fragment fragment;
+    private ConfigBean config;
+    private String info;
 
     public String getInfo() {
         return info;

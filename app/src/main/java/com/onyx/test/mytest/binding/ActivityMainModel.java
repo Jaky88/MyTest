@@ -18,12 +18,26 @@ import java.util.List;
  * Created by jaky on 2017/11/8 0008.
  */
 
-public class ActivityMainModel extends BaseObservable{
-    public String title ="";
-    public String versionName ="版本号：";
-    public Activity activity;
-    public List<String> tabTitleList = new ArrayList();
-    public List<Fragment> fragmentList = new ArrayList();
+public class ActivityMainModel extends BaseObservable {
+    private String title = "";
+    private String versionName = "版本号：";
+    private Activity activity;
+    private List<String> tabTitleList = new ArrayList();
+    private List<Fragment> fragmentList = new ArrayList();
+
+    public ActivityMainModel(Activity activity) {
+        this.activity = activity;
+        this.versionName = getVersionNameImpl();
+        initData();
+
+    }
+
+    private void initData() {
+        setTabTitleList(Arrays.asList(activity.getResources().getStringArray(R.array.tab_title_items)));
+        for (int i = 0; i < tabTitleList.size(); i++) {
+            fragmentList.add(FragmentFactory.createFragment(i));
+        }
+    }
 
     public Activity getActivity() {
         return activity;
@@ -39,20 +53,6 @@ public class ActivityMainModel extends BaseObservable{
 
     public void setFragmentList(List fragmentList) {
         this.fragmentList = fragmentList;
-    }
-
-    public ActivityMainModel(Activity activity){
-        this.activity = activity;
-        this.versionName = getVersionNameImpl();
-        initData();
-
-    }
-
-    private void initData() {
-        setTabTitleList(Arrays.asList(activity.getResources().getStringArray(R.array.tab_title_items)));
-        for (int i = 0; i < tabTitleList.size(); i++) {
-            fragmentList.add(FragmentFactory.createFragment(i));
-        }
     }
 
     @Bindable

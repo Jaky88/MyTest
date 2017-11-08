@@ -25,9 +25,9 @@ import rx.schedulers.Schedulers;
 
 public class FragmentTab03Model extends BaseObservable {
 
-    public Fragment fragment;
-    public ConfigBean config;
-    public String translatePath = "/sdcard/translate";
+    private Fragment fragment;
+    private ConfigBean config;
+    private String translatePath = "/sdcard/translate";
 
     public FragmentTab03Model(Fragment f, ConfigBean config) {
         this.fragment = f;

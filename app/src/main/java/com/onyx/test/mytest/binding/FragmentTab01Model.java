@@ -21,16 +21,16 @@ import java.io.File;
 
 public class FragmentTab01Model extends BaseObservable {
 
-    public String testProjectName = "Kreader自动翻页测试";
-    public int slideshowInterval = 20;
-    public String testFilePath = "mnt/sdcard/test.pdf";
-    public int slideshowTotalPage = 2000;
-    public int slideshowStartPage = 0;
-    public boolean isBootCompletedAtoTest = false;
-    public String btnSelectFile = "选择";
-    public String btnSettings = "设置";
-    public Fragment fragment;
-    public ConfigBean config;
+    private String testProjectName = "Kreader自动翻页测试";
+    private int slideshowInterval = 20;
+    private String testFilePath = "mnt/sdcard/test.pdf";
+    private int slideshowTotalPage = 2000;
+    private int slideshowStartPage = 0;
+    private boolean isBootCompletedAtoTest = false;
+    private String btnSelectFile = "选择";
+    private String btnSettings = "设置";
+    private Fragment fragment;
+    private ConfigBean config;
 
 
     public FragmentTab01Model(Fragment f, ConfigBean config) {

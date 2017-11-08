@@ -15,8 +15,8 @@ import com.onyx.test.mytest.model.bean.ConfigBean;
  */
 
 public class FragmentTab05Model extends BaseObservable {
-    public Fragment fragment;
-    public ConfigBean config;
+    private Fragment fragment;
+    private ConfigBean config;
 
     public FragmentTab05Model(Fragment f, ConfigBean config) {
         this.fragment = f;
