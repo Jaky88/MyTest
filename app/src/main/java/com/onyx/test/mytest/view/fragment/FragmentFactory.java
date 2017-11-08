@@ -12,7 +12,6 @@ import java.util.Map;
 public class FragmentFactory {
     private static Map<Integer, Fragment> mFragments = new HashMap<Integer, Fragment>();
 
-
     public static Fragment createFragment(int position)
     {
         Fragment fragment = null;

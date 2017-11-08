@@ -17,8 +17,6 @@ import com.onyx.test.mytest.databinding.FragmentTab5Binding;
 
 public class Tab5Fragment extends BaseFragment<FragmentTab5Binding> {
 
-    private FragmentTab05Model bean;
-
     @Override
     public int getLayout() {
         return R.layout.fragment_tab5;
@@ -26,8 +24,7 @@ public class Tab5Fragment extends BaseFragment<FragmentTab5Binding> {
 
     @Override
     public void bindData() {
-        bean = new FragmentTab05Model(Tab5Fragment.this, config);
-        bindingView.setBean(bean);
+        bindingView.setBean(new FragmentTab05Model(Tab5Fragment.this, config));
         initView();
     }
 
@@ -47,13 +44,13 @@ public class Tab5Fragment extends BaseFragment<FragmentTab5Binding> {
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
-            holder.key.setText(bean.getDatas().get(position).first);
-            holder.value.setText(bean.getDatas().get(position).second);
+            holder.key.setText(bindingView.getBean().getDatas().get(position).first);
+            holder.value.setText(bindingView.getBean().getDatas().get(position).second);
         }
 
         @Override
         public int getItemCount() {
-            return bean.getDatas().size();
+            return bindingView.getBean().getDatas().size();
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {

@@ -16,23 +16,21 @@ import com.onyx.test.mytest.view.adapter.ViewPagerAdapter;
 public class MainActivity extends AppCompatActivity {
 
     private ViewPagerAdapter viewPagerAdapter;
-    private ActivityMainBinding binding;
-    private ActivityMainModel mainModel;
+    private ActivityMainBinding bindingView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        mainModel = new ActivityMainModel(MainActivity.this);
-        binding.setMainModel(mainModel);
+        bindingView = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        bindingView.setMainModel(new ActivityMainModel(MainActivity.this));
         initToolbar();
         initTabPage();
     }
 
     private void initToolbar() {
-        binding.toolbar.inflateMenu(R.menu.menu_main);
-        binding.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        bindingView.toolbar.inflateMenu(R.menu.menu_main);
+        bindingView.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
@@ -52,8 +50,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initTabPage() {
-        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), mainModel.getFragmentList(), mainModel.getTabTitleList());
-        binding.viewPager.setAdapter(viewPagerAdapter);
-        binding.tabLayout.setupWithViewPager(binding.viewPager);
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),
+                bindingView.getMainModel().getFragmentList(),
+                bindingView.getMainModel().getTabTitleList());
+        bindingView.viewPager.setAdapter(viewPagerAdapter);
+        bindingView.tabLayout.setupWithViewPager(bindingView.viewPager);
     }
 }

@@ -18,8 +18,6 @@ import java.util.List;
 
 public class Tab1Fragment extends BaseFragment<FragmentTab1Binding> {
 
-    private FragmentTab01Model bean;
-
     @Override
     public int getLayout() {
         return R.layout.fragment_tab1;
@@ -27,8 +25,7 @@ public class Tab1Fragment extends BaseFragment<FragmentTab1Binding> {
 
     @Override
     public void bindData() {
-        bean = new FragmentTab01Model(Tab1Fragment.this, config);
-        bindingView.setBean(bean);
+        bindingView.setBean(new FragmentTab01Model(Tab1Fragment.this, config));
     }
 
 
@@ -40,8 +37,8 @@ public class Tab1Fragment extends BaseFragment<FragmentTab1Binding> {
                 List<String> list = data.getStringArrayListExtra("paths");
                 for (String s : list) {
                     Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
-                    bindingView.etFileName.setText(s);
-                    bean.setTestFilePath(s);
+                    bindingView.getBean().setTestFilePath(s);
+                    bindingView.notifyChange();
                 }
             }
         }

@@ -92,8 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="@{bean.wifiChecked}"
-            android:onClick="@{bean::onOpenWifiClick}"
-            android:text="@{bean.wifiChecked ? @string/close_wifi:@string/open_wifi}"/>
+            android:text="@{bean.wifiChecked ? @string/close_wifi : @string/open_wifi}"/>
 
         <Button
             android:id="@+id/btn_connect_wifi"

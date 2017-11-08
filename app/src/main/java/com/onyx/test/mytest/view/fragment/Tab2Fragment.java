@@ -9,8 +9,6 @@ import com.onyx.test.mytest.binding.FragmentTab02Model;
  */
 
 public class Tab2Fragment extends BaseFragment<FragmentTab2Binding> {
-    private static final int REC_REQUESTCODE = 1;
-    private FragmentTab02Model bean;
 
     @Override
     public int getLayout() {
@@ -19,8 +17,7 @@ public class Tab2Fragment extends BaseFragment<FragmentTab2Binding> {
 
     @Override
     public void bindData() {
-        bean = new FragmentTab02Model(Tab2Fragment.this, config);
-        bindingView.setBean(bean);
+        bindingView.setBean(new FragmentTab02Model(Tab2Fragment.this, config));
     }
 
 }

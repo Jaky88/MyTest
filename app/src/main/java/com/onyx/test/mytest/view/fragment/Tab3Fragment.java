@@ -9,7 +9,6 @@ import com.onyx.test.mytest.databinding.FragmentTab3Binding;
  */
 
 public class Tab3Fragment extends BaseFragment<FragmentTab3Binding> {
-    private FragmentTab03Model bean;
 
     @Override
     public int getLayout() {
@@ -18,7 +17,6 @@ public class Tab3Fragment extends BaseFragment<FragmentTab3Binding> {
 
     @Override
     public void bindData() {
-        bean = new FragmentTab03Model(Tab3Fragment.this, config);
-        bindingView.setBean(bean);
+        bindingView.setBean(new FragmentTab03Model(Tab3Fragment.this, config));
     }
 }

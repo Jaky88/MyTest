@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.media.AudioManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -60,8 +62,11 @@ public class FragmentTab04Model extends BaseObservable {
     }
 
         private void initWifiConnect() {
-        wifiManager = (WifiManager) (fragment.getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE));
+        wifiManager = (WifiManager) fragment.getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         wac = new WifiConnector(wifiManager);
+        ConnectivityManager manager = (ConnectivityManager)fragment.getActivity().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo.State wifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
+        setWifiChecked((wifi == NetworkInfo.State.CONNECTED||wifi== NetworkInfo.State.CONNECTING));
     }
 
     @Bindable
@@ -95,8 +100,12 @@ public class FragmentTab04Model extends BaseObservable {
         connectWIFI();
     }
 
-    public void onOpenWifiClick(View view) {
-
+    public void onWifiCheckedChanged(final boolean isChecked) {
+        if (isChecked) {
+            setWifiChecked(wac.openWifi());
+        } else {
+            setWifiChecked(!wac.closeWifi());
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
