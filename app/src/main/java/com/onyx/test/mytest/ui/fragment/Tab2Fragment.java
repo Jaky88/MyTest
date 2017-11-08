@@ -1,16 +1,8 @@
 package com.onyx.test.mytest.ui.fragment;
 
-import android.content.Intent;
-
 import com.onyx.test.mytest.R;
 import com.onyx.test.mytest.databinding.FragmentTab2Binding;
-import com.onyx.test.mytest.model.utils.ShellUtils;
-import com.onyx.test.mytest.model.utils.ShellUtils.CommandResult;
-import com.onyx.test.mytest.viewmodel.FragmentTab02Model;
-import com.onyx.test.mytest.viewmodel.FragmentTab01Model;
-
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import com.onyx.test.mytest.binding.FragmentTab02Model;
 
 /**
  * Created by jaky on 2017/9/7 0007.

@@ -4,7 +4,7 @@
     <data>
         <variable
             name="bean"
-            type="com.onyx.test.mytest.viewmodel.FragmentTab03Model" />
+            type="com.onyx.test.mytest.binding.FragmentTab03Model" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"

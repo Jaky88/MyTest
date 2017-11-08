@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.viewmodel;
+package com.onyx.test.mytest.binding;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -13,10 +13,10 @@ import java.util.List;
  */
 
 public class ActivityMainModel extends BaseObservable{
-    private String title ="";
-    private String versionName ="版本号：";
-    private Context context;
-    private List tabTitleList;
+    public String title ="";
+    public String versionName ="版本号：";
+    public Context context;
+    public List tabTitleList;
 
     public ActivityMainModel(Context context){
         this.context = context;

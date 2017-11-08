@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.viewmodel;
+package com.onyx.test.mytest.binding;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -14,6 +14,8 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.View;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
@@ -35,14 +37,24 @@ import java.util.Map;
  */
 
 public class FragmentTab04Model extends BaseObservable {
-    private Fragment fragment;
-    private ConfigBean config;
+    public Fragment fragment;
+    public ConfigBean config;
+    public String selectfilePath;
 
-    private AudioManager audiomanage;
-    private NotificationManager notificationManager;
-    private WifiManager wifiManager;
-    private WifiConnector wac;
+    public AudioManager audiomanage;
+    public NotificationManager notificationManager;
+    public WifiManager wifiManager;
+    public WifiConnector wac;
+    public String mPwd = "OnyxWpa2017";
+    public String mSSID = "onyx-office1";
 
+    public String getSelectfilePath() {
+        return selectfilePath;
+    }
+
+    public void setSelectfilePath(String selectfilePath) {
+        this.selectfilePath = selectfilePath;
+    }
 
     public FragmentTab04Model(Fragment f, ConfigBean config) {
         this.fragment = f;
@@ -51,40 +63,41 @@ public class FragmentTab04Model extends BaseObservable {
         notificationManager = (NotificationManager) fragment.getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
-    public void onEnableAdbClick() {
+    public void onEnableAdbClick(View view) {
+        openADB();
+    }
+
+    public void onOpenPdfClick(View view) {
+        openPDF();
+    }
+
+    public void onConnectWifiClick(View view) {
+        connectWIFI();
+    }
+
+    public void onOpenWifiClick(View view) {
 
     }
 
-    public void onOpenPdfClick() {
-
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    public void onSendNotificationClick(View view) {
+        sendNotification();
     }
 
-    public void onConnectWifiClick() {
-
+    public void onFileTestClick(View view) {
+        readWriteFileTest();
     }
 
-    public void onOpenWifiClick() {
-
+    public void onVolumeDownClick(View view) {
+        audiomanage.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI);
     }
 
-    public void onSendNotificationClick() {
-
+    public void onVolumeAddClick(View view) {
+        audiomanage.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);
     }
 
-    public void onFileTestClick() {
-
-    }
-
-    public void onVolumeDownClick() {
-
-    }
-
-    public void onVolumeAddClick() {
-
-    }
-
-    public void onStartKreaderClick() {
-
+    public void onStartKreaderClick(View view) {
+        startKreader();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -168,10 +181,26 @@ public class FragmentTab04Model extends BaseObservable {
                 if ((Boolean) listItem.get(arg1).get("isDire")) {
                     openCurDir((String) listItem.get(arg1).get("path"));
                 } else {
-                    edtFileName.setText((String) listItem.get(arg1).get("path"));
+                    setSelectfilePath((String) listItem.get(arg1).get("path"));
                 }
             }
         });
         b.show();
+    }
+
+    private void openPDF() {
+//        ActivityUtil.startActivity(mContext, MuPDFActivity.class);
+    }
+
+    private void openADB() {
+
+    }
+
+    private void connectWIFI() {
+        try {
+            wac.connect(mSSID, mPwd, mPwd.equals("") ? WifiConnector.WifiCipherType.WIFICIPHER_NOPASS : WifiConnector.WifiCipherType.WIFICIPHER_WPA);
+        } catch (Exception e) {
+            Log.d("===", "============" + e.getMessage());
+        }
     }
 }

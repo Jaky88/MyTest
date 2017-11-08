@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.viewmodel;
+package com.onyx.test.mytest.binding;
 
 import android.databinding.BaseObservable;
 import android.os.Environment;
@@ -25,8 +25,8 @@ import rx.schedulers.Schedulers;
 
 public class FragmentTab03Model extends BaseObservable {
 
-    private Fragment fragment;
-    private ConfigBean config;
+    public Fragment fragment;
+    public ConfigBean config;
     public String translatePath = "/sdcard/translate";
 
     public FragmentTab03Model(Fragment f, ConfigBean config) {

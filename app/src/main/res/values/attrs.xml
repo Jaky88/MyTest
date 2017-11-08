@@ -13,6 +13,6 @@
 		<item>@layout/fragment_tab2</item>
 		<item>@layout/fragment_tab3</item>
 		<item>@layout/fragment_tab4</item>
-		<item>@layout/tab05</item>
+		<item>@layout/fragment_tab5</item>
 	</string-array>
 </resources>

@@ -1,8 +1,6 @@
 package com.onyx.test.mytest.ui.fragment;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,35 +10,37 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.onyx.test.mytest.R;
+import com.onyx.test.mytest.binding.FragmentTab05Model;
+import com.onyx.test.mytest.databinding.FragmentTab5Binding;
 import com.onyx.test.mytest.model.entity.DataUtil;
 
 import java.util.List;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
  * Created by jaky on 2017/9/7 0007.
  */
 
-public class Tab5Fragment extends BaseFragment {
+public class Tab5Fragment extends BaseFragment<FragmentTab5Binding> {
 
+    private FragmentTab05Model bean;
     private Context mContext;
     private RVAdapter mAdapter;
     private List<Pair<String, String>> mDatas;
-    @Bind(R.id.recyclerview)
-    RecyclerView mRecyclerview;
 
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View fl = inflater.inflate(R.layout.tab05, null);
-        ButterKnife.bind(this, fl);
-        mContext = Tab5Fragment.this.getActivity();
-        initData();
+    public int getLayout() {
+        return R.layout.fragment_tab5;
+    }
+
+    @Override
+    public void bindData() {
+        bean = new FragmentTab05Model(Tab5Fragment.this, config);
+        bindingView.setBean(bean);
         initView();
-        return fl;
+        initData();
     }
 
     private void initData() {
@@ -48,8 +48,8 @@ public class Tab5Fragment extends BaseFragment {
     }
 
     private void initView() {
-        mRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
-        mRecyclerview.setAdapter(mAdapter = new RVAdapter());
+        bindingView.recyclerview.setLayoutManager(new LinearLayoutManager(mContext));
+        bindingView.recyclerview.setAdapter(mAdapter = new RVAdapter());
     }
 
 

@@ -21,7 +21,7 @@
 
 
     <application
-        android:name="com.onyx.test.mytest.ui.MyApplication"
+        android:name="com.onyx.test.mytest.ui.app.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

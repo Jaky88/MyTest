@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.viewmodel;
+package com.onyx.test.mytest.binding;
 
 import android.content.Intent;
 import android.databinding.BaseObservable;

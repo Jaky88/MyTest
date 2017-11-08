@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.viewmodel;
+package com.onyx.test.mytest.binding;
 
 import android.databinding.BaseObservable;
 import android.support.v4.app.Fragment;
@@ -13,9 +13,9 @@ import com.onyx.test.mytest.model.utils.ShellUtils;
 
 public class FragmentTab02Model extends BaseObservable {
 
-    private Fragment fragment;
-    private ConfigBean config;
-    private String info;
+    public Fragment fragment;
+    public ConfigBean config;
+    public String info;
 
     public String getInfo() {
         return info;

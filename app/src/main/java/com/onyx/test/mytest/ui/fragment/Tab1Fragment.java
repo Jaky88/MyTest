@@ -7,7 +7,7 @@ import android.widget.Toast;
 import com.leon.lfilepickerlibrary.utils.Constant;
 import com.onyx.test.mytest.R;
 import com.onyx.test.mytest.databinding.FragmentTab1Binding;
-import com.onyx.test.mytest.viewmodel.FragmentTab01Model;
+import com.onyx.test.mytest.binding.FragmentTab01Model;
 
 import java.util.List;
 

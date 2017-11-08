@@ -5,7 +5,7 @@
 
         <variable
             name="bean"
-            type="com.onyx.test.mytest.viewmodel.FragmentTab02Model" />
+            type="com.onyx.test.mytest.binding.FragmentTab02Model" />
     </data>
 
     <LinearLayout
