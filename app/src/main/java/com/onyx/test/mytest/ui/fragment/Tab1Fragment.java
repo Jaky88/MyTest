@@ -3,6 +3,7 @@ package com.onyx.test.mytest.ui.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.databinding.Observable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,17 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.leon.lfilepickerlibrary.LFilePicker;
 import com.leon.lfilepickerlibrary.utils.Constant;
-import com.onyx.android.sdk.utils.ActivityUtil;
-import com.onyx.android.sdk.utils.ViewDocumentUtils;
 import com.onyx.test.mytest.R;
 import com.onyx.test.mytest.config.AppConfig;
 import com.onyx.test.mytest.config.ConfigBean;
-import com.onyx.test.mytest.ui.viewmodel.DataTab01;
+import com.onyx.test.mytest.ui.viewmodel.FragmentTab01Model;
 import com.onyx.test.mytest.databinding.FragmentTab1Binding;
 
-import java.io.File;
 import java.util.List;
 
 
@@ -30,7 +27,7 @@ import java.util.List;
 
 public class Tab1Fragment extends BaseFragment {
 
-    private DataTab01 bean;
+    private FragmentTab01Model tab1Model;
     private FragmentTab1Binding binding;
 
 
@@ -39,8 +36,13 @@ public class Tab1Fragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ConfigBean config = AppConfig.getConfig(getActivity());
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab1, container, false);
-        bean = new DataTab01(Tab1Fragment.this, config);
-        binding.setBean(bean);
+        tab1Model = new FragmentTab01Model(Tab1Fragment.this, config);
+//        tab1Model.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+//            @Override
+//            public void onPropertyChanged(Observable sender, int propertyId) {
+//            }
+//        });
+        binding.setBean(tab1Model);
         return binding.getRoot();
     }
 
@@ -53,7 +55,7 @@ public class Tab1Fragment extends BaseFragment {
                 List<String> list = data.getStringArrayListExtra("paths");
                 for (String s : list) {
                     Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
-                    bean.setTestFilePath(s);
+                    binding.etFileName.setText(s);
                 }
             }
         }

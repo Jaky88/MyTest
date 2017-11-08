@@ -2,6 +2,7 @@ package com.onyx.test.mytest.ui.viewmodel;
 
 import android.content.Intent;
 import android.databinding.Observable;
+import android.databinding.ObservableField;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
@@ -18,21 +19,60 @@ import java.io.File;
  * Created by jaky on 2017/11/4 0004.
  */
 
-public class DataTab01 implements Observable {
+public class FragmentTab01Model implements Observable {
 
-    public String testProjectName = "Kreader自动翻页测试";
-    public int slideshowInterval = 20;
-    public String testFilePath = "mnt/sdcard/test.pdf";
-    public int slideshowTotalPage = 2000;
-    public int slideshowStartPage = 0;
-    public boolean isBootCompletedAtoTest = false;
-    public String btnSelectFile = "选择";
-    public String btnSettings = "设置";
-    public Fragment fragment;
-    public ConfigBean config;
+    private String testProjectName = "Kreader自动翻页测试";
+    private ObservableField<String> testFilePath = new ObservableField<>("mnt/sdcard/test.pdf");
+    private ObservableField<Integer> slideshowInterval = new ObservableField<>(20);
+    private ObservableField<Integer> slideshowTotalPage = new ObservableField<>(2000);
+    private ObservableField<Integer> slideshowStartPage = new ObservableField<>(0);
+    private ObservableField<Boolean> isBootCompletedAtoTest = new ObservableField<>(false);
+    private String btnSelectFile = "选择";
+    private String btnSettings = "设置";
+    private Fragment fragment;
+    private ConfigBean config;
 
+    public ObservableField<String> getTestFilePath() {
+        return testFilePath;
+    }
 
-    public DataTab01(Fragment f, ConfigBean config) {
+    public void setTestFilePath(ObservableField<String> testFilePath) {
+        this.testFilePath = testFilePath;
+    }
+
+    public ObservableField<Integer> getSlideshowInterval() {
+        return slideshowInterval;
+    }
+
+    public void setSlideshowInterval(ObservableField<Integer> slideshowInterval) {
+        this.slideshowInterval = slideshowInterval;
+    }
+
+    public ObservableField<Integer> getSlideshowTotalPage() {
+        return slideshowTotalPage;
+    }
+
+    public void setSlideshowTotalPage(ObservableField<Integer> slideshowTotalPage) {
+        this.slideshowTotalPage = slideshowTotalPage;
+    }
+
+    public ObservableField<Integer> getSlideshowStartPage() {
+        return slideshowStartPage;
+    }
+
+    public void setSlideshowStartPage(ObservableField<Integer> slideshowStartPage) {
+        this.slideshowStartPage = slideshowStartPage;
+    }
+
+    public ObservableField<Boolean> getIsBootCompletedAtoTest() {
+        return isBootCompletedAtoTest;
+    }
+
+    public void setIsBootCompletedAtoTest(ObservableField<Boolean> isBootCompletedAtoTest) {
+        this.isBootCompletedAtoTest = isBootCompletedAtoTest;
+    }
+
+    public FragmentTab01Model(Fragment f, ConfigBean config) {
         this.fragment = f;
         this.config = config;
     }
@@ -48,10 +88,10 @@ public class DataTab01 implements Observable {
     }
 
     public void onSettingsClick(View view) {
-        config.setSlideFileName(testFilePath);
-        config.setSlideInterval(slideshowInterval);
-        config.setSlideTime(slideshowTotalPage);
-        config.setBootUpLastDocumentOpenChecked(isBootCompletedAtoTest);
+        config.setSlideFileName(testFilePath.get());
+        config.setSlideInterval(slideshowInterval.get());
+        config.setSlideTime(slideshowTotalPage.get());
+        config.setBootUpLastDocumentOpenChecked(isBootCompletedAtoTest.get());
         AppConfig.saveConfig(fragment.getActivity());
         File file = new File(config.getSlideFileName());
         Intent in = ViewDocumentUtils.viewActionIntentWithMimeType(file);
@@ -78,46 +118,6 @@ public class DataTab01 implements Observable {
         this.testProjectName = testProjectName;
     }
 
-    public int getSlideshowInterval() {
-        return slideshowInterval;
-    }
-
-    public void setSlideshowInterval(int slideshowInterval) {
-        this.slideshowInterval = slideshowInterval;
-    }
-
-    public String getTestFilePath() {
-        return testFilePath;
-    }
-
-    public void setTestFilePath(String testFilePath) {
-        this.testFilePath = testFilePath;
-    }
-
-    public int getSlideshowTotalPage() {
-        return slideshowTotalPage;
-    }
-
-    public void setSlideshowTotalPage(int slideshowTotalPage) {
-        this.slideshowTotalPage = slideshowTotalPage;
-    }
-
-    public int getSlideshowStartPage() {
-        return slideshowStartPage;
-    }
-
-    public void setSlideshowStartPage(int slideshowStartPage) {
-        this.slideshowStartPage = slideshowStartPage;
-    }
-
-    public boolean isBootCompletedAtoTest() {
-        return isBootCompletedAtoTest;
-    }
-
-    public void setBootCompletedAtoTest(boolean bootCompletedAtoTest) {
-        isBootCompletedAtoTest = bootCompletedAtoTest;
-    }
-
     public String getBtnSelectFile() {
         return btnSelectFile;
     }
@@ -133,4 +133,5 @@ public class DataTab01 implements Observable {
     public void setBtnSettings(String btnSettings) {
         this.btnSettings = btnSettings;
     }
+
 }
