@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.ui.fragment;
+package com.onyx.test.mytest.view.fragment;
 
 import com.onyx.test.mytest.R;
 import com.onyx.test.mytest.databinding.FragmentTab2Binding;

@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.ui.activity;
+package com.onyx.test.mytest.view.activity;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;

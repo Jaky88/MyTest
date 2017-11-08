@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.ui.receiver;
+package com.onyx.test.mytest.view.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

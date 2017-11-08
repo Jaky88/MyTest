@@ -24,7 +24,7 @@ import com.onyx.test.mytest.model.bean.ConfigBean;
 import com.onyx.test.mytest.model.utils.ActivityUtil;
 import com.onyx.test.mytest.model.utils.FileUtil;
 import com.onyx.test.mytest.model.utils.WifiConnector;
-import com.onyx.test.mytest.ui.activity.MainActivity;
+import com.onyx.test.mytest.view.activity.MainActivity;
 
 import java.io.File;
 import java.util.ArrayList;

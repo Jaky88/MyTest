@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.ui.app;
+package com.onyx.test.mytest.view.app;
 
 import com.onyx.android.sdk.reader.ReaderBaseApp;
 //import com.raizlabs.android.dbflow.config.DatabaseHolder;

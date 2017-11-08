@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.ui.fragment;
+package com.onyx.test.mytest.view.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
