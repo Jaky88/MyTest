@@ -26,6 +26,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.onyx.test.mytest.R;
+import com.onyx.test.mytest.databinding.FragmentTab4Binding;
 import com.onyx.test.mytest.ui.activity.MainActivity;
 import com.onyx.test.mytest.model.utils.ActivityUtil;
 import com.onyx.test.mytest.model.utils.FileUtil;
@@ -44,7 +45,7 @@ import butterknife.ButterKnife;
  * Created by jaky on 2017/9/7 0007.
  */
 
-public class Tab4Fragment extends BaseFragment implements View.OnClickListener {
+public class Tab4Fragment extends BaseFragment<FragmentTab4Binding> implements View.OnClickListener {
 
     private static final int FILE_SELECT_CODE = 1;
     @Bind(R.id.btn_file_test)
@@ -80,7 +81,7 @@ public class Tab4Fragment extends BaseFragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.tab04, null);
+        View view = inflater.inflate(, null);
         mContext = getActivity();
         audiomanage = (AudioManager) (mContext.getSystemService(Context.AUDIO_SERVICE));
         notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -90,6 +91,16 @@ public class Tab4Fragment extends BaseFragment implements View.OnClickListener {
         initWifiConnect();
 
         return view;
+    }
+
+    @Override
+    public int getLayout() {
+        return R.layout.fragment_tab4;
+    }
+
+    @Override
+    public void bindData() {
+
     }
 
     private void initWifiConnect() {

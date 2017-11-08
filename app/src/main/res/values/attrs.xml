@@ -10,9 +10,9 @@
 
 	<string-array name="tab_layout_items">
 		<item>@layout/fragment_tab1</item>
-		<item>@layout/tab02</item>
-		<item>@layout/tab03</item>
-		<item>@layout/tab04</item>
+		<item>@layout/fragment_tab2</item>
+		<item>@layout/fragment_tab3</item>
+		<item>@layout/fragment_tab4</item>
 		<item>@layout/tab05</item>
 	</string-array>
 </resources>
