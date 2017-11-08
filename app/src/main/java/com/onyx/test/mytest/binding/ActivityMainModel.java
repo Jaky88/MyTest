@@ -27,12 +27,11 @@ public class ActivityMainModel extends BaseObservable {
 
     public ActivityMainModel(Activity activity) {
         this.activity = activity;
-        this.versionName = getVersionNameImpl();
         initData();
-
     }
 
     private void initData() {
+        setVersionName(getVersionNameImpl());
         setTabTitleList(Arrays.asList(activity.getResources().getStringArray(R.array.tab_title_items)));
         for (int i = 0; i < tabTitleList.size(); i++) {
             fragmentList.add(FragmentFactory.createFragment(i));
