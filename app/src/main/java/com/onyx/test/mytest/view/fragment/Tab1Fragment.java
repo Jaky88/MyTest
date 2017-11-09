@@ -27,7 +27,7 @@ public class Tab1Fragment extends BaseFragment<FragmentTab1Binding> {
     @Override
     public void bindData() {
         bindingView.setBean(new FragmentTab01Model(Tab1Fragment.this));
-        bindingView.setReaderSlideshowBean(ConfigManager.getConfig(getActivity()));
+        bindingView.setReaderSlideshowBean(ConfigManager.getReaderSlideshowConfig(getActivity()));
     }
 
 

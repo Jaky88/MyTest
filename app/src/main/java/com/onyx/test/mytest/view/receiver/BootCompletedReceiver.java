@@ -24,7 +24,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         String action = intent.getAction();
         if (Intent.ACTION_BOOT_COMPLETED.equals(action)) {
             Log.d("=========", "======ACTION_BOOT_COMPLETED========");
-            ReaderSlideshowBean config = ConfigManager.getConfig(context.getApplicationContext());
+            ReaderSlideshowBean config = ConfigManager.getReaderSlideshowConfig(context.getApplicationContext());
             if (config.isBootCompletedAtoTest()) {
                 processBootCompletedTask(context, config);
             }

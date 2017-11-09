@@ -56,7 +56,7 @@ public class FragmentTab04Model extends BaseObservable {
 
     public FragmentTab04Model(Fragment f) {
         this.fragment = f;
-        this.config = ConfigManager.getConfig(f.getActivity());
+        this.config = ConfigManager.getReaderSlideshowConfig(f.getActivity());
         audiomanage = (AudioManager) (fragment.getActivity().getSystemService(Context.AUDIO_SERVICE));
         notificationManager = (NotificationManager) fragment.getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
         initWifiConnect();
