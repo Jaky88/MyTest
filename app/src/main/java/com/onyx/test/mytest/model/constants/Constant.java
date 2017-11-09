@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.model;
+package com.onyx.test.mytest.model.constants;
 
 import android.content.Context;
 import android.os.Environment;

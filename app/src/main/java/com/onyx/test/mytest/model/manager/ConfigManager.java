@@ -1,10 +1,11 @@
-package com.onyx.test.mytest.model;
+package com.onyx.test.mytest.model.manager;
 
 import android.content.Context;
 import android.util.Log;
 
 import com.onyx.test.mytest.model.bean.ConfigBean;
 import com.onyx.test.mytest.model.bean.ReaderSlideshowBean;
+import com.onyx.test.mytest.model.constants.Constant;
 import com.onyx.test.mytest.model.utils.FileUtil;
 import com.onyx.test.mytest.model.utils.JsonUtil;
 

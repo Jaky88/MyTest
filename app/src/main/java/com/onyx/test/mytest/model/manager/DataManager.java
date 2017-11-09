@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.model;
+package com.onyx.test.mytest.model.manager;
 
 /**
  * Created by jaky on 2017/10/27 0027.

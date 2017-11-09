@@ -23,7 +23,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.onyx.test.mytest.R;
-import com.onyx.test.mytest.model.ConfigManager;
+import com.onyx.test.mytest.model.manager.ConfigManager;
 import com.onyx.test.mytest.model.bean.ReaderSlideshowBean;
 import com.onyx.test.mytest.model.utils.ActivityUtil;
 import com.onyx.test.mytest.model.utils.FileUtil;

@@ -2,13 +2,11 @@ package com.onyx.test.mytest.view.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.widget.Toast;
 
 import com.leon.lfilepickerlibrary.utils.Constant;
 import com.onyx.test.mytest.R;
 import com.onyx.test.mytest.databinding.FragmentTab1Binding;
 import com.onyx.test.mytest.binding.FragmentTab01Model;
-import com.onyx.test.mytest.model.ConfigManager;
 
 import java.util.List;
 

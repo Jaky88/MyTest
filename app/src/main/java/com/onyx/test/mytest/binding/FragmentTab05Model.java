@@ -5,7 +5,7 @@ import android.databinding.Bindable;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 
-import com.onyx.test.mytest.model.ConfigManager;
+import com.onyx.test.mytest.model.manager.ConfigManager;
 import com.onyx.test.mytest.model.bean.ReaderSlideshowBean;
 import com.onyx.test.mytest.model.entity.DataUtil;
 
