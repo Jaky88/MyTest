@@ -5,7 +5,7 @@ import android.databinding.Bindable;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 
-import com.onyx.test.mytest.model.AppConfig;
+import com.onyx.test.mytest.model.ConfigManager;
 import com.onyx.test.mytest.model.bean.ReaderSlideshowBean;
 import com.onyx.test.mytest.model.entity.DataUtil;
 
@@ -44,7 +44,7 @@ public class FragmentTab05Model extends BaseObservable {
 
     public FragmentTab05Model(Fragment f) {
         this.fragment = f;
-        this.config = AppConfig.getConfig(f.getActivity());
+        this.config = ConfigManager.getConfig(f.getActivity());
         initData();
     }
 

@@ -8,8 +8,7 @@ import com.leon.lfilepickerlibrary.utils.Constant;
 import com.onyx.test.mytest.R;
 import com.onyx.test.mytest.databinding.FragmentTab1Binding;
 import com.onyx.test.mytest.binding.FragmentTab01Model;
-import com.onyx.test.mytest.model.AppConfig;
-import com.onyx.test.mytest.model.bean.ReaderSlideshowBean;
+import com.onyx.test.mytest.model.ConfigManager;
 
 import java.util.List;
 
@@ -28,7 +27,7 @@ public class Tab1Fragment extends BaseFragment<FragmentTab1Binding> {
     @Override
     public void bindData() {
         bindingView.setBean(new FragmentTab01Model(Tab1Fragment.this));
-        bindingView.setReaderSlideshowBean(AppConfig.getConfig(getActivity()));
+        bindingView.setReaderSlideshowBean(ConfigManager.getConfig(getActivity()));
     }
 
 

@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
 
-import com.onyx.test.mytest.model.AppConfig;
+import com.onyx.test.mytest.model.ConfigManager;
 import com.onyx.test.mytest.model.bean.ReaderSlideshowBean;
 import com.onyx.test.mytest.translator.TranslateManager;
 import com.onyx.test.mytest.translator.config.Language;
@@ -33,7 +33,7 @@ public class FragmentTab03Model extends BaseObservable {
 
     public FragmentTab03Model(Fragment f) {
         this.fragment = f;
-        this.config = AppConfig.getConfig(f.getActivity());
+        this.config = ConfigManager.getConfig(f.getActivity());
     }
 
     @Bindable

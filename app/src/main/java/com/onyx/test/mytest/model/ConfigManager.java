@@ -13,10 +13,10 @@ import org.apache.commons.lang3.StringUtils;
  * Created by jaky on 2017/8/16.
  */
 
-public class AppConfig {
+public class ConfigManager {
 
     private static ReaderSlideshowBean config;
-    private static final String TAG = AppConfig.class.getSimpleName();
+    private static final String TAG = ConfigManager.class.getSimpleName();
 
     public static ReaderSlideshowBean getConfig(Context context) {
         if (config == null) {

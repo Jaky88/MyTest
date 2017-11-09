@@ -5,7 +5,7 @@ import android.databinding.Bindable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-import com.onyx.test.mytest.model.AppConfig;
+import com.onyx.test.mytest.model.ConfigManager;
 import com.onyx.test.mytest.model.bean.ReaderSlideshowBean;
 import com.onyx.test.mytest.model.utils.ShellUtils;
 
@@ -30,7 +30,7 @@ public class FragmentTab02Model extends BaseObservable {
 
     public FragmentTab02Model(Fragment f) {
         this.fragment = f;
-        this.config = AppConfig.getConfig(f.getActivity());
+        this.config = ConfigManager.getConfig(f.getActivity());
     }
 
 

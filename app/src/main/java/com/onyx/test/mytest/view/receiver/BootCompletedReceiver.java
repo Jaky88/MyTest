@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.onyx.android.sdk.utils.ActivityUtil;
 import com.onyx.android.sdk.utils.ViewDocumentUtils;
-import com.onyx.test.mytest.model.AppConfig;
+import com.onyx.test.mytest.model.ConfigManager;
 import com.onyx.test.mytest.model.bean.ReaderSlideshowBean;
 
 import java.io.File;
@@ -24,7 +24,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         String action = intent.getAction();
         if (Intent.ACTION_BOOT_COMPLETED.equals(action)) {
             Log.d("=========", "======ACTION_BOOT_COMPLETED========");
-            ReaderSlideshowBean config = AppConfig.getConfig(context.getApplicationContext());
+            ReaderSlideshowBean config = ConfigManager.getConfig(context.getApplicationContext());
             if (config.isBootCompletedAtoTest()) {
                 processBootCompletedTask(context, config);
             }
