@@ -22,10 +22,10 @@ import java.io.File;
 public class FragmentTab01Model extends BaseObservable {
 
     private Fragment fragment;
-    public ReaderSlideshowBean readerSlideshowBean;
+    private ReaderSlideshowBean readerSlideshowBean;
 
-    public FragmentTab01Model(Fragment f) {
-        this.fragment = f;
+    public FragmentTab01Model(Fragment fragment) {
+        this.fragment = fragment;
         this.readerSlideshowBean = ConfigManager.getConfig(f.getActivity()).getReaderSlideshowBean();
     }
 

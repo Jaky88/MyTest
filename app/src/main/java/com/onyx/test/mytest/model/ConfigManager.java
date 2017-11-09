@@ -25,7 +25,7 @@ public class ConfigManager {
         }
         return config;
     }
-    
+
     public static boolean saveConfig(Context context) {
         String json = JsonUtil.objectToJson(getConfig(context));
         if (StringUtils.isBlank(json)) {
