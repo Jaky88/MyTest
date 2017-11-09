@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 
 import com.onyx.test.mytest.model.AppConfig;
-import com.onyx.test.mytest.model.bean.ConfigBean;
+import com.onyx.test.mytest.model.bean.ReaderSlideshowBean;
 import com.onyx.test.mytest.model.entity.DataUtil;
 
 import java.util.List;
@@ -22,14 +22,14 @@ import java.util.List;
 
 public class FragmentTab05Model extends BaseObservable {
     private Fragment fragment;
-    private ConfigBean config;
+    private ReaderSlideshowBean config;
     private List<Pair<String, String>> mDatas;
 
-    public ConfigBean getConfig() {
+    public ReaderSlideshowBean getConfig() {
         return config;
     }
 
-    public void setConfig(ConfigBean config) {
+    public void setConfig(ReaderSlideshowBean config) {
         this.config = config;
     }
 

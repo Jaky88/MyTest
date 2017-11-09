@@ -9,9 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.onyx.test.mytest.model.AppConfig;
-import com.onyx.test.mytest.model.bean.ConfigBean;
-
 /**
  * Created by jaky on 2017/9/7 0007.
  */

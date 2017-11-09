@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.onyx.test.mytest.model.AppConfig;
-import com.onyx.test.mytest.model.bean.ConfigBean;
+import com.onyx.test.mytest.model.bean.ReaderSlideshowBean;
 import com.onyx.test.mytest.translator.TranslateManager;
 import com.onyx.test.mytest.translator.config.Language;
 import com.onyx.test.mytest.translator.config.TranslatePlatform;
@@ -28,7 +28,7 @@ import rx.schedulers.Schedulers;
 public class FragmentTab03Model extends BaseObservable {
 
     private Fragment fragment;
-    private ConfigBean config;
+    private ReaderSlideshowBean config;
     private String translatePath = "/sdcard/translate";
 
     public FragmentTab03Model(Fragment f) {

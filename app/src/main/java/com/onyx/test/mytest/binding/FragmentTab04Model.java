@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.onyx.test.mytest.R;
 import com.onyx.test.mytest.model.AppConfig;
-import com.onyx.test.mytest.model.bean.ConfigBean;
+import com.onyx.test.mytest.model.bean.ReaderSlideshowBean;
 import com.onyx.test.mytest.model.utils.ActivityUtil;
 import com.onyx.test.mytest.model.utils.FileUtil;
 import com.onyx.test.mytest.model.utils.WifiConnector;
@@ -42,7 +42,7 @@ import java.util.Map;
 
 public class FragmentTab04Model extends BaseObservable {
     private Fragment fragment;
-    private ConfigBean config;
+    private ReaderSlideshowBean config;
     private String selectfilePath;
     private boolean wifiChecked = false;
 

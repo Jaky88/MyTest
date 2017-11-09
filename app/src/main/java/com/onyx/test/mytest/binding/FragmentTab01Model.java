@@ -11,7 +11,7 @@ import com.leon.lfilepickerlibrary.utils.Constant;
 import com.onyx.android.sdk.utils.ActivityUtil;
 import com.onyx.android.sdk.utils.ViewDocumentUtils;
 import com.onyx.test.mytest.model.AppConfig;
-import com.onyx.test.mytest.model.bean.ConfigBean;
+import com.onyx.test.mytest.model.bean.ReaderSlideshowBean;
 
 import java.io.File;
 
@@ -28,7 +28,7 @@ public class FragmentTab01Model extends BaseObservable {
     private boolean isBootCompletedAtoTest = false;
 
     private Fragment fragment;
-    private ConfigBean config;
+    private ReaderSlideshowBean config;
 
 
     public FragmentTab01Model(Fragment f) {
@@ -47,15 +47,15 @@ public class FragmentTab01Model extends BaseObservable {
     }
 
     public void onSettingsClick(View view) {
-        config.setSlideFileName(testFilePath);
-        config.setSlideInterval(slideshowInterval);
-        config.setSlideTime(slideshowTotalPage);
-        config.setBootUpLastDocumentOpenChecked(isBootCompletedAtoTest);
+        config.setTestFilePath(testFilePath);
+        config.setSlideshowInterval(slideshowInterval);
+        config.setSlideshowTotalPage(slideshowTotalPage);
+        config.setBootCompletedAtoTest(isBootCompletedAtoTest);
         AppConfig.saveConfig(fragment.getActivity());
-        File file = new File(config.getSlideFileName());
+        File file = new File(config.getTestFilePath());
         Intent in = ViewDocumentUtils.viewActionIntentWithMimeType(file);
         in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        ActivityUtil.startActivitySafely(fragment.getActivity(), ViewDocumentUtils.autoSlideShowIntent(file, config.getSlideTime(), config.getSlideInterval()));
+        ActivityUtil.startActivitySafely(fragment.getActivity(), ViewDocumentUtils.autoSlideShowIntent(file, config.getSlideshowTotalPage(), config.getSlideshowInterval()));
     }
 
     public void onSelectFileClick(View view) {

@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.onyx.test.mytest.model.AppConfig;
-import com.onyx.test.mytest.model.bean.ConfigBean;
+import com.onyx.test.mytest.model.bean.ReaderSlideshowBean;
 import com.onyx.test.mytest.model.utils.ShellUtils;
 
 /**
@@ -16,7 +16,7 @@ import com.onyx.test.mytest.model.utils.ShellUtils;
 public class FragmentTab02Model extends BaseObservable {
 
     private Fragment fragment;
-    private ConfigBean config;
+    private ReaderSlideshowBean config;
     private String info;
 
     @Bindable
