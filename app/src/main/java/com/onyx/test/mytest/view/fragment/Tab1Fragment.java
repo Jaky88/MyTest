@@ -2,7 +2,9 @@ package com.onyx.test.mytest.view.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.databinding.Observable;
 
+import com.android.databinding.library.baseAdapters.BR;
 import com.leon.lfilepickerlibrary.utils.Constant;
 import com.onyx.test.mytest.R;
 import com.onyx.test.mytest.databinding.FragmentTab1Binding;
@@ -35,7 +37,8 @@ public class Tab1Fragment extends BaseFragment<FragmentTab1Binding> {
             if (requestCode == Constant.REQUESTCODE_FROM_FRAGMENT) {
                 List<String> list = data.getStringArrayListExtra("paths");
                 for (String s : list) {
-                    bindingView.etFileName.setText(s);
+//                    bindingView.etFileName.setText(s);
+                    bindingView.getBean().getReaderSlideshowBean().setTestFilePath(s);
                 }
             }
         }

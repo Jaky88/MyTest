@@ -10,6 +10,7 @@ import com.leon.lfilepickerlibrary.LFilePicker;
 import com.leon.lfilepickerlibrary.utils.Constant;
 import com.onyx.android.sdk.utils.ActivityUtil;
 import com.onyx.android.sdk.utils.ViewDocumentUtils;
+import com.onyx.test.mytest.BR;
 import com.onyx.test.mytest.model.manager.ConfigManager;
 import com.onyx.test.mytest.model.bean.ReaderSlideshowBean;
 
@@ -36,10 +37,11 @@ public class FragmentTab01Model extends BaseObservable {
 
     public void setReaderSlideshowBean(ReaderSlideshowBean readerSlideshowBean) {
         this.readerSlideshowBean = readerSlideshowBean;
+        notifyPropertyChanged(BR.readerSlideshowBean);
     }
 
     public void onSettingsClick(View view) {
-        ConfigManager.getConfig(fragment.getActivity()).setReaderSlideshowBean(readerSlideshowBean);
+        setReaderSlideshowBean(readerSlideshowBean);
         ConfigManager.saveConfig(fragment.getActivity());
         File file = new File(readerSlideshowBean.getTestFilePath());
         Intent in = ViewDocumentUtils.viewActionIntentWithMimeType(file);
