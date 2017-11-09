@@ -30,7 +30,7 @@ public class FragmentTab02Model extends BaseObservable {
 
     public FragmentTab02Model(Fragment f) {
         this.fragment = f;
-        this.config = ConfigManager.getReaderSlideshowConfig(f.getActivity());
+        this.config = ConfigManager.getConfig(f.getActivity()).getReaderSlideshowBean();
     }
 
 

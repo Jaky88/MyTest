@@ -17,7 +17,6 @@ import org.apache.commons.lang3.StringUtils;
 public class ConfigManager {
 
     private static final String TAG = ConfigManager.class.getSimpleName();
-    private static ReaderSlideshowBean ReaderSlideshowConfig;
     private static ConfigBean config;
 
     public static ConfigBean getConfig(Context context) {
@@ -26,25 +25,9 @@ public class ConfigManager {
         }
         return config;
     }
-
-    private static ConfigBean readConfig(Context context) {
-        String content = FileUtil.readContentFromFile(Constant.getConfigPath(context));
-        if (StringUtils.isBlank(content)) {
-            return new ConfigBean(new ReaderSlideshowBean());
-        }
-
-        return JsonUtil.jsonToObject(content, ConfigBean.class);
-    }
-
-    public static ReaderSlideshowBean getReaderSlideshowConfig(Context context) {
-        if (ReaderSlideshowConfig == null) {
-            ReaderSlideshowConfig = readReaderSlideshowConfig(context);
-        }
-        return ReaderSlideshowConfig;
-    }
-
+    
     public static boolean saveConfig(Context context) {
-        String json = JsonUtil.objectToJson(getReaderSlideshowConfig(context));
+        String json = JsonUtil.objectToJson(getConfig(context));
         if (StringUtils.isBlank(json)) {
             return false;
         }
@@ -52,13 +35,19 @@ public class ConfigManager {
         return FileUtil.saveContentToFile(json, Constant.getConfigPath(context));
     }
 
-    private static ReaderSlideshowBean readReaderSlideshowConfig(Context context) {
+    private static ConfigBean readConfig(Context context) {
         String content = FileUtil.readContentFromFile(Constant.getConfigPath(context));
         if (StringUtils.isBlank(content)) {
-            return new ReaderSlideshowBean();
+            return new ConfigBean(new ReaderSlideshowBean());
         }
-
-        return JsonUtil.jsonToObject(content, ReaderSlideshowBean.class);
+        ConfigBean configBean = JsonUtil.jsonToObject(content, ConfigBean.class);
+        if(configBean != null){
+            if(configBean.getReaderSlideshowBean() == null) {
+                configBean.setReaderSlideshowBean(new ReaderSlideshowBean());
+            }
+            return configBean;
+        }
+        configBean = new ConfigBean(new ReaderSlideshowBean());
+        return configBean;
     }
-
 }

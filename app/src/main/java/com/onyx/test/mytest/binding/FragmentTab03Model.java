@@ -33,7 +33,7 @@ public class FragmentTab03Model extends BaseObservable {
 
     public FragmentTab03Model(Fragment f) {
         this.fragment = f;
-        this.config = ConfigManager.getReaderSlideshowConfig(f.getActivity());
+        this.config = ConfigManager.getConfig(f.getActivity()).getReaderSlideshowBean();
     }
 
     @Bindable

@@ -26,7 +26,7 @@ public class FragmentTab01Model extends BaseObservable {
 
     public FragmentTab01Model(Fragment f) {
         this.fragment = f;
-        this.readerSlideshowBean = ConfigManager.getReaderSlideshowConfig(f.getActivity());
+        this.readerSlideshowBean = ConfigManager.getConfig(f.getActivity()).getReaderSlideshowBean();
     }
 
     @Bindable
