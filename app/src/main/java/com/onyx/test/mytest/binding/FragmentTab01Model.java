@@ -21,7 +21,6 @@ import java.io.File;
 
 public class FragmentTab01Model extends BaseObservable {
 
-    private String testProjectName = "Kreader自动翻页测试";
     private int slideshowInterval = 20;
     private String testFilePath = "mnt/sdcard/test.pdf";
     private int slideshowTotalPage = 2000;
@@ -68,15 +67,6 @@ public class FragmentTab01Model extends BaseObservable {
                 .withFileFilter(new String[]{".txt", ".pdf", ".epub", ".fb2", ".djvu"})
                 .withBackIcon(Constant.BACKICON_STYLETHREE)
                 .start();
-    }
-
-    @Bindable
-    public String getTestProjectName() {
-        return testProjectName;
-    }
-
-    public void setTestProjectName(String testProjectName) {
-        this.testProjectName = testProjectName;
     }
 
     @Bindable
