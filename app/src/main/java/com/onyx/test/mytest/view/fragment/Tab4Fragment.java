@@ -19,7 +19,7 @@ public class Tab4Fragment extends BaseFragment<FragmentTab4Binding> {
 
     @Override
     public void bindData() {
-        bindingView.setBean(new FragmentTab04Model(Tab4Fragment.this, config));
+        bindingView.setBean(new FragmentTab04Model(Tab4Fragment.this));
         bindingView.cbOpenWifi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

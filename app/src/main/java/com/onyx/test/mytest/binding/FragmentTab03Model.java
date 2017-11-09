@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
 
+import com.onyx.test.mytest.model.AppConfig;
 import com.onyx.test.mytest.model.bean.ConfigBean;
 import com.onyx.test.mytest.translator.TranslateManager;
 import com.onyx.test.mytest.translator.config.Language;
@@ -30,9 +31,9 @@ public class FragmentTab03Model extends BaseObservable {
     private ConfigBean config;
     private String translatePath = "/sdcard/translate";
 
-    public FragmentTab03Model(Fragment f, ConfigBean config) {
+    public FragmentTab03Model(Fragment f) {
         this.fragment = f;
-        this.config = config;
+        this.config = AppConfig.getConfig(f.getActivity());
     }
 
     @Bindable

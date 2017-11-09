@@ -33,9 +33,9 @@ public class FragmentTab01Model extends BaseObservable {
     private ConfigBean config;
 
 
-    public FragmentTab01Model(Fragment f, ConfigBean config) {
+    public FragmentTab01Model(Fragment f) {
         this.fragment = f;
-        this.config = config;
+        this.config = AppConfig.getConfig(f.getActivity());
     }
 
     @Override

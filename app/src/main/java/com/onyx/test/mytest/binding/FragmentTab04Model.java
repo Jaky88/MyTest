@@ -23,6 +23,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.onyx.test.mytest.R;
+import com.onyx.test.mytest.model.AppConfig;
 import com.onyx.test.mytest.model.bean.ConfigBean;
 import com.onyx.test.mytest.model.utils.ActivityUtil;
 import com.onyx.test.mytest.model.utils.FileUtil;
@@ -53,9 +54,9 @@ public class FragmentTab04Model extends BaseObservable {
     private String mSSID = "onyx-office1";
 
 
-    public FragmentTab04Model(Fragment f, ConfigBean config) {
+    public FragmentTab04Model(Fragment f) {
         this.fragment = f;
-        this.config = config;
+        this.config = AppConfig.getConfig(f.getActivity());
         audiomanage = (AudioManager) (fragment.getActivity().getSystemService(Context.AUDIO_SERVICE));
         notificationManager = (NotificationManager) fragment.getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
         initWifiConnect();

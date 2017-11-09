@@ -19,12 +19,10 @@ import com.onyx.test.mytest.model.bean.ConfigBean;
 public abstract class BaseFragment<F extends ViewDataBinding> extends Fragment {
 
     protected F bindingView;
-    protected ConfigBean config;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        config = AppConfig.getConfig(getActivity());
         bindingView = DataBindingUtil.inflate(inflater, getLayout(), container, false);
         bindData();
         return  bindingView.getRoot();

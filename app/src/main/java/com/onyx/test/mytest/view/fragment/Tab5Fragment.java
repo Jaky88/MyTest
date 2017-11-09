@@ -24,7 +24,7 @@ public class Tab5Fragment extends BaseFragment<FragmentTab5Binding> {
 
     @Override
     public void bindData() {
-        bindingView.setBean(new FragmentTab05Model(Tab5Fragment.this, config));
+        bindingView.setBean(new FragmentTab05Model(Tab5Fragment.this));
         initView();
     }
 

@@ -5,6 +5,7 @@ import android.databinding.Bindable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.onyx.test.mytest.model.AppConfig;
 import com.onyx.test.mytest.model.bean.ConfigBean;
 import com.onyx.test.mytest.model.utils.ShellUtils;
 
@@ -27,9 +28,9 @@ public class FragmentTab02Model extends BaseObservable {
         this.info = info;
     }
 
-    public FragmentTab02Model(Fragment f, ConfigBean config) {
+    public FragmentTab02Model(Fragment f) {
         this.fragment = f;
-        this.config = config;
+        this.config = AppConfig.getConfig(f.getActivity());
     }
 
 
