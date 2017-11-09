@@ -42,7 +42,7 @@
                 android:id="@+id/btn_file_select"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{bean.btnSelectFile}"
+                android:text="@string/select"
                 android:onClick="@{bean::onSelectFileClick}"/>
 
         </LinearLayout>
@@ -129,7 +129,7 @@
             android:id="@+id/btn_set"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{bean.btnSettings}"
+            android:text="@string/settings"
             android:onClick="@{bean::onSettingsClick}"
             android:textSize="@dimen/title_level2_text_size" />
 

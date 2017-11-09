@@ -41,14 +41,4 @@ public class ConfigBean {
     public void setBootUpLastDocumentOpenChecked(boolean bootUpLastDocumentOpenChecked) {
         this.bootUpLastDocumentOpenChecked = bootUpLastDocumentOpenChecked;
     }
-
-    @Override
-    public String toString() {
-        return "ConfigBean{" +
-                "bootUpLastDocumentOpenChecked=" + bootUpLastDocumentOpenChecked +
-                ", slideInterval=" + slideInterval +
-                ", slideTime=" + slideTime +
-                ", slideFileName='" + slideFileName + '\'' +
-                '}';
-    }
 }

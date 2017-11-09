@@ -27,8 +27,7 @@ public class FragmentTab01Model extends BaseObservable {
     private int slideshowTotalPage = 2000;
     private int slideshowStartPage = 0;
     private boolean isBootCompletedAtoTest = false;
-    private String btnSelectFile = "选择";
-    private String btnSettings = "设置";
+
     private Fragment fragment;
     private ConfigBean config;
 
@@ -123,23 +122,5 @@ public class FragmentTab01Model extends BaseObservable {
 
     public void setBootCompletedAtoTest(boolean bootCompletedAtoTest) {
         isBootCompletedAtoTest = bootCompletedAtoTest;
-    }
-
-    @Bindable
-    public String getBtnSelectFile() {
-        return btnSelectFile;
-    }
-
-    public void setBtnSelectFile(String btnSelectFile) {
-        this.btnSelectFile = btnSelectFile;
-    }
-
-    @Bindable
-    public String getBtnSettings() {
-        return btnSettings;
-    }
-
-    public void setBtnSettings(String btnSettings) {
-        this.btnSettings = btnSettings;
     }
 }
