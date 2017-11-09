@@ -8,8 +8,9 @@ import android.databinding.Bindable;
  */
 
 public class ReaderSlideshowBean extends BaseObservable {
+
     private boolean isBootCompletedAtoTest = true;
-    private int slideshowInterval = 10;
+    private int slideshowInterval = 20;
     private int slideshowTotalPage = 2000;
     private int slideshowStartPage = 0;
     private String testFilePath = "mnt/sdcard/test.pdf";
