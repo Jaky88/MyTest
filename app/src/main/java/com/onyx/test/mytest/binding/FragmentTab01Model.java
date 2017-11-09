@@ -24,20 +24,9 @@ public class FragmentTab01Model extends BaseObservable {
     private Fragment fragment;
     private ReaderSlideshowBean config;
 
-
     public FragmentTab01Model(Fragment f) {
         this.fragment = f;
         this.config = AppConfig.getConfig(f.getActivity());
-    }
-
-    @Override
-    public void addOnPropertyChangedCallback(OnPropertyChangedCallback callback) {
-
-    }
-
-    @Override
-    public void removeOnPropertyChangedCallback(OnPropertyChangedCallback callback) {
-
     }
 
     public void onSettingsClick(View view) {
