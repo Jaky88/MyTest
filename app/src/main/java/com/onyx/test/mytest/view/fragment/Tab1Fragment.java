@@ -27,7 +27,6 @@ public class Tab1Fragment extends BaseFragment<FragmentTab1Binding> {
     @Override
     public void bindData() {
         bindingView.setBean(new FragmentTab01Model(Tab1Fragment.this));
-        bindingView.setReaderSlideshowBean(ConfigManager.getReaderSlideshowConfig(getActivity()));
     }
 
 
@@ -38,9 +37,7 @@ public class Tab1Fragment extends BaseFragment<FragmentTab1Binding> {
             if (requestCode == Constant.REQUESTCODE_FROM_FRAGMENT) {
                 List<String> list = data.getStringArrayListExtra("paths");
                 for (String s : list) {
-                    Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
-                    bindingView.getReaderSlideshowBean().setTestFilePath(s);
-                    bindingView.notifyChange();
+                    bindingView.etFileName.setText(s);
                 }
             }
         }

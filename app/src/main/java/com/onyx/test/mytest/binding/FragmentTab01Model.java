@@ -2,6 +2,7 @@ package com.onyx.test.mytest.binding;
 
 import android.content.Intent;
 import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
@@ -21,20 +22,30 @@ import java.io.File;
 public class FragmentTab01Model extends BaseObservable {
 
     private Fragment fragment;
-    private ReaderSlideshowBean config;
+    public ReaderSlideshowBean readerSlideshowBean;
 
     public FragmentTab01Model(Fragment f) {
         this.fragment = f;
-        this.config = ConfigManager.getReaderSlideshowConfig(f.getActivity());
+        this.readerSlideshowBean = ConfigManager.getReaderSlideshowConfig(f.getActivity());
+    }
+
+    @Bindable
+    public ReaderSlideshowBean getReaderSlideshowBean() {
+        return readerSlideshowBean;
+    }
+
+    public void setReaderSlideshowBean(ReaderSlideshowBean readerSlideshowBean) {
+        this.readerSlideshowBean = readerSlideshowBean;
     }
 
     public void onSettingsClick(View view) {
+        ConfigManager.getConfig(fragment.getActivity()).setReaderSlideshowBean(readerSlideshowBean);
         ConfigManager.saveConfig(fragment.getActivity());
-        File file = new File(config.getTestFilePath());
+        File file = new File(readerSlideshowBean.getTestFilePath());
         Intent in = ViewDocumentUtils.viewActionIntentWithMimeType(file);
         in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         ActivityUtil.startActivitySafely(fragment.getActivity(), ViewDocumentUtils.autoSlideShowIntent(file,
-                config.getSlideshowTotalPage(), config.getSlideshowInterval()));
+                readerSlideshowBean.getSlideshowTotalPage(), readerSlideshowBean.getSlideshowInterval()));
     }
 
     public void onSelectFileClick(View view) {

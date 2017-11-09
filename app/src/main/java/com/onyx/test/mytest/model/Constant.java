@@ -12,7 +12,7 @@ import java.io.File;
 public class Constant {
 
     public static final String LOG_FILE_NAME = "mytest.log";
-    public static final String CONFIG_FILE_NAME = "config.json";
+    public static final String CONFIG_FILE_NAME = "readerSlideshowBean.json";
 
 
     public static String getConfigPath(Context context) {

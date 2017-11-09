@@ -98,7 +98,7 @@ public class WifiConnector {
             config.allowedPairwiseCiphers
                     .set(WifiConfiguration.PairwiseCipher.TKIP);
             // 此处需要修改否则不能自动重联
-            // config.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+            // readerSlideshowBean.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
             config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
             config.allowedPairwiseCiphers
                     .set(WifiConfiguration.PairwiseCipher.CCMP);
