@@ -11,8 +11,8 @@ import com.leon.lfilepickerlibrary.utils.Constant;
 import com.onyx.android.sdk.utils.ActivityUtil;
 import com.onyx.android.sdk.utils.ViewDocumentUtils;
 import com.onyx.test.mytest.BR;
-import com.onyx.test.mytest.model.manager.ConfigManager;
 import com.onyx.test.mytest.model.bean.ReaderSlideshowBean;
+import com.onyx.test.mytest.model.manager.ConfigManager;
 
 import java.io.File;
 

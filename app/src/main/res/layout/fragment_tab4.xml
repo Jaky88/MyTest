@@ -91,7 +91,7 @@
             android:id="@+id/cb_open_wifi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="@{bean.wifiChecked}"
+            android:checked="@={bean.wifiChecked}"
             android:text="@{bean.wifiChecked ? @string/close_wifi : @string/open_wifi}"/>
 
         <Button
