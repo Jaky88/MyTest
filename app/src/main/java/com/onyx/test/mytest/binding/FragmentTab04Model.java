@@ -54,9 +54,9 @@ public class FragmentTab04Model extends BaseObservable {
     private String mSSID = "onyx-office1";
 
 
-    public FragmentTab04Model(Fragment f) {
-        this.fragment = f;
-        this.config = ConfigManager.getConfig(f.getActivity()).getReaderSlideshowBean();
+    public FragmentTab04Model(Fragment fragment) {
+        this.fragment = fragment;
+        this.config = ConfigManager.getConfig(fragment.getActivity()).getReaderSlideshowBean();
         audiomanage = (AudioManager) (fragment.getActivity().getSystemService(Context.AUDIO_SERVICE));
         notificationManager = (NotificationManager) fragment.getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
         initWifiConnect();

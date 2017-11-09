@@ -42,9 +42,9 @@ public class FragmentTab05Model extends BaseObservable {
         mDatas = datas;
     }
 
-    public FragmentTab05Model(Fragment f) {
-        this.fragment = f;
-        this.config = ConfigManager.getConfig(f.getActivity()).getReaderSlideshowBean();
+    public FragmentTab05Model(Fragment fragment) {
+        this.fragment = fragment;
+        this.config = ConfigManager.getConfig(fragment.getActivity()).getReaderSlideshowBean();
         initData();
     }
 

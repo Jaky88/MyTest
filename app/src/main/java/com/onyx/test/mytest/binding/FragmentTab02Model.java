@@ -28,9 +28,9 @@ public class FragmentTab02Model extends BaseObservable {
         this.info = info;
     }
 
-    public FragmentTab02Model(Fragment f) {
-        this.fragment = f;
-        this.config = ConfigManager.getConfig(f.getActivity()).getReaderSlideshowBean();
+    public FragmentTab02Model(Fragment fragment) {
+        this.fragment = fragment;
+        this.config = ConfigManager.getConfig(fragment.getActivity()).getReaderSlideshowBean();
     }
 
 

@@ -31,9 +31,9 @@ public class FragmentTab03Model extends BaseObservable {
     private ReaderSlideshowBean config;
     private String translatePath = "/sdcard/translate";
 
-    public FragmentTab03Model(Fragment f) {
-        this.fragment = f;
-        this.config = ConfigManager.getConfig(f.getActivity()).getReaderSlideshowBean();
+    public FragmentTab03Model(Fragment fragment) {
+        this.fragment = fragment;
+        this.config = ConfigManager.getConfig(fragment.getActivity()).getReaderSlideshowBean();
     }
 
     @Bindable
