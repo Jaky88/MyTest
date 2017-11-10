@@ -93,6 +93,9 @@ dependencies {
 
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.google.code.gson:gson-parent:2.7'
+
+    //https://github.com/Kelin-Hong/MVVMLight
+    compile 'com.kelin.mvvmlight:library:1.0.0'
     //RxAndroid1/RxJava1
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'io.reactivex:rxandroid:1.1.0'
