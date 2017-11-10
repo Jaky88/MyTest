@@ -3,8 +3,6 @@ package com.onyx.test.mytest.model.bean;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
-import com.android.databinding.library.baseAdapters.BR;
-
 /**
  * Created by jaky on 2017/8/16.
  */
@@ -51,7 +49,6 @@ public class ReaderSlideshowBean extends BaseObservable {
 
     public void setTestFilePath(String testFilePath) {
         this.testFilePath = testFilePath;
-        notifyPropertyChanged(BR.testFilePath);
     }
 
     @Bindable

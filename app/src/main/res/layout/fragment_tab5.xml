@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="me.tatarka.bindingcollectionadapter.LayoutManagers"/>
         <variable
             name="bean"
             type="com.onyx.test.mytest.binding.FragmentTab05Model" />
@@ -14,7 +16,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="#ff000000"
-            android:dividerHeight="2dp" />
+            android:dividerHeight="2dp"
+            bind:itemView="@{bean.itemView}"
+            bind:items="@{bean.itemViewModel}"
+            bind:layoutManager="@{LayoutManagers.linear()}"/>
 
     </LinearLayout>
 </layout>

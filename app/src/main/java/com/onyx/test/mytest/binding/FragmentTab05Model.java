@@ -3,14 +3,19 @@ package com.onyx.test.mytest.binding;
 import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.support.v4.app.Fragment;
+import android.databinding.ObservableArrayList;
+import android.databinding.ObservableList;
 import android.support.v4.util.Pair;
 
-import com.onyx.test.mytest.model.manager.ConfigManager;
+import com.onyx.test.mytest.BR;
+import com.onyx.test.mytest.R;
 import com.onyx.test.mytest.model.bean.ReaderSlideshowBean;
 import com.onyx.test.mytest.model.entity.DataUtil;
+import com.onyx.test.mytest.model.manager.ConfigManager;
 
 import java.util.List;
+
+import me.tatarka.bindingcollectionadapter.ItemView;
 
 /**
  * @Copyright: Copyright © 2017 Onyx International Inc. All rights reserved.
@@ -26,6 +31,8 @@ public class FragmentTab05Model extends BaseObservable {
     private Context context;
     private ReaderSlideshowBean config;
     private List<Pair<String, String>> mDatas;
+    public final ObservableList<Pair<String, String>> itemViewModel = new ObservableArrayList<>();
+    public final ItemView itemView = ItemView.of(BR.bean, R.layout.item_recycleview);
 
     public ReaderSlideshowBean getConfig() {
         return config;
