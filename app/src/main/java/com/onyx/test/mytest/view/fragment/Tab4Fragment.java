@@ -24,7 +24,6 @@ public class Tab4Fragment extends BaseFragment<FragmentTab4Binding> {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 bindingView.getBean().onWifiCheckedChanged(isChecked);
-                bindingView.invalidateAll();
             }
         });
     }
