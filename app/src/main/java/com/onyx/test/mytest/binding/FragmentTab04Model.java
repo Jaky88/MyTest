@@ -41,7 +41,8 @@ import java.util.Map;
  */
 
 public class FragmentTab04Model extends BaseObservable {
-    private Fragment fragment;
+    
+    private Context context;
     private ReaderSlideshowBean config;
     private String selectfilePath;
     private boolean wifiChecked = false;
@@ -54,18 +55,18 @@ public class FragmentTab04Model extends BaseObservable {
     private String mSSID = "onyx-office1";
 
 
-    public FragmentTab04Model(Fragment fragment) {
-        this.fragment = fragment;
-        this.config = ConfigManager.getConfig(fragment.getActivity()).getReaderSlideshowBean();
-        audiomanage = (AudioManager) (fragment.getActivity().getSystemService(Context.AUDIO_SERVICE));
-        notificationManager = (NotificationManager) fragment.getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+    public FragmentTab04Model(Context context) {
+        this.context = context;
+        this.config = ConfigManager.getConfig(context).getReaderSlideshowBean();
+        audiomanage = (AudioManager) (context.getSystemService(Context.AUDIO_SERVICE));
+        notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         initWifiConnect();
     }
 
         private void initWifiConnect() {
-        wifiManager = (WifiManager) fragment.getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         wac = new WifiConnector(wifiManager);
-        ConnectivityManager manager = (ConnectivityManager)fragment.getActivity().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager manager = (ConnectivityManager)context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo.State wifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
         setWifiChecked((wifi == NetworkInfo.State.CONNECTED||wifi== NetworkInfo.State.CONNECTING));
     }
@@ -132,9 +133,9 @@ public class FragmentTab04Model extends BaseObservable {
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void sendNotification() {
-        Notification.Builder builder = new Notification.Builder(fragment.getActivity());
-        Intent intent = new Intent(fragment.getActivity(), MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(fragment.getActivity(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Notification.Builder builder = new Notification.Builder(context);
+        Intent intent = new Intent(context, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(pendingIntent);
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setContentTitle("新通知");
@@ -151,7 +152,7 @@ public class FragmentTab04Model extends BaseObservable {
         notification.flags = Notification.FLAG_NO_CLEAR;
         setEventInfo(pendingIntent, notification);
         notificationManager.notify(0, notification);
-        Toast.makeText(fragment.getActivity(), "发送成功！", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "发送成功！", Toast.LENGTH_SHORT).show();
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -163,16 +164,16 @@ public class FragmentTab04Model extends BaseObservable {
 
     private void readWriteFileTest() {
         if (FileUtil.saveContentToFile("test", "/mnt/hidden/test")) {
-            Toast.makeText(fragment.getActivity(), "成功！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "成功！", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(fragment.getActivity(), "失败！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "失败！", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void startKreader() {
         String fileName = "西游记.pdf";
         String filePath = FileUtil.getSDCardPath() + File.separator + "Books" + File.separator + fileName;
-        ActivityUtil.startActivityWithData(fragment.getActivity(), "com.onyx.kreader", new File(filePath));
+        ActivityUtil.startActivityWithData(context, "com.onyx.kreader", new File(filePath));
     }
 
     private void openCurDir(String curPath) {
@@ -200,10 +201,10 @@ public class FragmentTab04Model extends BaseObservable {
             }
         }
 
-        SimpleAdapter adapter = new SimpleAdapter(fragment.getActivity(), listItem, R.layout.simple_adapter,
+        SimpleAdapter adapter = new SimpleAdapter(context, listItem, R.layout.simple_adapter,
                 new String[]{"name", "image"}, new int[]{R.id.adapter_filename, R.id.adapter_image});
 
-        final AlertDialog.Builder b = new AlertDialog.Builder(fragment.getActivity());
+        final AlertDialog.Builder b = new AlertDialog.Builder(context);
         b.setAdapter(adapter, new DialogInterface.OnClickListener() {
 
             @Override

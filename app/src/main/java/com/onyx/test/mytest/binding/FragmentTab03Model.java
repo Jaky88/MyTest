@@ -1,5 +1,6 @@
 package com.onyx.test.mytest.binding;
 
+import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.os.Environment;
@@ -27,13 +28,13 @@ import rx.schedulers.Schedulers;
 
 public class FragmentTab03Model extends BaseObservable {
 
-    private Fragment fragment;
+    private Context context;
     private ReaderSlideshowBean config;
     private String translatePath = "/sdcard/translate";
 
-    public FragmentTab03Model(Fragment fragment) {
-        this.fragment = fragment;
-        this.config = ConfigManager.getConfig(fragment.getActivity()).getReaderSlideshowBean();
+    public FragmentTab03Model(Context context) {
+        this.context = context;
+        this.config = ConfigManager.getConfig(context).getReaderSlideshowBean();
     }
 
     @Bindable

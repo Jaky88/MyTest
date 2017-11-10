@@ -1,5 +1,6 @@
 package com.onyx.test.mytest.binding;
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
@@ -22,12 +23,12 @@ import java.io.File;
 
 public class FragmentTab01Model extends BaseObservable {
 
-    private Fragment fragment;
+    private Context context;
     private ReaderSlideshowBean readerSlideshowBean;
 
-    public FragmentTab01Model(Fragment fragment) {
-        this.fragment = fragment;
-        this.readerSlideshowBean = ConfigManager.getConfig(fragment.getActivity()).getReaderSlideshowBean();
+    public FragmentTab01Model(Context context) {
+        this.context = context;
+        this.readerSlideshowBean = ConfigManager.getConfig(context).getReaderSlideshowBean();
     }
 
     @Bindable
@@ -42,22 +43,11 @@ public class FragmentTab01Model extends BaseObservable {
 
     public void onSettingsClick(View view) {
         setReaderSlideshowBean(readerSlideshowBean);
-        ConfigManager.saveConfig(fragment.getActivity());
+        ConfigManager.saveConfig(context);
         File file = new File(readerSlideshowBean.getTestFilePath());
         Intent in = ViewDocumentUtils.viewActionIntentWithMimeType(file);
         in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        ActivityUtil.startActivitySafely(fragment.getActivity(), ViewDocumentUtils.autoSlideShowIntent(file,
+        ActivityUtil.startActivitySafely(context, ViewDocumentUtils.autoSlideShowIntent(file,
                 readerSlideshowBean.getSlideshowTotalPage(), readerSlideshowBean.getSlideshowInterval()));
-    }
-
-    public void onSelectFileClick(View view) {
-        new LFilePicker().withSupportFragment(fragment)
-                .withRequestCode(Constant.REQUESTCODE_FROM_FRAGMENT)
-                .withTitle("选择文件")
-                .withTitleColor("#FF000000")
-                .withMutilyMode(false)
-                .withFileFilter(new String[]{".txt", ".pdf", ".epub", ".fb2", ".djvu"})
-                .withBackIcon(Constant.BACKICON_STYLETHREE)
-                .start();
     }
 }

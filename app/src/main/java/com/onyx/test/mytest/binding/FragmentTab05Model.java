@@ -1,5 +1,6 @@
 package com.onyx.test.mytest.binding;
 
+import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.support.v4.app.Fragment;
@@ -21,7 +22,8 @@ import java.util.List;
  */
 
 public class FragmentTab05Model extends BaseObservable {
-    private Fragment fragment;
+
+    private Context context;
     private ReaderSlideshowBean config;
     private List<Pair<String, String>> mDatas;
 
@@ -42,13 +44,13 @@ public class FragmentTab05Model extends BaseObservable {
         mDatas = datas;
     }
 
-    public FragmentTab05Model(Fragment fragment) {
-        this.fragment = fragment;
-        this.config = ConfigManager.getConfig(fragment.getActivity()).getReaderSlideshowBean();
+    public FragmentTab05Model(Context context) {
+        this.context = context;
+        this.config = ConfigManager.getConfig(context).getReaderSlideshowBean();
         initData();
     }
 
     private void initData() {
-        mDatas = DataUtil.getInstance(fragment.getActivity()).getData();
+        mDatas = DataUtil.getInstance(context).getData();
     }
 }

@@ -1,6 +1,7 @@
 package com.onyx.test.mytest.binding;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.databinding.BaseObservable;
@@ -19,31 +20,23 @@ import java.util.List;
  */
 
 public class ActivityMainModel extends BaseObservable {
-    private String title = "";
-    private String versionName = "版本号：";
-    private Activity activity;
+    private String title;
+    private String versionName;
+    private Context context;
     private List<String> tabTitleList = new ArrayList();
     private List<Fragment> fragmentList = new ArrayList();
 
-    public ActivityMainModel(Activity activity) {
-        this.activity = activity;
+    public ActivityMainModel(Context context) {
+        this.context = context;
         initData();
     }
 
     private void initData() {
         setVersionName(getVersionNameImpl());
-        setTabTitleList(Arrays.asList(activity.getResources().getStringArray(R.array.tab_title_items)));
+        setTabTitleList(Arrays.asList(context.getResources().getStringArray(R.array.tab_title_items)));
         for (int i = 0; i < tabTitleList.size(); i++) {
             fragmentList.add(FragmentFactory.createFragment(i));
         }
-    }
-
-    public Activity getActivity() {
-        return activity;
-    }
-
-    public void setActivity(Activity activity) {
-        this.activity = activity;
     }
 
     public List getFragmentList() {
@@ -82,9 +75,9 @@ public class ActivityMainModel extends BaseObservable {
     }
 
     public String getVersionNameImpl() {
-        PackageManager manager = activity.getPackageManager();
+        PackageManager manager = context.getPackageManager();
         try {
-            PackageInfo packageInfo = manager.getPackageInfo(activity.getPackageName(), PackageManager.GET_ACTIVITIES
+            PackageInfo packageInfo = manager.getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES
             );
             return packageInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {

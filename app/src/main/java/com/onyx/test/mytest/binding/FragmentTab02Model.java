@@ -1,5 +1,6 @@
 package com.onyx.test.mytest.binding;
 
+import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.support.v4.app.Fragment;
@@ -15,7 +16,7 @@ import com.onyx.test.mytest.model.utils.ShellUtils;
 
 public class FragmentTab02Model extends BaseObservable {
 
-    private Fragment fragment;
+    private Context context;
     private ReaderSlideshowBean config;
     private String info;
 
@@ -28,9 +29,9 @@ public class FragmentTab02Model extends BaseObservable {
         this.info = info;
     }
 
-    public FragmentTab02Model(Fragment fragment) {
-        this.fragment = fragment;
-        this.config = ConfigManager.getConfig(fragment.getActivity()).getReaderSlideshowBean();
+    public FragmentTab02Model(Context context) {
+        this.context = context;
+        this.config = ConfigManager.getConfig(context).getReaderSlideshowBean();
     }
 
 

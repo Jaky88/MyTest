@@ -17,7 +17,7 @@ public class Tab2Fragment extends BaseFragment<FragmentTab2Binding> {
 
     @Override
     public void bindData() {
-        bindingView.setBean(new FragmentTab02Model(Tab2Fragment.this));
+        bindingView.setBean(new FragmentTab02Model(getActivity()));
     }
 
 }

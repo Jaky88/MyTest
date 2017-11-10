@@ -17,6 +17,6 @@ public class Tab3Fragment extends BaseFragment<FragmentTab3Binding> {
 
     @Override
     public void bindData() {
-        bindingView.setBean(new FragmentTab03Model(Tab3Fragment.this));
+        bindingView.setBean(new FragmentTab03Model(getActivity()));
     }
 }
