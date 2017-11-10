@@ -1,19 +1,18 @@
-package com.onyx.test.mytest.model.entity;
+package com.onyx.test.mytest.model.utils;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 import android.os.SystemClock;
-import android.support.v4.util.Pair;
 import android.util.Log;
 
 import com.onyx.test.mytest.binding.RecycleViewItemModel;
+import com.onyx.test.mytest.model.entity.CpuUtil;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -37,23 +36,22 @@ import static com.onyx.test.mytest.BuildConfig.DEBUG;
  * @Description: TODO
  */
 
-public class DataUtil {
-    private static final String TAG = DataUtil.class.getSimpleName();
-    private List<Pair<String, String>> mDatas;
+public class DeviceInfoHelper {
+    private static final String TAG = DeviceInfoHelper.class.getSimpleName();
     private List<RecycleViewItemModel> itemModels;
-    private static DataUtil sInstance;
+    private static DeviceInfoHelper sInstance;
     private Context mContext;
     private String strLevel = "";
 
 
-    private DataUtil(Context context) {
+    private DeviceInfoHelper(Context context) {
         mContext = context;
 //        context.registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
 
-    public static DataUtil getInstance(Context context) {
+    public static DeviceInfoHelper getInstance(Context context) {
         if (sInstance == null) {
-            sInstance = new DataUtil(context);
+            sInstance = new DeviceInfoHelper(context);
         }
 
         return sInstance;
@@ -114,63 +112,6 @@ public class DataUtil {
             itemModels.add(new RecycleViewItemModel("MAC地址：", getOtherInfo()[0]));
         }
         return itemModels;
-    }
-
-    public List<Pair<String, String>> getData() {
-        if (mDatas == null) {
-            mDatas = new ArrayList<>();
-            mDatas.add(new Pair<>("编译信息：", ""));
-            mDatas.add(new Pair<>("TYPE(类型)", Build.TYPE));
-            mDatas.add(new Pair<>("SERIAL（序列号）", Build.SERIAL));
-            mDatas.add(new Pair<>("HARDWARE", Build.HARDWARE));
-            mDatas.add(new Pair<>("MODEL（型号）", Build.MODEL));
-            mDatas.add(new Pair<>("BOARD（主板）", Build.BOARD));
-            mDatas.add(new Pair<>("BRAND", Build.BRAND));
-            mDatas.add(new Pair<>("DEVICE（设备）", Build.DEVICE));
-            mDatas.add(new Pair<>("PRODUCT（产品）", Build.PRODUCT));
-            mDatas.add(new Pair<>("VERSION_CODES.BASE（系统版本）", "" + Build.VERSION_CODES.BASE));
-            mDatas.add(new Pair<>("VERSION.RELEASE（API等级）", "" + Build.VERSION.RELEASE));
-            mDatas.add(new Pair<>("FINGERPRINT（系统指纹）", "" + Build.FINGERPRINT));
-            mDatas.add(new Pair<>("SDK（sdk版本）", "" + Build.VERSION.SDK));
-
-            mDatas.add(new Pair<>("ID(版本ID)", "" + Build.ID));
-            mDatas.add(new Pair<>("DISPLAY（版本号）", "" + Build.DISPLAY));
-            mDatas.add(new Pair<>("USER", "" + Build.USER));
-            mDatas.add(new Pair<>("编译时间", "" + Build.TIME));
-
-            mDatas.add(new Pair<>("kernel version", System.getProperty("os.version")));
-            mDatas.add(new Pair<>("kernel name", System.getProperty("os.name")));
-            mDatas.add(new Pair<>("kernel arch", System.getProperty("os.arch")));
-            mDatas.add(new Pair<>("user.home", System.getProperty("user.home")));
-            mDatas.add(new Pair<>("user.name", System.getProperty("user.name")));
-            mDatas.add(new Pair<>("user.dir", System.getProperty("user.dir")));
-
-            mDatas.add(new Pair<>("java.home ", System.getProperty("java.home ")));
-            mDatas.add(new Pair<>("java.versio", System.getProperty("java.versio")));
-            mDatas.add(new Pair<>("java.class.version", System.getProperty("java.class.version")));
-            mDatas.add(new Pair<>("java.class.path", System.getProperty("java.class.path")));
-
-            mDatas.add(new Pair<>("硬件信息：", ""));
-            mDatas.add(new Pair<>("CPU概况：", CpuUtil.getCpuString()));
-            mDatas.add(new Pair<>("CPU名字：", CpuUtil.getCpuName()));
-            mDatas.add(new Pair<>("CPU类型：", CpuUtil.getCpuModel()));
-            mDatas.add(new Pair<>("CPU ABI：", Build.CPU_ABI));
-            mDatas.add(new Pair<>("CPU特性：", CpuUtil.getCpuFeature()));
-            mDatas.add(new Pair<>("CPU最大频率：", "" + CpuUtil.getMaxCpuFreq()));
-            mDatas.add(new Pair<>("CPU最小频率：", "" + CpuUtil.getMinCpuFreq()));
-            mDatas.add(new Pair<>("CPU当前频率：", "" + CpuUtil.getCurCpuFreq()));
-            mDatas.add(new Pair<>("移动信息：", CpuUtil.getMobileInfo()));
-            mDatas.add(new Pair<>("内存大小：", "" + getTotalMemory()));
-            mDatas.add(new Pair<>("Rom大小：", "" + getRomMemroy()[0]));
-            mDatas.add(new Pair<>("内部存储大小：", "" + getTotalInternalMemorySize()));
-            mDatas.add(new Pair<>("SD卡大小：", "" + getSDCardMemory()[0]));
-            mDatas.add(new Pair<>("IP地址：", getIpAddress(mContext)));
-            mDatas.add(new Pair<>("版本信息：", getVersion()[0]));
-            mDatas.add(new Pair<>("当前电量：", strLevel));
-            mDatas.add(new Pair<>("开机时间：", getTimes()));
-            mDatas.add(new Pair<>("MAC地址：", getOtherInfo()[0]));
-        }
-        return mDatas;
     }
 
     private BroadcastReceiver batteryReceiver = new BroadcastReceiver() {

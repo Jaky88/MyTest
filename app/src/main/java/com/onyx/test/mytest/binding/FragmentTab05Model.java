@@ -6,9 +6,7 @@ import android.databinding.Bindable;
 
 import com.onyx.test.mytest.BR;
 import com.onyx.test.mytest.R;
-import com.onyx.test.mytest.model.bean.ReaderSlideshowBean;
-import com.onyx.test.mytest.model.entity.DataUtil;
-import com.onyx.test.mytest.model.manager.ConfigManager;
+import com.onyx.test.mytest.model.utils.DeviceInfoHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +30,7 @@ public class FragmentTab05Model extends BaseObservable {
 
     public FragmentTab05Model(Context context) {
         this.context = context;
-        itemViewModel = DataUtil.getInstance(context).getItemModel();
+        itemViewModel = DeviceInfoHelper.getInstance(context).getItemModel();
     }
 
     @Bindable
