@@ -45,7 +45,7 @@ public class DataUtil {
 
     private DataUtil(Context context) {
         mContext = context;
-        context.registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+//        context.registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
 
     public static DataUtil getInstance(Context context) {

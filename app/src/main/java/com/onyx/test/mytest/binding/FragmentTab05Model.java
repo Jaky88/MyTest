@@ -32,7 +32,19 @@ public class FragmentTab05Model extends BaseObservable {
     private ReaderSlideshowBean config;
     private List<Pair<String, String>> mDatas;
     public final ObservableList<Pair<String, String>> itemViewModel = new ObservableArrayList<>();
-    public final ItemView itemView = ItemView.of(BR.bean, R.layout.item_recycleview);
+    public final ItemView itemView = ItemView.of(BR.itemModel, R.layout.item_recycleview);
+
+
+    public FragmentTab05Model(Context context) {
+        this.context = context;
+        this.config = ConfigManager.getConfig(context).getReaderSlideshowBean();
+        initData();
+    }
+
+    private void initData() {
+        mDatas = DataUtil.getInstance(context).getData();
+        itemViewModel.addAll(mDatas);
+    }
 
     public ReaderSlideshowBean getConfig() {
         return config;
@@ -51,13 +63,5 @@ public class FragmentTab05Model extends BaseObservable {
         mDatas = datas;
     }
 
-    public FragmentTab05Model(Context context) {
-        this.context = context;
-        this.config = ConfigManager.getConfig(context).getReaderSlideshowBean();
-        initData();
-    }
 
-    private void initData() {
-        mDatas = DataUtil.getInstance(context).getData();
-    }
 }
