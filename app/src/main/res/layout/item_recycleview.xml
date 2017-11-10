@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="@{itemModel.key}" />
+            android:text="@={itemModel.key}" />
 
         <TextView
             android:id="@+id/item_value"
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="@{itemModel.value}" />
+            android:text="@={itemModel.value}" />
 
     </LinearLayout>
 </layout>
