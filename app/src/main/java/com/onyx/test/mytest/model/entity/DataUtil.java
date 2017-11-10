@@ -13,6 +13,8 @@ import android.os.SystemClock;
 import android.support.v4.util.Pair;
 import android.util.Log;
 
+import com.onyx.test.mytest.binding.RecycleViewItemModel;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -38,6 +40,7 @@ import static com.onyx.test.mytest.BuildConfig.DEBUG;
 public class DataUtil {
     private static final String TAG = DataUtil.class.getSimpleName();
     private List<Pair<String, String>> mDatas;
+    private List<RecycleViewItemModel> itemModels;
     private static DataUtil sInstance;
     private Context mContext;
     private String strLevel = "";
@@ -54,6 +57,63 @@ public class DataUtil {
         }
 
         return sInstance;
+    }
+
+    public List<RecycleViewItemModel> getItemModel() {
+        if (itemModels == null) {
+            itemModels = new ArrayList<>();
+            itemModels.add(new RecycleViewItemModel("编译信息：", ""));
+            itemModels.add(new RecycleViewItemModel("TYPE(类型)", Build.TYPE));
+            itemModels.add(new RecycleViewItemModel("SERIAL（序列号）", Build.SERIAL));
+            itemModels.add(new RecycleViewItemModel("HARDWARE", Build.HARDWARE));
+            itemModels.add(new RecycleViewItemModel("MODEL（型号）", Build.MODEL));
+            itemModels.add(new RecycleViewItemModel("BOARD（主板）", Build.BOARD));
+            itemModels.add(new RecycleViewItemModel("BRAND", Build.BRAND));
+            itemModels.add(new RecycleViewItemModel("DEVICE（设备）", Build.DEVICE));
+            itemModels.add(new RecycleViewItemModel("PRODUCT（产品）", Build.PRODUCT));
+            itemModels.add(new RecycleViewItemModel("VERSION_CODES.BASE（系统版本）", "" + Build.VERSION_CODES.BASE));
+            itemModels.add(new RecycleViewItemModel("VERSION.RELEASE（API等级）", "" + Build.VERSION.RELEASE));
+            itemModels.add(new RecycleViewItemModel("FINGERPRINT（系统指纹）", "" + Build.FINGERPRINT));
+            itemModels.add(new RecycleViewItemModel("SDK（sdk版本）", "" + Build.VERSION.SDK));
+
+            itemModels.add(new RecycleViewItemModel("ID(版本ID)", "" + Build.ID));
+            itemModels.add(new RecycleViewItemModel("DISPLAY（版本号）", "" + Build.DISPLAY));
+            itemModels.add(new RecycleViewItemModel("USER", "" + Build.USER));
+            itemModels.add(new RecycleViewItemModel("编译时间", "" + Build.TIME));
+
+            itemModels.add(new RecycleViewItemModel("kernel version", System.getProperty("os.version")));
+            itemModels.add(new RecycleViewItemModel("kernel name", System.getProperty("os.name")));
+            itemModels.add(new RecycleViewItemModel("kernel arch", System.getProperty("os.arch")));
+            itemModels.add(new RecycleViewItemModel("user.home", System.getProperty("user.home")));
+            itemModels.add(new RecycleViewItemModel("user.name", System.getProperty("user.name")));
+            itemModels.add(new RecycleViewItemModel("user.dir", System.getProperty("user.dir")));
+
+            itemModels.add(new RecycleViewItemModel("java.home ", System.getProperty("java.home ")));
+            itemModels.add(new RecycleViewItemModel("java.versio", System.getProperty("java.versio")));
+            itemModels.add(new RecycleViewItemModel("java.class.version", System.getProperty("java.class.version")));
+            itemModels.add(new RecycleViewItemModel("java.class.path", System.getProperty("java.class.path")));
+
+            itemModels.add(new RecycleViewItemModel("硬件信息：", ""));
+            itemModels.add(new RecycleViewItemModel("CPU概况：", CpuUtil.getCpuString()));
+            itemModels.add(new RecycleViewItemModel("CPU名字：", CpuUtil.getCpuName()));
+            itemModels.add(new RecycleViewItemModel("CPU类型：", CpuUtil.getCpuModel()));
+            itemModels.add(new RecycleViewItemModel("CPU ABI：", Build.CPU_ABI));
+            itemModels.add(new RecycleViewItemModel("CPU特性：", CpuUtil.getCpuFeature()));
+            itemModels.add(new RecycleViewItemModel("CPU最大频率：", "" + CpuUtil.getMaxCpuFreq()));
+            itemModels.add(new RecycleViewItemModel("CPU最小频率：", "" + CpuUtil.getMinCpuFreq()));
+            itemModels.add(new RecycleViewItemModel("CPU当前频率：", "" + CpuUtil.getCurCpuFreq()));
+            itemModels.add(new RecycleViewItemModel("移动信息：", CpuUtil.getMobileInfo()));
+            itemModels.add(new RecycleViewItemModel("内存大小：", "" + getTotalMemory()));
+            itemModels.add(new RecycleViewItemModel("Rom大小：", "" + getRomMemroy()[0]));
+            itemModels.add(new RecycleViewItemModel("内部存储大小：", "" + getTotalInternalMemorySize()));
+            itemModels.add(new RecycleViewItemModel("SD卡大小：", "" + getSDCardMemory()[0]));
+            itemModels.add(new RecycleViewItemModel("IP地址：", getIpAddress(mContext)));
+            itemModels.add(new RecycleViewItemModel("版本信息：", getVersion()[0]));
+            itemModels.add(new RecycleViewItemModel("当前电量：", strLevel));
+            itemModels.add(new RecycleViewItemModel("开机时间：", getTimes()));
+            itemModels.add(new RecycleViewItemModel("MAC地址：", getOtherInfo()[0]));
+        }
+        return itemModels;
     }
 
     public List<Pair<String, String>> getData() {
