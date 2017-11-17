@@ -44,6 +44,12 @@ public class FragmentTab02Model extends BaseObservable {
         mSettingsObserver = new SettingsObserver(mHandler);
         resolver.registerContentObserver(Settings.System.getUriFor(Settings.System.SCREEN_OFF_TIMEOUT), true, mSettingsObserver);
         resolver.registerContentObserver(Settings.System.getUriFor(AUTO_POWEROFF_TIMEOUT), true, mSettingsObserver);
+        initData();
+    }
+
+    private void initData() {
+        screenTimeout = String.valueOf(Settings.System.getInt(resolver, Settings.System.SCREEN_OFF_TIMEOUT, DEFAULT_SCREEN_OFF_TIMEOUT));
+        poweroffTimeout = String.valueOf(Settings.System.getInt(resolver, AUTO_POWEROFF_TIMEOUT, DEFAULT_SCREEN_OFF_TIMEOUT));
     }
 
     public String getPoweroffTimeout() {

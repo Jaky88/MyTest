@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/title_level0_text_size"
+            android:layout_marginLeft="8dp"
             android:text="@string/apps_with_wakelocks_permission" />
         <View
             android:layout_width="match_parent"
@@ -50,6 +51,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/title_level0_text_size"
             android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
             android:text="@string/current_apps_with_wakelock_acquired" />
 
         <View
