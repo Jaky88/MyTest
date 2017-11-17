@@ -122,6 +122,7 @@ dependencies {
 //    compile "com.github.Raizlabs.DBFlow:dbflow:$rootProject.dbflowVersion"
 
     compile project(path: ':lfilepickerlibrary')
+    compile project(path: ':xposelibrary')
     compile "com.jakewharton:disklrucache:$rootProject.disklrucacheVersion"
     compile "org.apache.lucene:lucene-core:$rootProject.lucenecoreVersion"
 }

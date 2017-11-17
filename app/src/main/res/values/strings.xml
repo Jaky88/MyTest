@@ -14,4 +14,6 @@
     <string name="open_wifi">打开Wifi</string>
     <string name="close_wifi">关闭Wifi</string>
     <string name="kreader_test">Kreader自动翻页测试</string>
+    <string name="apps_with_wakelocks_permission">有Wakelock权限的应用:</string>
+    <string name="current_apps_with_wakelock_acquired">\n 当前持有Wakelock的应用:</string>
 </resources>

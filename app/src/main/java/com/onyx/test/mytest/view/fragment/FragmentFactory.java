@@ -38,10 +38,10 @@ public class FragmentFactory {
             {
                 fragment = new Tab5Fragment();
             }
-//            else if(position == 5)
-//            {
-//                fragment = new StyleFragment();
-//            }
+            else if(position == 5)
+            {
+                fragment = new Tab6Fragment();
+            }
             if(fragment != null)
             {
                 mFragments.put(position, fragment);

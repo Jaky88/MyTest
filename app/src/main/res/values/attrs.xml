@@ -2,10 +2,11 @@
 <resources>
     <string-array name="tab_title_items">
 	    <item>KReader</item>
-	    <item>文件</item>
+	    <item>设置</item>
 	    <item>翻译</item>
 	    <item>测试</item>
 	    <item>信息</item>
+		<item>电源</item>
 	</string-array>
 
 	<string-array name="tab_layout_items">
@@ -14,5 +15,6 @@
 		<item>@layout/fragment_tab3</item>
 		<item>@layout/fragment_tab4</item>
 		<item>@layout/fragment_tab5</item>
+		<item>@layout/fragment_tab6</item>
 	</string-array>
 </resources>

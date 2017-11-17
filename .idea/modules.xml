@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/MyTest.iml" filepath="$PROJECT_DIR$/MyTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/lfilepickerlibrary/lfilepickerlibrary.iml" filepath="$PROJECT_DIR$/lfilepickerlibrary/lfilepickerlibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xposelibrary/xposelibrary.iml" filepath="$PROJECT_DIR$/xposelibrary/xposelibrary.iml" />
     </modules>
   </component>
 </project>

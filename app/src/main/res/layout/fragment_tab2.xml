@@ -14,17 +14,73 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_atart_activity"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{bean::onStartClick}"
-            android:text="启动" />
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_command"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@={bean.strCommand}" />
+
+            <Button
+                android:id="@+id/btn_atart_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{bean::onStartClick}"
+                android:text="执行sh命令" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_screen_off_timeout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@={bean.screenTimeout}" />
+
+            <Button
+                android:id="@+id/btn_set_screen_off_timeout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{bean::onSetScreenTimeout}"
+                android:text="设置屏幕超时" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_power_off_timeout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@={bean.poweroffTimeout}" />
+
+            <Button
+                android:id="@+id/btn_set_power_off_timeout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{bean::onSetPoweroffTimeout}"
+                android:text="设置关机超时" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_info"
+            android:layout_margin="20dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@={bean.info}"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@{bean.info}" />
     </LinearLayout>
 </layout>

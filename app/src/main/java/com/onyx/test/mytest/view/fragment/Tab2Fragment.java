@@ -20,4 +20,9 @@ public class Tab2Fragment extends BaseFragment<FragmentTab2Binding> {
         bindingView.setBean(new FragmentTab02Model(getActivity()));
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        bindingView.getBean().destroy();
+    }
 }
