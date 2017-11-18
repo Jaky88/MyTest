@@ -9,6 +9,7 @@ import android.databinding.BaseObservable;
 import android.util.Log;
 
 import java.util.List;
+import android.os.PowerManager.WakeLock;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
@@ -110,37 +111,26 @@ public class FragmentTab06Model extends BaseObservable {
         Log.d("=====", "============getLockFromApps=========");
         if (prefs.getBoolean((new StringBuilder(String.valueOf(appName))).append("/preventWakeLock").toString(), false)) {
 
-            //===============================PowerManager.WakeLock===========================
-            Class class1 = XposedHelpers.findClass("android.os.PowerManager.WakeLock", context.getClassLoader());
+            XposedHelpers.findAndHookMethod(WakeLock.class, "acquire", new Object[]{
+                    new XC_MethodHook() {
+                        @Override
+                        protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                            super.beforeHookedMethod(param);
+                            if (prefs.getBoolean((new StringBuilder(String.valueOf(appName))).append("/preventWakeLock").toString(), false)) {
 
-            Log.d("=====", "=====================" + class1.getName());
-
-
-            //===============================acquire===========================
-            Object aobj[] = new Object[1];
-            aobj[0] = new XC_MethodHook() {
-                //final MainXposedHook this$0;
-                private final LoadPackageParam val$lpparam = null;
-
-                @Override
-                protected void beforeHookedMethod(MethodHookParam methodParam) throws Throwable {
-                    if (prefs.getBoolean((new StringBuilder(String.valueOf(appName))).append("/preventWakeLock").toString(), false)) {
-
-                        String s = (String) XposedHelpers.getObjectField((android.os.PowerManager.WakeLock) methodParam.thisObject, "mTag");
-                        String s1 = prefs.getString((new StringBuilder(String.valueOf(appName))).append("/filterWakeLockTags").toString(), "");
-                        if (s1.equals("")) {
-                            s1 = "-1";
-                        }
-                        if (s1.equals("-1") || s1.contains(s)) {
-                            methodParam.setResult(null);
-                            Log.d("===================","===beforeHookedMethod=====acquire()============");
+                                String s = (String) XposedHelpers.getObjectField((android.os.PowerManager.WakeLock) param.thisObject, "mTag");
+                                String s1 = prefs.getString((new StringBuilder(String.valueOf(appName))).append("/filterWakeLockTags").toString(), "");
+                                if (s1.equals("")) {
+                                    s1 = "-1";
+                                }
+                                if (s1.equals("-1") || s1.contains(s)) {
+                                    param.setResult(null);
+                                    Log.d("===================","===beforeHookedMethod=====acquire()============");
+                                }
+                            }
                         }
                     }
-                }
-
-
-            };
-            XposedHelpers.findAndHookMethod(class1, "acquire", aobj);
+            });
 
             //================================release===========================
             Object aobj1[] = new Object[1];
@@ -165,7 +155,7 @@ public class FragmentTab06Model extends BaseObservable {
                 }
 
             };
-            XposedHelpers.findAndHookMethod(class1, "release", aobj1);
+            XposedHelpers.findAndHookMethod(WakeLock.class, "release", aobj1);
 
 
         }
