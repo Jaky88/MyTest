@@ -6,11 +6,6 @@
 #APP_PLATFORM=android-8
 #APP_ABI := armeabi
 
-# Version X+1: armeabi-v7a (Much faster due to the availability of hardware
-# FP, but cannot be run in the emulator).
-APP_PLATFORM=android-8
-APP_ABI := armeabi-v7a
-
 # Version X+2: x86 (Requires android-9, so a change needs to be made in
 # AndroidManifest.xml too)
 #APP_PLATFORM=android-9
@@ -21,10 +16,18 @@ APP_ABI := armeabi-v7a
 #APP_PLATFORM=android-9
 #APP_ABI := mips
 
+#======编译平台armeabi-v7a============
+# Version X+1: armeabi-v7a (Much faster due to the availability of hardware
+# FP, but cannot be run in the emulator).
+APP_PLATFORM=android-8
+APP_ABI := armeabi-v7a
+
+#APP_OPTIM配置
 ifdef NDK_PROFILER
 # The profiler doesn't seem to receive ticks when run on release code.
 # Accordingly, we need to build as debug - but this turns optimisations
 # off, which is less than ideal.
+
 APP_OPTIM := debug
 APP_CFLAGS := -O2
 else
@@ -35,12 +38,16 @@ else
 APP_OPTIM := release
 endif
 endif
+
+
+#V8_BUILD配置
 ifdef V8_BUILD
 APP_STL := stlport_static
 endif
 ifdef MEMENTO
 APP_CFLAGS += -DMEMENTO -DMEMENTO_LEAKONLY
 endif
+
 
 # If the ndk is r8b then workaround bug by uncommenting the following line
 #NDK_TOOLCHAIN_VERSION=4.4.3

@@ -9,7 +9,7 @@ endif
 
 include $(CLEAR_VARS)
 
-MY_ROOT := ../../..
+MY_ROOT := ./mupdf/
 
 LOCAL_CFLAGS += -Wall -Wno-maybe-uninitialized
 

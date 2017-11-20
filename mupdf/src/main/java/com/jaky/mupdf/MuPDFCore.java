@@ -4,6 +4,20 @@ import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
+import com.jaky.mupdf.data.Annotation;
+import com.jaky.mupdf.data.LinkInfo;
+import com.jaky.mupdf.data.MuPDFAlert;
+import com.jaky.mupdf.data.MuPDFAlertInternal;
+import com.jaky.mupdf.data.OutlineItem;
+import com.jaky.mupdf.data.Separation;
+import com.jaky.mupdf.data.TextChar;
+import com.jaky.mupdf.data.TextWord;
+import com.jaky.mupdf.data.WidgetType;
+import com.jaky.mupdf.ui.PassClickResult;
+import com.jaky.mupdf.ui.PassClickResultChoice;
+import com.jaky.mupdf.ui.PassClickResultSignature;
+import com.jaky.mupdf.ui.PassClickResultText;
+
 import java.util.ArrayList;
 
 public class MuPDFCore
@@ -11,9 +25,9 @@ public class MuPDFCore
 	/* load our native library */
 	private static boolean gs_so_available = false;
 	static {
-		System.out.println("Loading dll");
+//		System.out.println("Loading dll");
 		System.loadLibrary("mupdf_java");
-		System.out.println("Loaded dll");
+//		System.out.println("Loaded dll");
 		if (gprfSupportedInternal())
 		{
 			try {
@@ -73,10 +87,10 @@ public class MuPDFCore
 	private native int setFocusedWidgetTextInternal(String text);
 	private native String getFocusedWidgetTextInternal();
 	private native int getFocusedWidgetTypeInternal();
-	private native LinkInfo [] getPageLinksInternal(int page);
+	private native LinkInfo[] getPageLinksInternal(int page);
 	private native RectF[] getWidgetAreasInternal(int page);
 	private native Annotation[] getAnnotationsInternal(int page);
-	private native OutlineItem [] getOutlineInternal();
+	private native OutlineItem[] getOutlineInternal();
 	private native boolean hasOutlineInternal();
 	private native boolean needsPasswordInternal();
 	private native boolean authenticatePasswordInternal(String password);
@@ -289,7 +303,7 @@ public class MuPDFCore
 		return textAsHtml();
 	}
 
-	public synchronized TextWord [][] textLines(int page) {
+	public synchronized TextWord[][] textLines(int page) {
 		gotoPage(page);
 		TextChar[][][][] chars = text();
 
