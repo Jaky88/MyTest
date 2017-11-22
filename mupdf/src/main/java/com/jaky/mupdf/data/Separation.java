@@ -2,9 +2,9 @@ package com.jaky.mupdf.data;
 
 public class Separation
 {
-	String name;
-	int rgba;
-	int cmyk;
+	public String name;
+	public int rgba;
+	public int cmyk;
 
 	public Separation(String name, int rgba, int cmyk)
 	{

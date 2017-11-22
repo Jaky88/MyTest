@@ -24,11 +24,6 @@ import android.widget.ListView;
 import com.jaky.mupdf.data.ChoosePDFItem;
 import com.jaky.mupdf.R;
 
-enum Purpose {
-	PickPDF,
-	PickKeyFile
-}
-
 public class ChoosePDFActivity extends ListActivity {
 	static public final String PICK_KEY_FILE = "com.artifex.mupdfdemo.PICK_KEY_FILE";
 	static private File  mDirectory;

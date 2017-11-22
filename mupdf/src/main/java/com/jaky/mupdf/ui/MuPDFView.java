@@ -6,8 +6,6 @@ import android.graphics.RectF;
 import com.jaky.mupdf.data.Annotation;
 import com.jaky.mupdf.data.LinkInfo;
 
-enum Hit {Nothing, Widget, Annotation};
-
 public interface MuPDFView {
 	public void setPage(int page, PointF size);
 	public void setScale(float scale);

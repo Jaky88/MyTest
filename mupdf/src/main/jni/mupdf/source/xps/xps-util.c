@@ -21,7 +21,7 @@ xps_strcasecmp(char *a, char *b)
 
 /* A URL is defined as consisting of a:
  * SCHEME (e.g. http:)
- * AUTHORITY (username, password, hostname, port, eg //test:passwd@mupdf.com:999)
+ * AUTHORITY (username, password, hostname, port, eg //test:passwd@mupdf.cppom:999)
  * PATH (e.g. /download)
  * QUERY (e.g. ?view=page)
  * FRAGMENT (e.g. #fred) (not strictly part of the URL)

@@ -8,7 +8,7 @@ import com.jaky.mupdf.task.CancellableTaskDefinition;
 import com.jaky.mupdf.data.FilePicker;
 import com.jaky.mupdf.data.LinkInfo;
 import com.jaky.mupdf.task.MuPDFCancellableTaskDefinition;
-import com.jaky.mupdf.MuPDFCore;
+import com.jaky.mupdf.core.MuPDFCore;
 import com.jaky.mupdf.R;
 import com.jaky.mupdf.data.TextWord;
 
@@ -29,70 +29,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
-/* This enum should be kept in line with the cooresponding C enum in mupdf.c */
-enum SignatureState {
-	NoSupport,
-	Unsigned,
-	Signed
-}
 
-abstract class PassClickResultVisitor {
-	public abstract void visitText(PassClickResultText result);
-	public abstract void visitChoice(PassClickResultChoice result);
-	public abstract void visitSignature(PassClickResultSignature result);
-}
-
-class PassClickResult {
-	public final boolean changed;
-
-	public PassClickResult(boolean _changed) {
-		changed = _changed;
-	}
-
-	public void acceptVisitor(PassClickResultVisitor visitor) {
-	}
-}
-
-class PassClickResultText extends PassClickResult {
-	public final String text;
-
-	public PassClickResultText(boolean _changed, String _text) {
-		super(_changed);
-		text = _text;
-	}
-
-	public void acceptVisitor(PassClickResultVisitor visitor) {
-		visitor.visitText(this);
-	}
-}
-
-class PassClickResultChoice extends PassClickResult {
-	public final String [] options;
-	public final String [] selected;
-
-	public PassClickResultChoice(boolean _changed, String [] _options, String [] _selected) {
-		super(_changed);
-		options = _options;
-		selected = _selected;
-	}
-
-	public void acceptVisitor(PassClickResultVisitor visitor) {
-		visitor.visitChoice(this);
-	}
-}
-
-class PassClickResultSignature extends PassClickResult {
-	public final SignatureState state;
-
-	public PassClickResultSignature(boolean _changed, int _state) {
-		super(_changed);
-		state = SignatureState.values()[_state];
-	}
-
-	public void acceptVisitor(PassClickResultVisitor visitor) {
-		visitor.visitSignature(this);
-	}
-}
 
 public class MuPDFPageView extends PageView implements MuPDFView {
 	final private FilePicker.FilePickerSupport mFilePickerSupport;

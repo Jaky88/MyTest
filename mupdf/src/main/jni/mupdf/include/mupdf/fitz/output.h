@@ -1,10 +1,10 @@
 #ifndef MUPDF_FITZ_OUTPUT_H
 #define MUPDF_FITZ_OUTPUT_H
 
-#include "mupdf/fitz/system.h"
-#include "mupdf/fitz/context.h"
-#include "mupdf/fitz/buffer.h"
-#include "mupdf/fitz/string.h"
+#include "system.h"
+#include "context.h"
+#include "buffer.h"
+#include "string.h"
 
 /*
 	Generic output streams - generalise between outputting to a file,

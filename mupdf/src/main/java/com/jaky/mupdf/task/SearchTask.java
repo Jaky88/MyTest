@@ -7,7 +7,7 @@ import android.content.DialogInterface;
 import android.graphics.RectF;
 import android.os.Handler;
 
-import com.jaky.mupdf.MuPDFCore;
+import com.jaky.mupdf.core.MuPDFCore;
 import com.jaky.mupdf.R;
 
 class ProgressDialogX extends ProgressDialog {

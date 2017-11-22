@@ -1,8 +1,8 @@
 #ifndef MUPDF_FITZ_TRANSITION_H
 #define MUPDF_FITZ_TRANSITION_H
 
-#include "mupdf/fitz/system.h"
-#include "mupdf/fitz/pixmap.h"
+#include "system.h"
+#include "pixmap.h"
 
 /* Transition support */
 typedef struct fz_transition_s fz_transition;

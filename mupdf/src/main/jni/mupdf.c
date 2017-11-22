@@ -1,39 +1,9 @@
-#include <jni.h>
-#include <time.h>
-#include <pthread.h>
-#include <android/log.h>
-#include <android/bitmap.h>
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+#include "com_jaky_mupdf_core_MuPDFCore.h"
 
-#ifdef NDK_PROFILER
-#include "prof.h"
-#endif
 
-#include "mupdf/fitz.h"
-#include "mupdf/pdf.h"
-
-#define JNI_FN(A) Java_com_jaky_mupdf_ ## A
-#define PACKAGENAME "com/jaky/mupdf"
-
-#define LOG_TAG "libmupdf"
-#define LOGI(...) __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
-#define LOGT(...) __android_log_print(ANDROID_LOG_INFO,"alert",__VA_ARGS__)
-#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
-
-/* Enable to log rendering times (render each frame 100 times and time) */
-#undef TIME_DISPLAY_LIST
-
-#define MAX_SEARCH_HITS (500)
-#define NUM_CACHE (3)
-#define STRIKE_HEIGHT (0.375f)
-#define UNDERLINE_HEIGHT (0.075f)
-#define LINE_THICKNESS (0.07f)
-#define INK_THICKNESS (4.0f)
-#define SMALL_FLOAT (0.00001)
-#define PROOF_RESOLUTION (300)
+#define JNI_FN(A) Java_com_jaky_mupdf_core_ ## A
+#define PACKAGENAME "com/jaky/mupdf/core"
 
 enum
 {
@@ -687,8 +657,7 @@ static void update_changed_rects(globals *glo, page_cache *pc, pdf_document *ido
 }
 
 JNIEXPORT jboolean JNICALL
-JNI_FN(MuPDFCore_drawPage)(JNIEnv *env, jobject thiz, jobject bitmap,
-		int pageW, int pageH, int patchX, int patchY, int patchW, int patchH, jlong cookiePtr)
+JNI_FN(MuPDFCore_drawPage)(JNIEnv *env, jobject thiz, jobject bitmap, jint pageW, jint pageH, jint patchX, jint patchY, jint patchW, jint patchH, jlong cookiePtr)
 {
 	AndroidBitmapInfo info;
 	void *pixels;
@@ -2880,3 +2849,4 @@ JNI_FN(MuPDFCore_getSepInternal)(JNIEnv *env, jobject thiz, int page, int sep)
 
 	return (*env)->NewObject(env, sepClass, ctor, jname, bgra, cmyk);
 }
+

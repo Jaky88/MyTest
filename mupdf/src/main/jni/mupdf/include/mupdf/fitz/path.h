@@ -1,9 +1,9 @@
 #ifndef MUPDF_FITZ_PATH_H
 #define MUPDF_FITZ_PATH_H
 
-#include "mupdf/fitz/system.h"
-#include "mupdf/fitz/context.h"
-#include "mupdf/fitz/math.h"
+#include "system.h"
+#include "context.h"
+#include "math.h"
 
 /*
  * Vector path buffer.

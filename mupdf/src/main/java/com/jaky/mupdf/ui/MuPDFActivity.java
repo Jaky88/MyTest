@@ -39,9 +39,8 @@ import android.widget.ViewAnimator;
 import com.jaky.mupdf.data.Annotation;
 import com.jaky.mupdf.task.AsyncTask;
 import com.jaky.mupdf.data.FilePicker;
-import com.jaky.mupdf.Hit;
 import com.jaky.mupdf.data.MuPDFAlert;
-import com.jaky.mupdf.MuPDFCore;
+import com.jaky.mupdf.core.MuPDFCore;
 import com.jaky.mupdf.data.OutlineActivityData;
 import com.jaky.mupdf.data.OutlineItem;
 import com.jaky.mupdf.R;
@@ -53,13 +52,6 @@ import com.jaky.mupdf.data.Separation;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.concurrent.Executor;
-
-class ThreadPerTaskExecutor implements Executor {
-	public void execute(Runnable r) {
-		new Thread(r).start();
-	}
-}
 
 public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupport
 {

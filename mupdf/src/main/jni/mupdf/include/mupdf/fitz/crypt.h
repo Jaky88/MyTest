@@ -1,7 +1,7 @@
 #ifndef MUPDF_FITZ_CRYPT_H
 #define MUPDF_FITZ_CRYPT_H
 
-#include "mupdf/fitz/system.h"
+#include "system.h"
 
 /*
  * Basic crypto functions.

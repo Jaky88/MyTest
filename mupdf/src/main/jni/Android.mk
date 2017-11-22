@@ -1,7 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 TOP_LOCAL_PATH := $(LOCAL_PATH)
 
-MUPDF_ROOT := ./mupdf/
+MUPDF_ROOT := mupdf
 
 
 #包含mk文件

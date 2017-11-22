@@ -9,7 +9,7 @@ endif
 
 include $(CLEAR_VARS)
 
-MY_ROOT := ./mupdf/
+MY_ROOT := mupdf
 
 LOCAL_CFLAGS += -Wall -Wno-maybe-uninitialized
 
@@ -75,6 +75,6 @@ LOCAL_SHARED_LIBRARIES := gsso
 endif
 LOCAL_LDLIBS    := -lm -llog -ljnigraphics
 
-LOCAL_SRC_FILES := $(addprefix ../, $(LOCAL_SRC_FILES))
+LOCAL_SRC_FILES := $(addprefix, $(LOCAL_SRC_FILES))
 
 include $(BUILD_STATIC_LIBRARY)

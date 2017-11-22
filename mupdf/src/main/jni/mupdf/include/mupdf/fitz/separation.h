@@ -1,8 +1,8 @@
 #ifndef MUPDF_FITZ_SEPARATION_H
 #define MUPDF_FITZ_SEPARATION_H
 
-#include "mupdf/fitz/system.h"
-#include "mupdf/fitz/context.h"
+#include "system.h"
+#include "context.h"
 
 /*
 	An fz_separation structure holds details of a set of separations

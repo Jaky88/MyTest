@@ -1,9 +1,10 @@
-package com.jaky.mupdf;
+package com.jaky.mupdf.core;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
+import com.jaky.mupdf.R;
 import com.jaky.mupdf.data.Annotation;
 import com.jaky.mupdf.data.LinkInfo;
 import com.jaky.mupdf.data.MuPDFAlert;

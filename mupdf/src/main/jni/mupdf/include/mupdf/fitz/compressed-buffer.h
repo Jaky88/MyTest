@@ -1,10 +1,10 @@
 #ifndef MUPDF_FITZ_COMPRESSED_BUFFER_H
 #define MUPDF_FITZ_COMPRESSED_BUFFER_H
 
-#include "mupdf/fitz/system.h"
-#include "mupdf/fitz/context.h"
-#include "mupdf/fitz/buffer.h"
-#include "mupdf/fitz/stream.h"
+#include "system.h"
+#include "context.h"
+#include "buffer.h"
+#include "stream.h"
 
 typedef struct fz_compression_params_s fz_compression_params;
 

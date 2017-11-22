@@ -1,10 +1,10 @@
 #ifndef MUPDF_FITZ_FUNCTION_H
 #define MUPDF_FITZ_FUNCTION_H
 
-#include "mupdf/fitz/system.h"
-#include "mupdf/fitz/context.h"
-#include "mupdf/fitz/store.h"
-#include "mupdf/fitz/colorspace.h"
+#include "system.h"
+#include "context.h"
+#include "store.h"
+#include "colorspace.h"
 
 /*
  * The generic function support.

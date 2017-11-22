@@ -1,7 +1,6 @@
 package com.jaky.mupdf.task;
 
-import com.jaky.mupdf.MuPDFCore;
-import com.jaky.mupdf.task.CancellableTaskDefinition;
+import com.jaky.mupdf.core.MuPDFCore;
 
 public abstract class MuPDFCancellableTaskDefinition<Params, Result> implements CancellableTaskDefinition<Params, Result>
 {

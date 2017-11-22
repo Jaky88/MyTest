@@ -1,7 +1,7 @@
 #ifndef MUPDF_FITZ_STRING_H
 #define MUPDF_FITZ_STRING_H
 
-#include "mupdf/fitz/system.h"
+#include "system.h"
 
 /*
 	Safe string functions

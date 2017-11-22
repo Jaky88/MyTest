@@ -1,9 +1,9 @@
 #ifndef MUPDF_FITZ_COLORSPACE_H
 #define MUPDF_FITZ_COLORSPACE_H
 
-#include "mupdf/fitz/system.h"
-#include "mupdf/fitz/context.h"
-#include "mupdf/fitz/store.h"
+#include "system.h"
+#include "context.h"
+#include "store.h"
 
 enum { FZ_MAX_COLORS = 32 };
 

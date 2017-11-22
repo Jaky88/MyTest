@@ -1,14 +1,14 @@
 #ifndef MUPDF_FITZ_DEVICE_H
 #define MUPDF_FITZ_DEVICE_H
 
-#include "mupdf/fitz/system.h"
-#include "mupdf/fitz/context.h"
-#include "mupdf/fitz/math.h"
-#include "mupdf/fitz/colorspace.h"
-#include "mupdf/fitz/image.h"
-#include "mupdf/fitz/shade.h"
-#include "mupdf/fitz/path.h"
-#include "mupdf/fitz/text.h"
+#include "system.h"
+#include "context.h"
+#include "math.h"
+#include "colorspace.h"
+#include "image.h"
+#include "shade.h"
+#include "path.h"
+#include "text.h"
 
 /*
 	The different format handlers (pdf, xps etc) interpret pages to a
