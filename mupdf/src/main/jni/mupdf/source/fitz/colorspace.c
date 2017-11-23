@@ -1,4 +1,4 @@
-#include "mupdf/fitz.h"
+#include "fitz.h"
 
 #define SLOWCMYK
 

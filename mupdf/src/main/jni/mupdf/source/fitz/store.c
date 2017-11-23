@@ -1,4 +1,4 @@
-#include "mupdf/fitz.h"
+#include "fitz.h"
 
 typedef struct fz_item_s fz_item;
 

@@ -9,7 +9,7 @@
  * TODO: linearize document for fast web view
  */
 
-#include "mupdf/pdf.h"
+#include "pdf.h"
 
 static void usage(void)
 {

@@ -1,4 +1,4 @@
-#include "mupdf/fitz.h"
+#include "fitz.h"
 
 #include <ft2build.h>
 #include "hb.h"

@@ -1,4 +1,4 @@
-#include "mupdf/pdf.h"
+#include "pdf.h"
 
 typedef struct globals_s
 {

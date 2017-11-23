@@ -1,4 +1,4 @@
-#include "mupdf/pdf.h"
+#include "pdf.h"
 
 pdf_xobject *
 pdf_keep_xobject(fz_context *ctx, pdf_xobject *xobj)

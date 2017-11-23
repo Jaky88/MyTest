@@ -1,4 +1,4 @@
-#include "mupdf/pdf.h"
+#include "pdf.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H

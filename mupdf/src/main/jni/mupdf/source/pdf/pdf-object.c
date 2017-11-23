@@ -1,4 +1,4 @@
-#include "mupdf/pdf.h"
+#include "pdf.h"
 
 #include "pdf-name-table.h"
 

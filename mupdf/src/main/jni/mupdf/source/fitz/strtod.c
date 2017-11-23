@@ -11,7 +11,7 @@
  * OF THIS SOFTWARE OR ITS FITNESS FOR ANY PARTICULAR PURPOSE.
  */
 
-#include "mupdf/fitz.h"
+#include "fitz.h"
 
 #include <stdio.h>
 #include <math.h>

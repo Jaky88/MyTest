@@ -1,4 +1,4 @@
-#include "mupdf/pdf.h"
+#include "pdf.h"
 
 #define TEXT_ANNOT_SIZE (25.0)
 

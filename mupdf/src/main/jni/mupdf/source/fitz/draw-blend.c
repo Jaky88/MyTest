@@ -1,4 +1,4 @@
-#include "mupdf/fitz.h"
+#include "fitz.h"
 #include "draw-imp.h"
 
 /* PDF 1.4 blend modes. These are slow. */

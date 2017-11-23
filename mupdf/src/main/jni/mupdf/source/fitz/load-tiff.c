@@ -1,4 +1,4 @@
-#include "mupdf/fitz.h"
+#include "fitz.h"
 
 /*
  * TIFF image loader. Should be enough to support TIFF files in XPS.

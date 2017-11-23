@@ -34,7 +34,7 @@
  * Includes...
  */
 
-#include "mupdf/fitz.h"
+#include "fitz.h"
 #include "bidi-impl.h" /* standard bidi code interface */
 
 /*

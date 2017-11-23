@@ -1,4 +1,4 @@
-#include "mupdf/xps.h"
+#include "xps.h"
 
 #define MAX_STOPS 256
 

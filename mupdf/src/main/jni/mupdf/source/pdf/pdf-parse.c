@@ -1,4 +1,4 @@
-#include "mupdf/pdf.h"
+#include "pdf.h"
 
 fz_rect *
 pdf_to_rect(fz_context *ctx, pdf_obj *array, fz_rect *r)

@@ -1,4 +1,4 @@
-#include "mupdf/pdf.h" // TODO: move this file to pdf module
+#include "pdf.h" // TODO: move this file to pdf module
 
 #ifdef HAVE_OPENSSL
 

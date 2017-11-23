@@ -1,4 +1,4 @@
-#include "mupdf/pdf.h"
+#include "pdf.h"
 
 /* FIXME: Remove this somehow */
 #define FUNSEGS 32 /* size of sampled mesh for function-based shadings */

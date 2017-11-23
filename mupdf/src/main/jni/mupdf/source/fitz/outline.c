@@ -1,4 +1,4 @@
-#include "mupdf/fitz.h"
+#include "fitz.h"
 
 fz_outline *
 fz_new_outline(fz_context *ctx)

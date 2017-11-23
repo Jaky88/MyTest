@@ -1,5 +1,5 @@
-#include "mupdf/fitz/stream.h"
-#include "mupdf/fitz/string.h"
+#include "fitz/stream.h"
+#include "fitz/string.h"
 
 /* File stream - progressive reading to simulate http download */
 

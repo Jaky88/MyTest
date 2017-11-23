@@ -1,4 +1,4 @@
-#include "mupdf/fitz.h"
+#include "fitz.h"
 #include "draw-imp.h"
 
 /* Unpack image samples and optionally pad pixels with opaque alpha */

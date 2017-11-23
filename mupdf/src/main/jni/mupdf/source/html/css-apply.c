@@ -1,4 +1,4 @@
-#include "mupdf/html.h"
+#include "html.h"
 
 static const char *inherit_list[] = {
 	"color",

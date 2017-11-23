@@ -1,4 +1,4 @@
-#include "mupdf/pdf.h"
+#include "pdf.h"
 
 /* Must be kept in sync with definitions in pdf_util.js */
 enum

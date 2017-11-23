@@ -3,7 +3,7 @@
  * custom allocators.
  */
 
-#include "mupdf/fitz.h"
+#include "fitz.h"
 
 #include "hb.h"
 

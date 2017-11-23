@@ -1,4 +1,4 @@
-#include "mupdf/fitz.h"
+#include "fitz.h"
 
 void fz_register_document_handlers(fz_context *ctx)
 {

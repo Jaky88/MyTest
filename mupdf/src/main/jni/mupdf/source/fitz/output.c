@@ -1,4 +1,4 @@
-#include "mupdf/fitz.h"
+#include "fitz.h"
 
 static void
 file_write(fz_context *ctx, void *opaque, const void *buffer, int count)

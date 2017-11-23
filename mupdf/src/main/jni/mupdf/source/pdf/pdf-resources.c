@@ -1,4 +1,4 @@
-#include "mupdf/pdf.h"
+#include "pdf.h"
 
 static void
 res_table_free(fz_context *ctx, pdf_res_table *table)

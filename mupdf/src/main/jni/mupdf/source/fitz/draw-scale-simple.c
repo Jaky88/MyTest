@@ -10,7 +10,7 @@ that return values strictly in the 0..1 range, and uses bytes for
 intermediate results rather than ints.
 */
 
-#include "mupdf/fitz.h"
+#include "fitz.h"
 #include "draw-imp.h"
 
 /* Do we special case handling of single pixel high/wide images? The

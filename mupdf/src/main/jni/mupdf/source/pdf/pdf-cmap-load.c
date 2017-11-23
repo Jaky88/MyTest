@@ -1,4 +1,4 @@
-#include "mupdf/pdf.h"
+#include "pdf.h"
 
 unsigned int
 pdf_cmap_size(fz_context *ctx, pdf_cmap *cmap)

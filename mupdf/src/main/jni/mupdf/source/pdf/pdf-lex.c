@@ -1,4 +1,4 @@
-#include "mupdf/pdf.h"
+#include "pdf.h"
 
 #define IS_NUMBER \
 	'+':case'-':case'.':case'0':case'1':case'2':case'3':\

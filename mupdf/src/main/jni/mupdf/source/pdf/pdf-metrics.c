@@ -1,4 +1,4 @@
-#include "mupdf/pdf.h"
+#include "pdf.h"
 
 void
 pdf_set_font_wmode(fz_context *ctx, pdf_font_desc *font, int wmode)

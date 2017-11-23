@@ -1,4 +1,4 @@
-#include "mupdf/pdf.h"
+#include "pdf.h"
 
 static pdf_obj *
 resolve_dest_rec(fz_context *ctx, pdf_document *doc, pdf_obj *dest, fz_link_kind kind, int depth)

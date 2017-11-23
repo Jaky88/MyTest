@@ -1,4 +1,4 @@
-#include "mupdf/xps.h"
+#include "xps.h"
 
 static inline int unhex(int a)
 {

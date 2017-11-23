@@ -1,4 +1,4 @@
-#include "mupdf/pdf.h"
+#include "pdf.h"
 
 /* Load or synthesize ToUnicode map for fonts */
 

@@ -1,4 +1,4 @@
-#include "mupdf/pdf.h"
+#include "pdf.h"
 
 typedef struct filter_gstate_s filter_gstate;
 

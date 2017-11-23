@@ -1,4 +1,4 @@
-#include "mupdf/fitz.h"
+#include "fitz.h"
 #include "draw-imp.h"
 
 #define BBOX_MIN -(1<<20)

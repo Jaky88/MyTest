@@ -1,4 +1,4 @@
-#include "mupdf/fitz.h"
+#include "fitz.h"
 
 /*
 Simple hashtable with open addressing linear probe.

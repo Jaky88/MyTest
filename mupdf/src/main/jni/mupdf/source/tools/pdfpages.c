@@ -3,7 +3,7 @@
  * Print information about pages of a pdf.
  */
 
-#include "mupdf/pdf.h"
+#include "pdf.h"
 
 static void
 infousage(void)

@@ -1,4 +1,4 @@
-#include "mupdf/fitz.h"
+#include "fitz.h"
 
 void
 fz_save_gproof(fz_context *ctx, const char *pdf_file, fz_document *doc, const char *filename, int res,

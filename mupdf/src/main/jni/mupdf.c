@@ -2,7 +2,7 @@
 #include "com_jaky_mupdf_core_MuPDFCore.h"
 
 
-#define JNI_FN(A) Java_com_jaky_mupdf_core_ ## A
+#define JNI_FN(A) Java_com_jaky_mupdf_ ## A
 #define PACKAGENAME "com/jaky/mupdf/core"
 
 enum

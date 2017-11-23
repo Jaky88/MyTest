@@ -3,7 +3,7 @@
  * Print information about the input pdf.
  */
 
-#include "mupdf/pdf.h"
+#include "pdf.h"
 
 enum
 {

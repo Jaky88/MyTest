@@ -1,4 +1,4 @@
-#include "mupdf/pdf.h"
+#include "pdf.h"
 
 pdf_pattern *
 pdf_keep_pattern(fz_context *ctx, pdf_pattern *pat)

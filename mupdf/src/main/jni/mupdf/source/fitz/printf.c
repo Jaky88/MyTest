@@ -1,4 +1,4 @@
-#include "mupdf/fitz.h"
+#include "fitz.h"
 
 static const char *fz_hex_digits = "0123456789abcdef";
 

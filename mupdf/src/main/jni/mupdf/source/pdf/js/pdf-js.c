@@ -1,4 +1,4 @@
-#include "mupdf/pdf.h"
+#include "pdf.h"
 #include "mujs.h"
 
 struct pdf_js_s

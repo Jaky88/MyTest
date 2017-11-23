@@ -1,4 +1,4 @@
-#include "mupdf/fitz.h"
+#include "fitz.h"
 
 /*
 	Convert IEEE single precison numbers into decimal ASCII strings, while

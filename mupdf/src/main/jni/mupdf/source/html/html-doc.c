@@ -1,4 +1,4 @@
-#include "mupdf/html.h"
+#include "html.h"
 
 enum { T, R, B, L };
 

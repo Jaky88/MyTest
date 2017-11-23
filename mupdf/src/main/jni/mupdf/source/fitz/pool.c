@@ -1,4 +1,4 @@
-#include "mupdf/fitz.h"
+#include "fitz.h"
 
 fz_pool *fz_new_pool(fz_context *ctx)
 {

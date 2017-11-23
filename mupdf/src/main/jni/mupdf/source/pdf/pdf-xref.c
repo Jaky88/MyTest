@@ -1,5 +1,5 @@
-#include "mupdf/pdf.h"
-#include "mupdf/fitz/document.h"
+#include "pdf.h"
+#include "fitz/document.h"
 
 #undef DEBUG_PROGESSIVE_ADVANCE
 

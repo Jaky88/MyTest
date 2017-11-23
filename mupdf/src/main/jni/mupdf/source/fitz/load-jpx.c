@@ -1,4 +1,4 @@
-#include "mupdf/fitz.h"
+#include "fitz.h"
 
 /* Without the definition of OPJ_STATIC, compilation fails on windows
  * due to the use of __stdcall. We believe it is required on some

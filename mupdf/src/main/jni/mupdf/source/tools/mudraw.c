@@ -2,8 +2,8 @@
  * mudraw -- command line tool for drawing and converting documents
  */
 
-#include "mupdf/fitz.h"
-#include "mupdf/pdf.h" /* for pdf output */
+#include "fitz.h"
+#include "pdf.h" /* for pdf output */
 
 #ifdef _MSC_VER
 #include <winsock2.h>

@@ -1,4 +1,4 @@
-#include "mupdf/html.h"
+#include "html.h"
 
 #include "hb.h"
 #include "hb-ft.h"

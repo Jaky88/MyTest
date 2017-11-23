@@ -1,4 +1,4 @@
-#include "mupdf/pdf.h"
+#include "pdf.h"
 
 /* Scan file for objects and reconstruct xref table */
 

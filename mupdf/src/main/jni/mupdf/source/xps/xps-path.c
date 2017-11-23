@@ -1,4 +1,4 @@
-#include "mupdf/xps.h"
+#include "xps.h"
 
 static char *
 xps_parse_float_array(fz_context *ctx, xps_document *doc, char *s, int num, float *x)

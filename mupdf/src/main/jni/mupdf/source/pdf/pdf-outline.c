@@ -1,4 +1,4 @@
-#include "mupdf/pdf.h"
+#include "pdf.h"
 
 static fz_outline *
 pdf_load_outline_imp(fz_context *ctx, pdf_document *doc, pdf_obj *dict)

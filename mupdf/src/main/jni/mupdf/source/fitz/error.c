@@ -1,4 +1,4 @@
-#include "mupdf/fitz.h"
+#include "fitz.h"
 
 #ifdef USE_OUTPUT_DEBUG_STRING
 #include <windows.h>

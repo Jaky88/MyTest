@@ -1,4 +1,4 @@
-#include "mupdf/fitz.h"
+#include "fitz.h"
 
 fz_display_list *
 fz_new_display_list_from_page(fz_context *ctx, fz_page *page)

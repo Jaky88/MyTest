@@ -1,4 +1,4 @@
-#include "mupdf/fitz.h"
+#include "fitz.h"
 
 /* Produce a (hopefully) unique temporary filename based upon a given
  * 'base' name, with a 'hint' for where to create it.

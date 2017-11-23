@@ -1,4 +1,4 @@
-#include "mupdf/fitz.h"
+#include "fitz.h"
 
 // Thoughts for further optimisations:
 // All paths start with MoveTo. We could probably avoid most cases where

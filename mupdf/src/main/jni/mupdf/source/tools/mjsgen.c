@@ -2,8 +2,8 @@
  * mjs test file generation tool
  */
 
-#include "mupdf/fitz.h"
-#include "mupdf/pdf.h"
+#include "fitz.h"
+#include "pdf.h"
 
 /*
 	A useful bit of bash script to call this to generate mjs files:
