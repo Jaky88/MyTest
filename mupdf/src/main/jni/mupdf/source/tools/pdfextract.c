@@ -2,7 +2,7 @@
  * pdfextract -- the ultimate way to extract images and fonts from pdfs
  */
 
-#include "pdf.h"
+#include "mupdf/include/mupdf/pdf.h"
 
 static pdf_document *doc = NULL;
 static fz_context *ctx = NULL;

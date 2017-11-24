@@ -1,4 +1,4 @@
-#include "pdf.h"
+#include "mupdf/include/mupdf/pdf.h"
 
 static void
 pdf_run_annot_with_usage(fz_context *ctx, pdf_document *doc, pdf_page *page, pdf_annot *annot, fz_device *dev, const fz_matrix *ctm, char *event, fz_cookie *cookie)

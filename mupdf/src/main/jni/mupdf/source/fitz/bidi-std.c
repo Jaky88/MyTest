@@ -3,7 +3,7 @@
 // Reference implementation for Unicode Bidirectional Algorithm
 
 // Bidi include file
-#include "fitz.h"
+#include "mupdf/include/mupdf/fitz.h"
 #include "bidi-impl.h"
 
 #ifndef TRUE

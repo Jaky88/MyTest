@@ -1,4 +1,4 @@
-#include "pdf.h"
+#include "mupdf/include/mupdf/pdf.h"
 
 #include "pdf-encodings.h"
 #include "pdf-glyphlist.h"

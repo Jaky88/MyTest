@@ -1,4 +1,4 @@
-#include "pdf.h"
+#include "mupdf/include/mupdf/pdf.h"
 
 typedef struct pdf_output_processor_s pdf_output_processor;
 

@@ -1,4 +1,4 @@
-#include "fitz.h"
+#include "mupdf/include/mupdf/fitz.h"
 
 #define SANE_DPI 72.0f
 #define INSANE_DPI 4800.0f

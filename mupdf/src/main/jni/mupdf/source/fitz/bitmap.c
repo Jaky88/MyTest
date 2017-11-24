@@ -1,4 +1,4 @@
-#include "fitz.h"
+#include "mupdf/include/mupdf/fitz.h"
 
 static const unsigned char pkm[256*8] =
 {

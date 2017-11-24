@@ -1,5 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 
+
+
 ifdef SUPPORT_GPROOF
 include $(CLEAR_VARS)
 LOCAL_MODULE    := gsso
@@ -7,9 +9,11 @@ LOCAL_SRC_FILES := libgs.so
 include $(PREBUILT_SHARED_LIBRARY)
 endif
 
-include $(CLEAR_VARS)
 
-MY_ROOT := mupdf
+
+include $(CLEAR_VARS)
+MY_ROOT := $(LOCAL_PATH)/mupdf
+
 
 LOCAL_CFLAGS += -Wall -Wno-maybe-uninitialized
 
@@ -75,6 +79,6 @@ LOCAL_SHARED_LIBRARIES := gsso
 endif
 LOCAL_LDLIBS    := -lm -llog -ljnigraphics
 
-LOCAL_SRC_FILES := $(addprefix, $(LOCAL_SRC_FILES))
+LOCAL_SRC_FILES := $(addprefix ../, $(LOCAL_SRC_FILES))
 
 include $(BUILD_STATIC_LIBRARY)

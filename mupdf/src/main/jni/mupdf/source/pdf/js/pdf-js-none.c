@@ -1,4 +1,4 @@
-#include "pdf.h"
+#include "mupdf/include/mupdf/pdf.h"
 
 void pdf_enable_js(fz_context *ctx, pdf_document *doc)
 {

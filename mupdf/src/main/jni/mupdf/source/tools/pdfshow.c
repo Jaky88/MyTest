@@ -2,7 +2,7 @@
  * pdfshow -- the ultimate pdf debugging tool
  */
 
-#include "pdf.h"
+#include "mupdf/include/mupdf/pdf.h"
 
 static pdf_document *doc = NULL;
 static fz_context *ctx = NULL;

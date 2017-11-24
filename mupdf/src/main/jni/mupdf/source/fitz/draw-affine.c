@@ -1,4 +1,4 @@
-#include "fitz.h"
+#include "mupdf/include/mupdf/fitz.h"
 #include "draw-imp.h"
 
 typedef unsigned char byte;

@@ -1,4 +1,4 @@
-#include "xps.h"
+#include "mupdf/include/mupdf/xps.h"
 
 /* Quick parsing of document to find links. */
 

@@ -1,4 +1,4 @@
-#include "fitz.h"
+#include "mupdf/include/mupdf/fitz.h"
 #include "draw-imp.h"
 
 #define STACK_SIZE 96

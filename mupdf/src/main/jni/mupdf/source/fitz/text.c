@@ -1,4 +1,4 @@
-#include "fitz.h"
+#include "mupdf/include/mupdf/fitz.h"
 
 fz_text *
 fz_new_text(fz_context *ctx)

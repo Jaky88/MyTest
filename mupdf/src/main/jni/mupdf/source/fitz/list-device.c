@@ -1,4 +1,4 @@
-#include "fitz.h"
+#include "mupdf/include/mupdf/fitz.h"
 
 typedef struct fz_display_node_s fz_display_node;
 typedef struct fz_list_device_s fz_list_device;

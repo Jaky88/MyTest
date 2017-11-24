@@ -1,4 +1,4 @@
-#include "fitz.h"
+#include "mupdf/include/mupdf/fitz.h"
 
 char *
 fz_strsep(char **stringp, const char *delim)

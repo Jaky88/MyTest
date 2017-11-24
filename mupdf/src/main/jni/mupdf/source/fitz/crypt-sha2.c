@@ -9,7 +9,7 @@ You can do whatever you want with this file.
 SHA-384 and SHA-512 were also taken from Crypto++ and adapted for fitz.
 */
 
-#include "fitz.h"
+#include "mupdf/include/mupdf/fitz.h"
 
 static inline int isbigendian(void)
 {

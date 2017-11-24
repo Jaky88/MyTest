@@ -8,7 +8,7 @@
 #define GS_API_NULL_STDIO
 #endif
 
-#include "fitz.h"
+#include "mupdf/include/mupdf/fitz.h"
 #if defined(USE_GS_API) && !defined(__ANDROID__)
 #ifdef _MSC_VER
 #define GSDLLEXPORT

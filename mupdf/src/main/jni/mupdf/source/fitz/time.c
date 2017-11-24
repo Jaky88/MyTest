@@ -1,6 +1,6 @@
 #ifdef _WIN32
 
-#include "fitz.h"
+#include "mupdf/include/mupdf/fitz.h"
 
 #include <time.h>
 #include <windows.h>

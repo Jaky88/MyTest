@@ -1,4 +1,4 @@
-#include "xps.h"
+#include "mupdf/include/mupdf/xps.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H

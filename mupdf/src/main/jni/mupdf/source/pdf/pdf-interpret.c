@@ -1,4 +1,4 @@
-#include "pdf.h"
+#include "mupdf/include/mupdf/pdf.h"
 
 void *
 pdf_new_processor(fz_context *ctx, int size)

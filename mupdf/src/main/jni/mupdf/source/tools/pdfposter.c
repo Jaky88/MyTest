@@ -2,7 +2,7 @@
  * PDF posteriser; split pages within a PDF file into smaller lumps.
  */
 
-#include "pdf.h"
+#include "mupdf/include/mupdf/pdf.h"
 
 static int x_factor = 0;
 static int y_factor = 0;

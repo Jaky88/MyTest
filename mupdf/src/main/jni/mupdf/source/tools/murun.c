@@ -1,5 +1,5 @@
-#include "fitz.h"
-#include "pdf.h"
+#include "mupdf/include/mupdf/fitz.h"
+#include "mupdf/include/mupdf/pdf.h"
 
 #include "mujs.h"
 

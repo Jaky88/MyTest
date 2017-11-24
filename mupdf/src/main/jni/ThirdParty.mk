@@ -1,8 +1,9 @@
 LOCAL_PATH := $(call my-dir)
 
-include $(CLEAR_VARS)
 
-MY_ROOT := mupdf
+
+include $(CLEAR_VARS)
+MY_ROOT := $(LOCAL_PATH)/mupdf
 
 LOCAL_C_INCLUDES := \
 	$(MY_ROOT)/include/ \
@@ -172,6 +173,7 @@ LOCAL_SRC_FILES := \
 	$(MY_ROOT)/thirdparty/freetype/src/truetype/truetype.c \
 	$(MY_ROOT)/thirdparty/freetype/src/type1/type1.c
 
-LOCAL_SRC_FILES := $(addprefix, $(LOCAL_SRC_FILES))
+LOCAL_SRC_FILES := $(addprefix ../, $(LOCAL_SRC_FILES))
 
 include $(BUILD_STATIC_LIBRARY)
+

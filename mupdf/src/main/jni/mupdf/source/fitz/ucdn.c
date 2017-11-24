@@ -14,7 +14,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#include "fitz.h"
+#include "mupdf/include/mupdf/fitz.h"
 
 typedef struct {
 	unsigned char category;

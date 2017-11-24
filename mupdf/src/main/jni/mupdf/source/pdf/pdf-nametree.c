@@ -1,4 +1,4 @@
-#include "pdf.h"
+#include "mupdf/include/mupdf/pdf.h"
 
 static pdf_obj *
 pdf_lookup_name_imp(fz_context *ctx, pdf_obj *node, pdf_obj *needle)

@@ -22,7 +22,7 @@
     ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THE SOFTWARE.
 */
 
-#include "fitz.h"
+#include "mupdf/include/mupdf/fitz.h"
 
 /* Bidirectional Character Types
  * as defined by the Unicode Bidirectional Algorithm Table 3-7.

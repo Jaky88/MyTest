@@ -1,4 +1,4 @@
-#include "fitz.h"
+#include "mupdf/include/mupdf/fitz.h"
 
 typedef struct fz_mesh_processor_s fz_mesh_processor;
 

@@ -4,7 +4,7 @@
  * Simple test bed to work with adding content and creating PDFs
  */
 
-#include "pdf.h"
+#include "mupdf/include/mupdf/pdf.h"
 
 static void usage(void)
 {

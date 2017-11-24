@@ -1,4 +1,4 @@
-#include "fitz.h"
+#include "mupdf/include/mupdf/fitz.h"
 
 typedef struct tiff_document_s tiff_document;
 typedef struct tiff_page_s tiff_page;

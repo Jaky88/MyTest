@@ -1,4 +1,4 @@
-#include "fitz.h"
+#include "mupdf/include/mupdf/fitz.h"
 
 /* Lifted from ghostscript gdevjlm.h */
 /*

@@ -1,4 +1,4 @@
-#include "xps.h"
+#include "mupdf/include/mupdf/xps.h"
 
 static void xps_init_document(fz_context *ctx, xps_document *doc);
 

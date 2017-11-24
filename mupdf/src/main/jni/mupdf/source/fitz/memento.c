@@ -42,7 +42,7 @@ void *memset(void *,int,size_t);
 #endif
 int atexit(void (*)(void));
 #else
-#include "memento.h"
+#include "mupdf/include/mupdf/memento.h"
 #include <stdio.h>
 #include <stdlib.h>
 #endif

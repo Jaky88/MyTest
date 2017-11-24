@@ -1,4 +1,4 @@
-#include "fitz.h"
+#include "mupdf/include/mupdf/fitz.h"
 
 #ifndef INFINITY
 #define INFINITY (DBL_MAX+DBL_MAX)
