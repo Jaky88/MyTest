@@ -1,10 +1,10 @@
 #ifndef MUPDF_FITZ_OUTLINE_H
 #define MUPDF_FITZ_OUTLINE_H
 
-#include "system.h"
-#include "context.h"
-#include "link.h"
-#include "output.h"
+#include "mupdf/fitz/system.h"
+#include "mupdf/fitz/context.h"
+#include "mupdf/fitz/link.h"
+#include "mupdf/fitz/output.h"
 
 /* Outline */
 

@@ -1,8 +1,8 @@
 #ifndef MUPDF_FITZ_BUFFER_H
 #define MUPDF_FITZ_BUFFER_H
 
-#include "system.h"
-#include "context.h"
+#include "mupdf/fitz/system.h"
+#include "mupdf/fitz/context.h"
 
 /*
 	fz_buffer is a wrapper around a dynamically allocated array of bytes.

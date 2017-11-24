@@ -1,8 +1,8 @@
 #ifndef MUPDF_FITZ_POOL_H
 #define MUPDF_FITZ_POOL_H
 
-#include "system.h"
-#include "context.h"
+#include "mupdf/fitz/system.h"
+#include "mupdf/fitz/context.h"
 
 typedef struct fz_pool_s fz_pool;
 typedef struct fz_pool_node_s fz_pool_node;

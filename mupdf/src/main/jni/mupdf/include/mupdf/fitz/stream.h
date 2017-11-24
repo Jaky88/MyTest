@@ -1,9 +1,9 @@
 #ifndef MUPDF_FITZ_STREAM_H
 #define MUPDF_FITZ_STREAM_H
 
-#include "system.h"
-#include "context.h"
-#include "buffer.h"
+#include "mupdf/fitz/system.h"
+#include "mupdf/fitz/context.h"
+#include "mupdf/fitz/buffer.h"
 
 /*
 	fz_file_exists: Return true if the named file exists and is readable.

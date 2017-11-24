@@ -1,10 +1,10 @@
 #ifndef MUPDF_FITZ_UNZIP_H
 #define MUPDF_FITZ_UNZIP_H
 
-#include "system.h"
-#include "context.h"
-#include "buffer.h"
-#include "stream.h"
+#include "mupdf/fitz/system.h"
+#include "mupdf/fitz/context.h"
+#include "mupdf/fitz/buffer.h"
+#include "mupdf/fitz/stream.h"
 
 typedef struct fz_archive_s fz_archive;
 

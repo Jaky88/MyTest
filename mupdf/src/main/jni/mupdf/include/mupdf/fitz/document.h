@@ -1,13 +1,13 @@
 #ifndef MUPDF_FITZ_DOCUMENT_H
 #define MUPDF_FITZ_DOCUMENT_H
 
-#include "system.h"
-#include "context.h"
-#include "math.h"
-#include "device.h"
-#include "transition.h"
-#include "link.h"
-#include "outline.h"
+#include "mupdf/fitz/system.h"
+#include "mupdf/fitz/context.h"
+#include "mupdf/fitz/math.h"
+#include "mupdf/fitz/device.h"
+#include "mupdf/fitz/transition.h"
+#include "mupdf/fitz/link.h"
+#include "mupdf/fitz/outline.h"
 
 /*
 	Document interface

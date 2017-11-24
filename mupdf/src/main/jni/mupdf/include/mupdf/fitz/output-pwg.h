@@ -1,11 +1,11 @@
 #ifndef MUPDF_FITZ_OUTPUT_PWG_H
 #define MUPDF_FITZ_OUTPUT_PWG_H
 
-#include "system.h"
-#include "context.h"
-#include "output.h"
-#include "pixmap.h"
-#include "bitmap.h"
+#include "mupdf/fitz/system.h"
+#include "mupdf/fitz/context.h"
+#include "mupdf/fitz/output.h"
+#include "mupdf/fitz/pixmap.h"
+#include "mupdf/fitz/bitmap.h"
 
 typedef struct fz_pwg_options_s fz_pwg_options;
 

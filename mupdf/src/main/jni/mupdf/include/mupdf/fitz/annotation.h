@@ -1,10 +1,10 @@
 #ifndef MUPDF_FITZ_ANNOTATION_H
 #define MUPDF_FITZ_ANNOTATION_H
 
-#include "system.h"
-#include "context.h"
-#include "math.h"
-#include "document.h"
+#include "mupdf/fitz/system.h"
+#include "mupdf/fitz/context.h"
+#include "mupdf/fitz/math.h"
+#include "mupdf/fitz/document.h"
 
 typedef enum
 {

@@ -1,8 +1,8 @@
 #ifndef MUPDF_FITZ_CONTEXT_H
 #define MUPDF_FITZ_CONTEXT_H
 
-#include "version.h"
-#include "system.h"
+#include "mupdf/fitz/version.h"
+#include "mupdf/fitz/system.h"
 
 /*
 	Contexts

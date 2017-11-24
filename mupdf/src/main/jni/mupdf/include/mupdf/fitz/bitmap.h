@@ -1,9 +1,9 @@
 #ifndef MUPDF_FITZ_BITMAP_H
 #define MUPDF_FITZ_BITMAP_H
 
-#include "system.h"
-#include "context.h"
-#include "pixmap.h"
+#include "mupdf/fitz/system.h"
+#include "mupdf/fitz/context.h"
+#include "mupdf/fitz/pixmap.h"
 
 /*
 	Bitmaps have 1 bit per component. Only used for creating halftoned
