@@ -22,14 +22,14 @@ android {
     dataBinding {
         enabled = true
     }
-    compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
 //        applicationId "com.moxi.test"
         multiDexEnabled true
         applicationId "com.onyx.test.mytest"
-        minSdkVersion 15
-        targetSdkVersion 23
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName  "${verName}-${devStage}-build-${buildTime()}"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
