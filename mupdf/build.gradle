@@ -1,6 +1,13 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 apply plugin: 'com.android.library'
 
+//加载资源
+Properties properties = new Properties()
+InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
+properties.load( inputStream )
+//读取文件
+def ndkDir = properties.getProperty('ndk.dir')
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -19,7 +26,7 @@ android {
         // call regular ndk-build(.cmd) script from app directory
         task ndkBuild(type: Exec) {
             if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-                commandLine 'ndk-build.cmd', '-C', file('src/main').absolutePath, '-j10'
+                commandLine "$ndkDir/ndk-build.cmd", '-C', file('src/main').absolutePath, '-j10'
             } else {
                 commandLine '/opt/adt-bundle-linux/ndk/ndk-build', '-C', file('src/main').absolutePath, '-j10'
             }
@@ -31,7 +38,7 @@ android {
 
         task ndkClean(type: Exec) {
             if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-                commandLine 'ndk-build.cmd', '-C', file('src/main').absolutePath, 'clean'
+                commandLine "$ndkDir/ndk-build.cmd", '-C', file('src/main').absolutePath, 'clean'
             } else {
                 commandLine '/opt/adt-bundle-linux/ndk/ndk-build', '-C', file('src/main').absolutePath, 'clean'
             }

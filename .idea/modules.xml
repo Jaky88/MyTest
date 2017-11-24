@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/lfilepickerlibrary/lfilepickerlibrary.iml" filepath="$PROJECT_DIR$/lfilepickerlibrary/lfilepickerlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/mupdf/mupdf.iml" filepath="$PROJECT_DIR$/mupdf/mupdf.iml" />
+      <module fileurl="file://C:\workspaces\MyTest\mupdf\mupdf.iml" filepath="C:\workspaces\MyTest\mupdf\mupdf.iml" />
       <module fileurl="file://$PROJECT_DIR$/xposelibrary/xposelibrary.iml" filepath="$PROJECT_DIR$/xposelibrary/xposelibrary.iml" />
     </modules>
   </component>
