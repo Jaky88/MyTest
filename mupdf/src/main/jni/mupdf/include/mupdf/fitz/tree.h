@@ -1,8 +1,8 @@
 #ifndef MUPDF_FITZ_TREE_H
 #define MUPDF_FITZ_TREE_H
 
-#include "mupdf/fitz/system.h"
-#include "mupdf/fitz/context.h"
+#include "mupdf/include/mupdf/fitz/system.h"
+#include "mupdf/include/mupdf/fitz/context.h"
 
 /* AA-tree to look up things by strings. */
 

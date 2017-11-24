@@ -1,13 +1,13 @@
 #ifndef MUPDF_FITZ_GLYPH_CACHE_H
 #define MUPDF_FITZ_GLYPH_CACHE_H
 
-#include "mupdf/fitz/system.h"
-#include "mupdf/fitz/context.h"
-#include "mupdf/fitz/math.h"
-#include "mupdf/fitz/font.h"
-#include "mupdf/fitz/path.h"
-#include "mupdf/fitz/pixmap.h"
-#include "mupdf/fitz/device.h"
+#include "mupdf/include/mupdf/fitz/system.h"
+#include "mupdf/include/mupdf/fitz/context.h"
+#include "mupdf/include/mupdf/fitz/math.h"
+#include "mupdf/include/mupdf/fitz/font.h"
+#include "mupdf/include/mupdf/fitz/path.h"
+#include "mupdf/include/mupdf/fitz/pixmap.h"
+#include "mupdf/include/mupdf/fitz/device.h"
 
 /*
  * Glyph cache

@@ -1,11 +1,11 @@
 #ifndef MUPDF_FITZ_GLYPH_H
 #define MUPDF_FITZ_GLYPH_H
 
-#include "mupdf/fitz/system.h"
-#include "mupdf/fitz/context.h"
-#include "mupdf/fitz/math.h"
-#include "mupdf/fitz/store.h"
-#include "mupdf/fitz/colorspace.h"
+#include "mupdf/include/mupdf/fitz/system.h"
+#include "mupdf/include/mupdf/fitz/context.h"
+#include "mupdf/include/mupdf/fitz/math.h"
+#include "mupdf/include/mupdf/fitz/store.h"
+#include "mupdf/include/mupdf/fitz/colorspace.h"
 
 /*
 	Glyphs represent a run length encoded set of pixels for a 2

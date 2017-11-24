@@ -1,7 +1,7 @@
 #ifndef MUPDF_HTML_H
 #define MUPDF_HTML_H
 
-#include "mupdf/fitz.h"
+#include "mupdf/include/mupdf/fitz.h"
 
 typedef struct fz_html_font_face_s fz_html_font_face;
 typedef struct fz_html_font_set_s fz_html_font_set;

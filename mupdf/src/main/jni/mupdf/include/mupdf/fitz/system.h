@@ -30,7 +30,7 @@
 
 #include <setjmp.h>
 
-#include "mupdf/memento.h"
+#include "mupdf/include/mupdf/memento.h"
 
 #define nelem(x) (sizeof(x)/sizeof((x)[0]))
 

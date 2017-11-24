@@ -1,13 +1,13 @@
 #ifndef MUPDF_FITZ_UTIL_H
 #define MUPDF_FITZ_UTIL_H
 
-#include "mupdf/fitz/system.h"
-#include "mupdf/fitz/context.h"
-#include "mupdf/fitz/math.h"
-#include "mupdf/fitz/document.h"
-#include "mupdf/fitz/pixmap.h"
-#include "mupdf/fitz/structured-text.h"
-#include "mupdf/fitz/buffer.h"
+#include "mupdf/include/mupdf/fitz/system.h"
+#include "mupdf/include/mupdf/fitz/context.h"
+#include "mupdf/include/mupdf/fitz/math.h"
+#include "mupdf/include/mupdf/fitz/document.h"
+#include "mupdf/include/mupdf/fitz/pixmap.h"
+#include "mupdf/include/mupdf/fitz/structured-text.h"
+#include "mupdf/include/mupdf/fitz/buffer.h"
 
 /*
 	fz_new_display_list_from_page: Create a display list with the contents of a page.

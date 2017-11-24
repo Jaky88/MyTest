@@ -1,15 +1,15 @@
 #ifndef MUPDF_FITZ_IMAGE_H
 #define MUPDF_FITZ_IMAGE_H
 
-#include "mupdf/fitz/system.h"
-#include "mupdf/fitz/context.h"
-#include "mupdf/fitz/store.h"
-#include "mupdf/fitz/colorspace.h"
-#include "mupdf/fitz/pixmap.h"
+#include "mupdf/include/mupdf/fitz/system.h"
+#include "mupdf/include/mupdf/fitz/context.h"
+#include "mupdf/include/mupdf/fitz/store.h"
+#include "mupdf/include/mupdf/fitz/colorspace.h"
+#include "mupdf/include/mupdf/fitz/pixmap.h"
 
-#include "mupdf/fitz/buffer.h"
-#include "mupdf/fitz/stream.h"
-#include "mupdf/fitz/compressed-buffer.h"
+#include "mupdf/include/mupdf/fitz/buffer.h"
+#include "mupdf/include/mupdf/fitz/stream.h"
+#include "mupdf/include/mupdf/fitz/compressed-buffer.h"
 
 /*
 	Images are storable objects from which we can obtain fz_pixmaps.

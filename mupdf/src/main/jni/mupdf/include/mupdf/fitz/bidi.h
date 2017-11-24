@@ -19,7 +19,7 @@
 #ifndef FITZ_BIDI_H
 #define FITZ_BIDI_H
 
-#include "mupdf/fitz/system.h"
+#include "mupdf/include/mupdf/fitz/system.h"
 
 typedef enum fz_bidi_direction_e
 {

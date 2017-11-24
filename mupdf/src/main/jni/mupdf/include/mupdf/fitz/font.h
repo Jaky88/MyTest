@@ -1,10 +1,10 @@
 #ifndef MUPDF_FITZ_FONT_H
 #define MUPDF_FITZ_FONT_H
 
-#include "mupdf/fitz/system.h"
-#include "mupdf/fitz/context.h"
-#include "mupdf/fitz/math.h"
-#include "mupdf/fitz/buffer.h"
+#include "mupdf/include/mupdf/fitz/system.h"
+#include "mupdf/include/mupdf/fitz/context.h"
+#include "mupdf/include/mupdf/fitz/math.h"
+#include "mupdf/include/mupdf/fitz/buffer.h"
 
 /*
 	An abstract font handle. Currently there are no public API functions

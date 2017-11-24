@@ -1,11 +1,11 @@
 #ifndef MUPDF_FITZ_FILTER_H
 #define MUPDF_FITZ_FILTER_H
 
-#include "mupdf/fitz/system.h"
-#include "mupdf/fitz/context.h"
-#include "mupdf/fitz/buffer.h"
-#include "mupdf/fitz/store.h"
-#include "mupdf/fitz/stream.h"
+#include "mupdf/include/mupdf/fitz/system.h"
+#include "mupdf/include/mupdf/fitz/context.h"
+#include "mupdf/include/mupdf/fitz/buffer.h"
+#include "mupdf/include/mupdf/fitz/store.h"
+#include "mupdf/include/mupdf/fitz/stream.h"
 
 typedef struct fz_jbig2_globals_s fz_jbig2_globals;
 

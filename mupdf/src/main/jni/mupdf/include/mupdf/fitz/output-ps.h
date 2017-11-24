@@ -1,10 +1,10 @@
 #ifndef MUPDF_FITZ_OUTPUT_PS_H
 #define MUPDF_FITZ_OUTPUT_PS_H
 
-#include "mupdf/fitz/system.h"
-#include "mupdf/fitz/context.h"
-#include "mupdf/fitz/output.h"
-#include "mupdf/fitz/pixmap.h"
+#include "mupdf/include/mupdf/fitz/system.h"
+#include "mupdf/include/mupdf/fitz/context.h"
+#include "mupdf/include/mupdf/fitz/output.h"
+#include "mupdf/include/mupdf/fitz/pixmap.h"
 
 typedef struct fz_ps_output_context_s fz_ps_output_context;
 
