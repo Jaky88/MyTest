@@ -26,7 +26,7 @@ android {
         // call regular ndk-build(.cmd) script from app directory
         task ndkBuild(type: Exec) {
             if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-                commandLine "$ndkDir/ndk-build.cmd", '-C', file('src/main').absolutePath, '-j10'
+                commandLine "$ndkDir/ndk-build.cmd", '-C', file('src/main').absolutePath, 'SUPPORT_GPROOF=1', '-j10'
             } else {
                 commandLine '/opt/adt-bundle-linux/ndk/ndk-build', '-C', file('src/main').absolutePath, '-j10'
             }
