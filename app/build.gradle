@@ -87,13 +87,17 @@ dependencies {
     compile(name:'cropimage-release', ext:'aar')
 //    compile(name:'onyxsdk-ui-release', ext:'aar')
 
+    compile project(path: ':lfilepickerlibrary')
+    compile project(path: ':xposelibrary')
+    compile project(path: ':mupdf')
+
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.+'
+    compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     //compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
+    testCompile "junit:junit:$rootProject.junitVersion"
     //design
     compile 'com.android.support:design:26.+'
 
@@ -129,9 +133,6 @@ dependencies {
 //    compile "com.github.Raizlabs.DBFlow:dbflow-core:$rootProject.dbflowVersion"
 //    compile "com.github.Raizlabs.DBFlow:dbflow:$rootProject.dbflowVersion"
 
-    compile project(path: ':lfilepickerlibrary')
-    compile project(path: ':xposelibrary')
-    compile project(path: ':mupdf')
     compile "com.jakewharton:disklrucache:$rootProject.disklrucacheVersion"
     compile "org.apache.lucene:lucene-core:$rootProject.lucenecoreVersion"
 }
