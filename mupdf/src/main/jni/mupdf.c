@@ -1,16 +1,5 @@
 
-#include "com_jaky_mupdf_core_MuPDFCore.h"
-
-/* Header for class com_jaky_mupdf_core_MuPDFCore */
-
-//#ifndef _Included_com_jaky_mupdf_core_MuPDFCore
-//#define _Included_com_jaky_mupdf_core_MuPDFCore
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#define JNI_FN(A) Java_com_jaky_mupdf_ ## A
-#define PACKAGENAME "com/jaky/mupdf/core"
+#include "mupdf.h"
 
 enum
 {
@@ -259,7 +248,7 @@ static globals *get_globals_any_thread(JNIEnv *env, jobject thiz)
 }
 
 JNIEXPORT jlong JNICALL
-JNI_FN(MuPDFCore_openFile)(JNIEnv * env, jobject thiz, jstring jfilename)
+JNI_MuPDFCore(openFile)(JNIEnv * env, jobject thiz, jstring jfilename)
 {
 	const char *filename;
 	globals *glo;
@@ -267,7 +256,7 @@ JNI_FN(MuPDFCore_openFile)(JNIEnv * env, jobject thiz, jstring jfilename)
 	jclass clazz;
 
 #ifdef NDK_PROFILER
-	monstartup("libmupdf_java.so");
+	monstartup("libmupdf_jaky.so");
 #endif
 
 	clazz = (*env)->GetObjectClass(env, thiz);
@@ -407,7 +396,7 @@ static void bufferStreamSeek(fz_context *ctx, fz_stream *stream, int offset, int
 }
 
 JNIEXPORT jlong JNICALL
-JNI_FN(MuPDFCore_openBuffer)(JNIEnv * env, jobject thiz, jstring jmagic)
+JNI_MuPDFCore(openBuffer)(JNIEnv * env, jobject thiz, jstring jmagic)
 {
 	globals *glo;
 	fz_context *ctx;
@@ -417,7 +406,7 @@ JNI_FN(MuPDFCore_openBuffer)(JNIEnv * env, jobject thiz, jstring jmagic)
 	const char *magic;
 
 #ifdef NDK_PROFILER
-	monstartup("libmupdf_java.so");
+	monstartup("libmupdf_jaky.so");
 #endif
 
 	clazz = (*env)->GetObjectClass(env, thiz);
@@ -497,7 +486,7 @@ JNI_FN(MuPDFCore_openBuffer)(JNIEnv * env, jobject thiz, jstring jmagic)
 }
 
 JNIEXPORT int JNICALL
-JNI_FN(MuPDFCore_countPagesInternal)(JNIEnv *env, jobject thiz)
+JNI_MuPDFCore(countPagesInternal)(JNIEnv *env, jobject thiz)
 {
 	globals *glo = get_globals(env, thiz);
 	fz_context *ctx = glo->ctx;
@@ -515,7 +504,7 @@ JNI_FN(MuPDFCore_countPagesInternal)(JNIEnv *env, jobject thiz)
 }
 
 JNIEXPORT jstring JNICALL
-JNI_FN(MuPDFCore_fileFormatInternal)(JNIEnv * env, jobject thiz)
+JNI_MuPDFCore(fileFormatInternal)(JNIEnv * env, jobject thiz)
 {
 	char info[64];
 	globals *glo = get_globals(env, thiz);
@@ -527,7 +516,7 @@ JNI_FN(MuPDFCore_fileFormatInternal)(JNIEnv * env, jobject thiz)
 }
 
 JNIEXPORT jboolean JNICALL
-JNI_FN(MuPDFCore_isUnencryptedPDFInternal)(JNIEnv * env, jobject thiz)
+JNI_MuPDFCore(isUnencryptedPDFInternal)(JNIEnv * env, jobject thiz)
 {
 	globals *glo = get_globals_any_thread(env, thiz);
 	if (glo == NULL)
@@ -543,7 +532,7 @@ JNI_FN(MuPDFCore_isUnencryptedPDFInternal)(JNIEnv * env, jobject thiz)
 }
 
 JNIEXPORT void JNICALL
-JNI_FN(MuPDFCore_gotoPageInternal)(JNIEnv *env, jobject thiz, int page)
+JNI_MuPDFCore(gotoPageInternal)(JNIEnv *env, jobject thiz, int page)
 {
 	int i;
 	int furthest;
@@ -616,7 +605,7 @@ JNI_FN(MuPDFCore_gotoPageInternal)(JNIEnv *env, jobject thiz, int page)
 }
 
 JNIEXPORT float JNICALL
-JNI_FN(MuPDFCore_getPageWidth)(JNIEnv *env, jobject thiz)
+JNI_MuPDFCore(getPageWidth)(JNIEnv *env, jobject thiz)
 {
 	globals *glo = get_globals(env, thiz);
 	LOGI("PageWidth=%d", glo->pages[glo->current].width);
@@ -624,7 +613,7 @@ JNI_FN(MuPDFCore_getPageWidth)(JNIEnv *env, jobject thiz)
 }
 
 JNIEXPORT float JNICALL
-JNI_FN(MuPDFCore_getPageHeight)(JNIEnv *env, jobject thiz)
+JNI_MuPDFCore(getPageHeight)(JNIEnv *env, jobject thiz)
 {
 	globals *glo = get_globals(env, thiz);
 	LOGI("PageHeight=%d", glo->pages[glo->current].height);
@@ -632,7 +621,7 @@ JNI_FN(MuPDFCore_getPageHeight)(JNIEnv *env, jobject thiz)
 }
 
 JNIEXPORT jboolean JNICALL
-JNI_FN(MuPDFCore_javascriptSupported)(JNIEnv *env, jobject thiz)
+JNI_MuPDFCore(javascriptSupported)(JNIEnv *env, jobject thiz)
 {
 	globals *glo = get_globals(env, thiz);
 	fz_context *ctx = glo->ctx;
@@ -664,7 +653,7 @@ static void update_changed_rects(globals *glo, page_cache *pc, pdf_document *ido
 }
 
 JNIEXPORT jboolean JNICALL
-JNI_FN(MuPDFCore_drawPage)(JNIEnv *env, jobject thiz, jobject bitmap, jint pageW, jint pageH, jint patchX, jint patchY, jint patchW, jint patchH, jlong cookiePtr)
+JNI_MuPDFCore(drawPage)(JNIEnv *env, jobject thiz, jobject bitmap, jint pageW, jint pageH, jint patchX, jint patchY, jint patchW, jint patchH, jlong cookiePtr)
 {
 	AndroidBitmapInfo info;
 	void *pixels;
@@ -847,7 +836,7 @@ static char *widget_type_string(int t)
 }
 
 JNIEXPORT jboolean JNICALL
-JNI_FN(MuPDFCore_updatePageInternal)(JNIEnv *env, jobject thiz, jobject bitmap, int page,
+JNI_MuPDFCore(updatePageInternal)(JNIEnv *env, jobject thiz, jobject bitmap, int page,
 		int pageW, int pageH, int patchX, int patchY, int patchW, int patchH, jlong cookiePtr)
 {
 	AndroidBitmapInfo info;
@@ -884,8 +873,8 @@ JNI_FN(MuPDFCore_updatePageInternal)(JNIEnv *env, jobject thiz, jobject bitmap, 
 	{
 		/* Without a cached page object we cannot perform a partial update so
 		render the entire bitmap instead */
-		JNI_FN(MuPDFCore_gotoPageInternal)(env, thiz, page);
-		return JNI_FN(MuPDFCore_drawPage)(env, thiz, bitmap, pageW, pageH, patchX, patchY, patchW, patchH, (jlong)(intptr_t)cookie);
+		JNI_MuPDFCore(gotoPageInternal)(env, thiz, page);
+		return JNI_MuPDFCore(drawPage)(env, thiz, bitmap, pageW, pageH, patchX, patchY, patchW, patchH, (jlong)(intptr_t)cookie);
 	}
 
 	idoc = pdf_specifics(ctx, doc);
@@ -1121,7 +1110,7 @@ fillInOutlineItems(JNIEnv * env, jclass olClass, jmethodID ctor, jobjectArray ar
 }
 
 JNIEXPORT jboolean JNICALL
-JNI_FN(MuPDFCore_needsPasswordInternal)(JNIEnv * env, jobject thiz)
+JNI_MuPDFCore(needsPasswordInternal)(JNIEnv * env, jobject thiz)
 {
 	globals *glo = get_globals(env, thiz);
 	fz_context *ctx = glo->ctx;
@@ -1130,7 +1119,7 @@ JNI_FN(MuPDFCore_needsPasswordInternal)(JNIEnv * env, jobject thiz)
 }
 
 JNIEXPORT jboolean JNICALL
-JNI_FN(MuPDFCore_authenticatePasswordInternal)(JNIEnv *env, jobject thiz, jstring password)
+JNI_MuPDFCore(authenticatePasswordInternal)(JNIEnv *env, jobject thiz, jstring password)
 {
 	const char *pw;
 	int result;
@@ -1147,7 +1136,7 @@ JNI_FN(MuPDFCore_authenticatePasswordInternal)(JNIEnv *env, jobject thiz, jstrin
 }
 
 JNIEXPORT jboolean JNICALL
-JNI_FN(MuPDFCore_hasOutlineInternal)(JNIEnv * env, jobject thiz)
+JNI_MuPDFCore(hasOutlineInternal)(JNIEnv * env, jobject thiz)
 {
 	globals *glo = get_globals(env, thiz);
 	fz_context *ctx = glo->ctx;
@@ -1158,7 +1147,7 @@ JNI_FN(MuPDFCore_hasOutlineInternal)(JNIEnv * env, jobject thiz)
 }
 
 JNIEXPORT jobjectArray JNICALL
-JNI_FN(MuPDFCore_getOutlineInternal)(JNIEnv * env, jobject thiz)
+JNI_MuPDFCore(getOutlineInternal)(JNIEnv * env, jobject thiz)
 {
 	jclass olClass;
 	jmethodID ctor;
@@ -1192,7 +1181,7 @@ JNI_FN(MuPDFCore_getOutlineInternal)(JNIEnv * env, jobject thiz)
 }
 
 JNIEXPORT jobjectArray JNICALL
-JNI_FN(MuPDFCore_searchPage)(JNIEnv * env, jobject thiz, jstring jtext)
+JNI_MuPDFCore(searchPage)(JNIEnv * env, jobject thiz, jstring jtext)
 {
 	jclass rectClass;
 	jmethodID ctor;
@@ -1252,7 +1241,7 @@ JNI_FN(MuPDFCore_searchPage)(JNIEnv * env, jobject thiz, jstring jtext)
 		(*env)->ReleaseStringUTFChars(env, jtext, str);
 		cls = (*env)->FindClass(env, "java/lang/OutOfMemoryError");
 		if (cls != NULL)
-			(*env)->ThrowNew(env, cls, "Out of memory in MuPDFCore_searchPage");
+			(*env)->ThrowNew(env, cls, "Out of memory in searchPage");
 		(*env)->DeleteLocalRef(env, cls);
 
 		return NULL;
@@ -1282,7 +1271,7 @@ JNI_FN(MuPDFCore_searchPage)(JNIEnv * env, jobject thiz, jstring jtext)
 }
 
 JNIEXPORT jobjectArray JNICALL
-JNI_FN(MuPDFCore_text)(JNIEnv * env, jobject thiz)
+JNI_MuPDFCore(text)(JNIEnv * env, jobject thiz)
 {
 	jclass textCharClass;
 	jclass textSpanClass;
@@ -1394,7 +1383,7 @@ JNI_FN(MuPDFCore_text)(JNIEnv * env, jobject thiz)
 	{
 		jclass cls = (*env)->FindClass(env, "java/lang/OutOfMemoryError");
 		if (cls != NULL)
-			(*env)->ThrowNew(env, cls, "Out of memory in MuPDFCore_text");
+			(*env)->ThrowNew(env, cls, "Out of memory in text");
 		(*env)->DeleteLocalRef(env, cls);
 
 		return NULL;
@@ -1404,7 +1393,7 @@ JNI_FN(MuPDFCore_text)(JNIEnv * env, jobject thiz)
 }
 
 JNIEXPORT jbyteArray JNICALL
-JNI_FN(MuPDFCore_textAsHtml)(JNIEnv * env, jobject thiz)
+JNI_MuPDFCore(textAsHtml)(JNIEnv * env, jobject thiz)
 {
 	fz_stext_sheet *sheet = NULL;
 	fz_stext_page *text = NULL;
@@ -1477,7 +1466,7 @@ JNI_FN(MuPDFCore_textAsHtml)(JNIEnv * env, jobject thiz)
 	{
 		jclass cls = (*env)->FindClass(env, "java/lang/OutOfMemoryError");
 		if (cls != NULL)
-			(*env)->ThrowNew(env, cls, "Out of memory in MuPDFCore_textAsHtml");
+			(*env)->ThrowNew(env, cls, "Out of memory in textAsHtml");
 		(*env)->DeleteLocalRef(env, cls);
 
 		return NULL;
@@ -1487,7 +1476,7 @@ JNI_FN(MuPDFCore_textAsHtml)(JNIEnv * env, jobject thiz)
 }
 
 JNIEXPORT void JNICALL
-JNI_FN(MuPDFCore_addMarkupAnnotationInternal)(JNIEnv * env, jobject thiz, jobjectArray points, fz_annot_type type)
+JNI_MuPDFCore(addMarkupAnnotationInternal)(JNIEnv * env, jobject thiz, jobjectArray points, jint type)
 {
 	globals *glo = get_globals(env, thiz);
 	fz_context *ctx = glo->ctx;
@@ -1580,13 +1569,13 @@ JNI_FN(MuPDFCore_addMarkupAnnotationInternal)(JNIEnv * env, jobject thiz, jobjec
 		LOGE("addStrikeOutAnnotation: %s failed", ctx->error->message);
 		jclass cls = (*env)->FindClass(env, "java/lang/OutOfMemoryError");
 		if (cls != NULL)
-			(*env)->ThrowNew(env, cls, "Out of memory in MuPDFCore_searchPage");
+			(*env)->ThrowNew(env, cls, "Out of memory in searchPage");
 		(*env)->DeleteLocalRef(env, cls);
 	}
 }
 
 JNIEXPORT void JNICALL
-JNI_FN(MuPDFCore_addInkAnnotationInternal)(JNIEnv * env, jobject thiz, jobjectArray arcs)
+JNI_MuPDFCore(addInkAnnotationInternal)(JNIEnv * env, jobject thiz, jobjectArray arcs)
 {
 	globals *glo = get_globals(env, thiz);
 	fz_context *ctx = glo->ctx;
@@ -1675,13 +1664,13 @@ JNI_FN(MuPDFCore_addInkAnnotationInternal)(JNIEnv * env, jobject thiz, jobjectAr
 		LOGE("addInkAnnotation: %s failed", ctx->error->message);
 		jclass cls = (*env)->FindClass(env, "java/lang/OutOfMemoryError");
 		if (cls != NULL)
-			(*env)->ThrowNew(env, cls, "Out of memory in MuPDFCore_searchPage");
+			(*env)->ThrowNew(env, cls, "Out of memory in searchPage");
 		(*env)->DeleteLocalRef(env, cls);
 	}
 }
 
 JNIEXPORT void JNICALL
-JNI_FN(MuPDFCore_deleteAnnotationInternal)(JNIEnv * env, jobject thiz, int annot_index)
+JNI_MuPDFCore(deleteAnnotationInternal)(JNIEnv * env, jobject thiz, int annot_index)
 {
 	globals *glo = get_globals(env, thiz);
 	fz_context *ctx = glo->ctx;
@@ -1731,7 +1720,7 @@ static void close_doc(globals *glo)
 }
 
 JNIEXPORT void JNICALL
-JNI_FN(MuPDFCore_destroying)(JNIEnv * env, jobject thiz)
+JNI_MuPDFCore(destroying)(JNIEnv * env, jobject thiz)
 {
 	globals *glo = get_globals(env, thiz);
 
@@ -1761,7 +1750,7 @@ JNI_FN(MuPDFCore_destroying)(JNIEnv * env, jobject thiz)
 }
 
 JNIEXPORT jobjectArray JNICALL
-JNI_FN(MuPDFCore_getPageLinksInternal)(JNIEnv * env, jobject thiz, int pageNumber)
+JNI_MuPDFCore(getPageLinksInternal)(JNIEnv * env, jobject thiz, int pageNumber)
 {
 	jclass linkInfoClass;
 	jclass linkInfoInternalClass;
@@ -1795,7 +1784,7 @@ JNI_FN(MuPDFCore_getPageLinksInternal)(JNIEnv * env, jobject thiz, int pageNumbe
 	ctorRemote = (*env)->GetMethodID(env, linkInfoRemoteClass, "<init>", "(FFFFLjava/lang/String;IZ)V");
 	if (ctorRemote == NULL) return NULL;
 
-	JNI_FN(MuPDFCore_gotoPageInternal)(env, thiz, pageNumber);
+	JNI_MuPDFCore(gotoPageInternal)(env, thiz, pageNumber);
 	pc = &glo->pages[glo->current];
 	if (pc->page == NULL || pc->number != pageNumber)
 		return NULL;
@@ -1876,7 +1865,7 @@ JNI_FN(MuPDFCore_getPageLinksInternal)(JNIEnv * env, jobject thiz, int pageNumbe
 }
 
 JNIEXPORT jobjectArray JNICALL
-JNI_FN(MuPDFCore_getWidgetAreasInternal)(JNIEnv * env, jobject thiz, int pageNumber)
+JNI_MuPDFCore(getWidgetAreasInternal)(JNIEnv * env, jobject thiz, int pageNumber)
 {
 	jclass rectFClass;
 	jmethodID ctor;
@@ -1898,7 +1887,7 @@ JNI_FN(MuPDFCore_getWidgetAreasInternal)(JNIEnv * env, jobject thiz, int pageNum
 	ctor = (*env)->GetMethodID(env, rectFClass, "<init>", "(FFFF)V");
 	if (ctor == NULL) return NULL;
 
-	JNI_FN(MuPDFCore_gotoPageInternal)(env, thiz, pageNumber);
+	JNI_MuPDFCore(gotoPageInternal)(env, thiz, pageNumber);
 	pc = &glo->pages[glo->current];
 	if (pc->number != pageNumber || pc->page == NULL)
 		return NULL;
@@ -1937,7 +1926,7 @@ JNI_FN(MuPDFCore_getWidgetAreasInternal)(JNIEnv * env, jobject thiz, int pageNum
 }
 
 JNIEXPORT jobjectArray JNICALL
-JNI_FN(MuPDFCore_getAnnotationsInternal)(JNIEnv * env, jobject thiz, int pageNumber)
+JNI_MuPDFCore(getAnnotationsInternal)(JNIEnv * env, jobject thiz, int pageNumber)
 {
 	jclass annotClass;
 	jmethodID ctor;
@@ -1958,7 +1947,7 @@ JNI_FN(MuPDFCore_getAnnotationsInternal)(JNIEnv * env, jobject thiz, int pageNum
 	ctor = (*env)->GetMethodID(env, annotClass, "<init>", "(FFFFI)V");
 	if (ctor == NULL) return NULL;
 
-	JNI_FN(MuPDFCore_gotoPageInternal)(env, thiz, pageNumber);
+	JNI_MuPDFCore(gotoPageInternal)(env, thiz, pageNumber);
 	pc = &glo->pages[glo->current];
 	if (pc->number != pageNumber || pc->page == NULL)
 		return NULL;
@@ -1994,7 +1983,7 @@ JNI_FN(MuPDFCore_getAnnotationsInternal)(JNIEnv * env, jobject thiz, int pageNum
 }
 
 JNIEXPORT int JNICALL
-JNI_FN(MuPDFCore_passClickEventInternal)(JNIEnv * env, jobject thiz, int pageNumber, float x, float y)
+JNI_MuPDFCore(passClickEventInternal)(JNIEnv * env, jobject thiz, int pageNumber, float x, float y)
 {
 	globals *glo = get_globals(env, thiz);
 	fz_context *ctx = glo->ctx;
@@ -2009,7 +1998,7 @@ JNI_FN(MuPDFCore_passClickEventInternal)(JNIEnv * env, jobject thiz, int pageNum
 	if (idoc == NULL)
 		return 0;
 
-	JNI_FN(MuPDFCore_gotoPageInternal)(env, thiz, pageNumber);
+	JNI_MuPDFCore(gotoPageInternal)(env, thiz, pageNumber);
 	pc = &glo->pages[glo->current];
 	if (pc->number != pageNumber || pc->page == NULL)
 		return 0;
@@ -2047,7 +2036,7 @@ JNI_FN(MuPDFCore_passClickEventInternal)(JNIEnv * env, jobject thiz, int pageNum
 }
 
 JNIEXPORT jstring JNICALL
-JNI_FN(MuPDFCore_getFocusedWidgetTextInternal)(JNIEnv * env, jobject thiz)
+JNI_MuPDFCore(getFocusedWidgetTextInternal)(JNIEnv * env, jobject thiz)
 {
 	char *text = "";
 	globals *glo = get_globals(env, thiz);
@@ -2074,7 +2063,7 @@ JNI_FN(MuPDFCore_getFocusedWidgetTextInternal)(JNIEnv * env, jobject thiz)
 }
 
 JNIEXPORT int JNICALL
-JNI_FN(MuPDFCore_setFocusedWidgetTextInternal)(JNIEnv * env, jobject thiz, jstring jtext)
+JNI_MuPDFCore(setFocusedWidgetTextInternal)(JNIEnv * env, jobject thiz, jstring jtext)
 {
 	const char *text;
 	int result = 0;
@@ -2114,7 +2103,7 @@ JNI_FN(MuPDFCore_setFocusedWidgetTextInternal)(JNIEnv * env, jobject thiz, jstri
 }
 
 JNIEXPORT jobjectArray JNICALL
-JNI_FN(MuPDFCore_getFocusedWidgetChoiceOptions)(JNIEnv * env, jobject thiz)
+JNI_MuPDFCore(getFocusedWidgetChoiceOptions)(JNIEnv * env, jobject thiz)
 {
 	globals *glo = get_globals(env, thiz);
 	fz_context *ctx = glo->ctx;
@@ -2170,7 +2159,7 @@ JNI_FN(MuPDFCore_getFocusedWidgetChoiceOptions)(JNIEnv * env, jobject thiz)
 }
 
 JNIEXPORT jobjectArray JNICALL
-JNI_FN(MuPDFCore_getFocusedWidgetChoiceSelected)(JNIEnv * env, jobject thiz)
+JNI_MuPDFCore(getFocusedWidgetChoiceSelected)(JNIEnv * env, jobject thiz)
 {
 	globals *glo = get_globals(env, thiz);
 	fz_context *ctx = glo->ctx;
@@ -2226,7 +2215,7 @@ JNI_FN(MuPDFCore_getFocusedWidgetChoiceSelected)(JNIEnv * env, jobject thiz)
 }
 
 JNIEXPORT void JNICALL
-JNI_FN(MuPDFCore_setFocusedWidgetChoiceSelectedInternal)(JNIEnv * env, jobject thiz, jobjectArray arr)
+JNI_MuPDFCore(setFocusedWidgetChoiceSelectedInternal)(JNIEnv * env, jobject thiz, jobjectArray arr)
 {
 	globals *glo = get_globals(env, thiz);
 	fz_context *ctx = glo->ctx;
@@ -2284,7 +2273,7 @@ JNI_FN(MuPDFCore_setFocusedWidgetChoiceSelectedInternal)(JNIEnv * env, jobject t
 }
 
 JNIEXPORT int JNICALL
-JNI_FN(MuPDFCore_getFocusedWidgetTypeInternal)(JNIEnv * env, jobject thiz)
+JNI_MuPDFCore(getFocusedWidgetTypeInternal)(JNIEnv * env, jobject thiz)
 {
 	globals *glo = get_globals(env, thiz);
 	fz_context *ctx = glo->ctx;
@@ -2319,7 +2308,7 @@ enum
 };
 
 JNIEXPORT int JNICALL
-JNI_FN(MuPDFCore_getFocusedWidgetSignatureState)(JNIEnv * env, jobject thiz)
+JNI_MuPDFCore(getFocusedWidgetSignatureState)(JNIEnv * env, jobject thiz)
 {
 	globals *glo = get_globals(env, thiz);
 	fz_context *ctx = glo->ctx;
@@ -2341,7 +2330,7 @@ JNI_FN(MuPDFCore_getFocusedWidgetSignatureState)(JNIEnv * env, jobject thiz)
 }
 
 JNIEXPORT jstring JNICALL
-JNI_FN(MuPDFCore_checkFocusedSignatureInternal)(JNIEnv * env, jobject thiz)
+JNI_MuPDFCore(checkFocusedSignatureInternal)(JNIEnv * env, jobject thiz)
 {
 	globals *glo = get_globals(env, thiz);
 	fz_context *ctx = glo->ctx;
@@ -2367,7 +2356,7 @@ exit:
 }
 
 JNIEXPORT jboolean JNICALL
-JNI_FN(MuPDFCore_signFocusedSignatureInternal)(JNIEnv * env, jobject thiz, jstring jkeyfile, jstring jpassword)
+JNI_MuPDFCore(signFocusedSignatureInternal)(JNIEnv * env, jobject thiz, jstring jkeyfile, jstring jpassword)
 {
 	globals *glo = get_globals(env, thiz);
 	fz_context *ctx = glo->ctx;
@@ -2406,7 +2395,7 @@ JNI_FN(MuPDFCore_signFocusedSignatureInternal)(JNIEnv * env, jobject thiz, jstri
 }
 
 JNIEXPORT jobject JNICALL
-JNI_FN(MuPDFCore_waitForAlertInternal)(JNIEnv * env, jobject thiz)
+JNI_MuPDFCore(waitForAlertInternal)(JNIEnv * env, jobject thiz)
 {
 	globals *glo = get_globals(env, thiz);
 	jclass alertClass;
@@ -2456,7 +2445,7 @@ JNI_FN(MuPDFCore_waitForAlertInternal)(JNIEnv * env, jobject thiz)
 }
 
 JNIEXPORT void JNICALL
-JNI_FN(MuPDFCore_replyToAlertInternal)(JNIEnv * env, jobject thiz, jobject alert)
+JNI_MuPDFCore(replyToAlertInternal)(JNIEnv * env, jobject thiz, jobject alert)
 {
 	globals *glo = get_globals(env, thiz);
 	jclass alertClass;
@@ -2489,7 +2478,7 @@ JNI_FN(MuPDFCore_replyToAlertInternal)(JNIEnv * env, jobject thiz, jobject alert
 }
 
 JNIEXPORT void JNICALL
-JNI_FN(MuPDFCore_startAlertsInternal)(JNIEnv * env, jobject thiz)
+JNI_MuPDFCore(startAlertsInternal)(JNIEnv * env, jobject thiz)
 {
 	globals *glo = get_globals(env, thiz);
 
@@ -2509,7 +2498,7 @@ JNI_FN(MuPDFCore_startAlertsInternal)(JNIEnv * env, jobject thiz)
 }
 
 JNIEXPORT void JNICALL
-JNI_FN(MuPDFCore_stopAlertsInternal)(JNIEnv * env, jobject thiz)
+JNI_MuPDFCore(stopAlertsInternal)(JNIEnv * env, jobject thiz)
 {
 	globals *glo = get_globals(env, thiz);
 
@@ -2531,7 +2520,7 @@ JNI_FN(MuPDFCore_stopAlertsInternal)(JNIEnv * env, jobject thiz)
 }
 
 JNIEXPORT jboolean JNICALL
-JNI_FN(MuPDFCore_hasChangesInternal)(JNIEnv * env, jobject thiz)
+JNI_MuPDFCore(hasChangesInternal)(JNIEnv * env, jobject thiz)
 {
 	globals *glo = get_globals(env, thiz);
 	fz_context *ctx = glo->ctx;
@@ -2565,7 +2554,7 @@ static char *tmp_path(char *path)
 }
 
 JNIEXPORT void JNICALL
-JNI_FN(MuPDFCore_saveInternal)(JNIEnv * env, jobject thiz)
+JNI_MuPDFCore(saveInternal)(JNIEnv * env, jobject thiz)
 {
 	globals *glo = get_globals(env, thiz);
 	fz_context *ctx = glo->ctx;
@@ -2626,7 +2615,7 @@ JNI_FN(MuPDFCore_saveInternal)(JNIEnv * env, jobject thiz)
 }
 
 JNIEXPORT void JNICALL
-JNI_FN(MuPDFCore_dumpMemoryInternal)(JNIEnv * env, jobject thiz)
+JNI_MuPDFCore(dumpMemoryInternal)(JNIEnv * env, jobject thiz)
 {
 	globals *glo = get_globals(env, thiz);
 	fz_context *ctx = glo->ctx;
@@ -2640,7 +2629,7 @@ JNI_FN(MuPDFCore_dumpMemoryInternal)(JNIEnv * env, jobject thiz)
 }
 
 JNIEXPORT jlong JNICALL
-JNI_FN(MuPDFCore_createCookie)(JNIEnv * env, jobject thiz)
+JNI_MuPDFCore(createCookie)(JNIEnv * env, jobject thiz)
 {
 	globals *glo = get_globals_any_thread(env, thiz);
 	if (glo == NULL)
@@ -2651,7 +2640,7 @@ JNI_FN(MuPDFCore_createCookie)(JNIEnv * env, jobject thiz)
 }
 
 JNIEXPORT void JNICALL
-JNI_FN(MuPDFCore_destroyCookie)(JNIEnv * env, jobject thiz, jlong cookiePtr)
+JNI_MuPDFCore(destroyCookie)(JNIEnv * env, jobject thiz, jlong cookiePtr)
 {
 	fz_cookie *cookie = (fz_cookie *) (intptr_t) cookiePtr;
 	globals *glo = get_globals_any_thread(env, thiz);
@@ -2663,7 +2652,7 @@ JNI_FN(MuPDFCore_destroyCookie)(JNIEnv * env, jobject thiz, jlong cookiePtr)
 }
 
 JNIEXPORT void JNICALL
-JNI_FN(MuPDFCore_abortCookie)(JNIEnv * env, jobject thiz, jlong cookiePtr)
+JNI_MuPDFCore(abortCookie)(JNIEnv * env, jobject thiz, jlong cookiePtr)
 {
 	fz_cookie *cookie = (fz_cookie *) (intptr_t) cookiePtr;
 	if (cookie != NULL)
@@ -2709,7 +2698,7 @@ static char *tmp_gproof_path(char *path)
 }
 
 JNIEXPORT jstring JNICALL
-JNI_FN(MuPDFCore_startProofInternal)(JNIEnv * env, jobject thiz, int inResolution)
+JNI_MuPDFCore(startProofInternal)(JNIEnv * env, jobject thiz, int inResolution)
 {
 #ifdef SUPPORT_GPROOF
 	globals *glo = get_globals(env, thiz);
@@ -2750,7 +2739,7 @@ JNI_FN(MuPDFCore_startProofInternal)(JNIEnv * env, jobject thiz, int inResolutio
 }
 
 JNIEXPORT void JNICALL
-JNI_FN(MuPDFCore_endProofInternal)(JNIEnv * env, jobject thiz, jstring jfilename)
+JNI_MuPDFCore(endProofInternal)(JNIEnv * env, jobject thiz, jstring jfilename)
 {
 #ifdef SUPPORT_GPROOF
 	globals *glo = get_globals(env, thiz);
@@ -2772,7 +2761,7 @@ JNI_FN(MuPDFCore_endProofInternal)(JNIEnv * env, jobject thiz, jstring jfilename
 }
 
 JNIEXPORT jboolean JNICALL
-JNI_FN(MuPDFCore_gprfSupportedInternal)(JNIEnv * env)
+JNI_MuPDFCore(gprfSupportedInternal)(JNIEnv * env)
 {
 #ifdef SUPPORT_GPROOF
 	return JNI_TRUE;
@@ -2782,7 +2771,7 @@ JNI_FN(MuPDFCore_gprfSupportedInternal)(JNIEnv * env)
 }
 
 JNIEXPORT int JNICALL
-JNI_FN(MuPDFCore_getNumSepsOnPageInternal)(JNIEnv *env, jobject thiz, int page)
+JNI_MuPDFCore(getNumSepsOnPageInternal)(JNIEnv *env, jobject thiz, int page)
 {
 	globals *glo = get_globals(env, thiz);
 	fz_context *ctx = glo->ctx;
@@ -2802,7 +2791,7 @@ JNI_FN(MuPDFCore_getNumSepsOnPageInternal)(JNIEnv *env, jobject thiz, int page)
 }
 
 JNIEXPORT void JNICALL
-JNI_FN(MuPDFCore_controlSepOnPageInternal)(JNIEnv *env, jobject thiz, int page, int sep, jboolean disable)
+JNI_MuPDFCore(controlSepOnPageInternal)(JNIEnv *env, jobject thiz, int page, int sep, jboolean disable)
 {
 	globals *glo = get_globals(env, thiz);
 	fz_context *ctx = glo->ctx;
@@ -2820,7 +2809,7 @@ JNI_FN(MuPDFCore_controlSepOnPageInternal)(JNIEnv *env, jobject thiz, int page, 
 }
 
 JNIEXPORT jobject JNICALL
-JNI_FN(MuPDFCore_getSepInternal)(JNIEnv *env, jobject thiz, int page, int sep)
+JNI_MuPDFCore(getSepInternal)(JNIEnv *env, jobject thiz, int page, int sep)
 {
 	globals *glo = get_globals(env, thiz);
 	fz_context *ctx = glo->ctx;

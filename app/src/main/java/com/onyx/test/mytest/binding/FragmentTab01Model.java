@@ -6,8 +6,8 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.view.View;
 
-import com.onyx.android.sdk.utils.ActivityUtil;
-import com.onyx.android.sdk.utils.ViewDocumentUtils;
+//import com.onyx.android.sdk.utils.ActivityUtil;
+//import com.onyx.android.sdk.utils.ViewDocumentUtils;
 import com.onyx.test.mytest.model.bean.ReaderSlideshowBean;
 import com.onyx.test.mytest.model.manager.ConfigManager;
 
@@ -40,9 +40,9 @@ public class FragmentTab01Model extends BaseObservable {
         setReaderSlideshowBean(readerSlideshowBean);
         ConfigManager.saveConfig(context);
         File file = new File(readerSlideshowBean.getTestFilePath());
-        Intent in = ViewDocumentUtils.viewActionIntentWithMimeType(file);
-        in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        ActivityUtil.startActivitySafely(context, ViewDocumentUtils.autoSlideShowIntent(file,
-                readerSlideshowBean.getSlideshowTotalPage(), readerSlideshowBean.getSlideshowInterval()));
+//        Intent in = ViewDocumentUtils.viewActionIntentWithMimeType(file);
+//        in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        ActivityUtil.startActivitySafely(context, ViewDocumentUtils.autoSlideShowIntent(file,
+//                readerSlideshowBean.getSlideshowTotalPage(), readerSlideshowBean.getSlideshowInterval()));
     }
 }

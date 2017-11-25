@@ -1,7 +1,6 @@
 import java.text.SimpleDateFormat
 
 apply plugin: 'com.android.application'
-//apply plugin: 'com.neenbedankt.android-apt'
 
 def verName = "1.0.0"
 def devStage = "alpha"
@@ -27,7 +26,7 @@ android {
     defaultConfig {
 //        applicationId "com.moxi.test"
         multiDexEnabled true
-        applicationId "com.onyx.test.mytest"
+        //applicationId "com.onyx.test.mytest"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -79,13 +78,8 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile(name:'onyxsdk-base-release', ext:'aar')
-    compile(name:'onyxsdk-data-release', ext:'aar')
-    compile(name:'onyxsdk-reader-release', ext:'aar')
-    compile(name:'chinese-analyzer-release', ext:'aar')
-    compile(name:'alreader-engine-release', ext:'aar')
-    compile(name:'cropimage-release', ext:'aar')
-//    compile(name:'onyxsdk-ui-release', ext:'aar')
+//    compile(name:'onyxsdk-base-release', ext:'aar')
+
 
     compile project(path: ':lfilepickerlibrary')
     compile project(path: ':xposelibrary')
@@ -101,7 +95,7 @@ dependencies {
     //design
     compile 'com.android.support:design:26.+'
 
-//    compile 'com.alibaba:fastjson:1.1.34.android'
+    compile "com.alibaba:fastjson:$rootProject.fastjsonVersion"
 
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.google.code.gson:gson-parent:2.7'

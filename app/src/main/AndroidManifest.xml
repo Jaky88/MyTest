@@ -161,7 +161,10 @@
 
         <!--</activity>-->
 
-
+        <activity
+            android:name="com.leon.lfilepickerlibrary.ui.LFilePickerActivity"
+            android:theme="@style/LibraryAppTheme">
+        </activity>
     </application>
 
 </manifest>

@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.onyx.android.sdk.utils.ActivityUtil;
-import com.onyx.android.sdk.utils.ViewDocumentUtils;
+//import com.onyx.android.sdk.utils.ActivityUtil;
+//import com.onyx.android.sdk.utils.ViewDocumentUtils;
 import com.onyx.test.mytest.model.manager.ConfigManager;
 import com.onyx.test.mytest.model.bean.ReaderSlideshowBean;
 
@@ -33,8 +33,8 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
     private void processBootCompletedTask(Context context, ReaderSlideshowBean config) {
         File file = new File(config.getTestFilePath());
-        Intent in = ViewDocumentUtils.viewActionIntentWithMimeType(file);
-        in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        ActivityUtil.startActivitySafely(context, ViewDocumentUtils.autoSlideShowIntent(file, config.getSlideshowTotalPage(), config.getSlideshowInterval()));
+//        Intent in = ViewDocumentUtils.viewActionIntentWithMimeType(file);
+//        in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        ActivityUtil.startActivitySafely(context, ViewDocumentUtils.autoSlideShowIntent(file, config.getSlideshowTotalPage(), config.getSlideshowInterval()));
     }
 }

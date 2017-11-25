@@ -1,6 +1,7 @@
 package com.onyx.test.mytest.view.app;
 
-import com.onyx.android.sdk.reader.ReaderBaseApp;
+import android.app.Application;
+
 //import com.raizlabs.android.dbflow.readerSlideshowBean.DatabaseHolder;
 //import com.raizlabs.android.dbflow.readerSlideshowBean.FlowConfig;
 //import com.raizlabs.android.dbflow.readerSlideshowBean.FlowManager;
@@ -9,7 +10,7 @@ import com.onyx.android.sdk.reader.ReaderBaseApp;
  * Created by jaky on 2017/9/30 0030.
  */
 
-public class MyApplication extends ReaderBaseApp {
+public class MyApplication extends Application {
 
     @Override
     public void onCreate() {

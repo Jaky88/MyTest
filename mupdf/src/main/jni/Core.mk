@@ -13,7 +13,7 @@ endif
 
 include $(CLEAR_VARS)
 MY_ROOT := $(LOCAL_PATH)/mupdf
-
+V8 := v8
 
 LOCAL_CFLAGS += -Wall -Wno-maybe-uninitialized
 
