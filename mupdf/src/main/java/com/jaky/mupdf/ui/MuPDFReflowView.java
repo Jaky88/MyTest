@@ -10,9 +10,9 @@ import android.view.MotionEvent;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.jaky.mupdf.data.Annotation;
+import com.jaky.mupdf.core.Annotation;
 import com.jaky.mupdf.task.AsyncTask;
-import com.jaky.mupdf.data.LinkInfo;
+import com.jaky.mupdf.core.LinkInfo;
 import com.jaky.mupdf.core.MuPDFCore;
 
 public class MuPDFReflowView extends WebView implements MuPDFView {

@@ -1,4 +1,4 @@
-package com.jaky.mupdf.data;
+package com.jaky.mupdf.core;
 
 import android.graphics.RectF;
 

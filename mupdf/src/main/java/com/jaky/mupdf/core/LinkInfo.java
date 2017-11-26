@@ -1,6 +1,8 @@
-package com.jaky.mupdf.data;
+package com.jaky.mupdf.core;
 
 import android.graphics.RectF;
+
+import com.jaky.mupdf.data.LinkInfoVisitor;
 
 public class LinkInfo {
 	final public RectF rect;

@@ -1,5 +1,7 @@
 package com.jaky.mupdf.data;
 
+import com.jaky.mupdf.core.LinkInfo;
+
 public class LinkInfoExternal extends LinkInfo {
 	final public String url;
 

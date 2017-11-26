@@ -3,8 +3,8 @@ package com.jaky.mupdf.ui;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
-import com.jaky.mupdf.data.Annotation;
-import com.jaky.mupdf.data.LinkInfo;
+import com.jaky.mupdf.core.Annotation;
+import com.jaky.mupdf.core.LinkInfo;
 
 public interface MuPDFView {
 	public void setPage(int page, PointF size);

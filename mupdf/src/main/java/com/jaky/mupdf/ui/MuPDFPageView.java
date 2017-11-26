@@ -2,11 +2,11 @@ package com.jaky.mupdf.ui;
 
 import java.util.ArrayList;
 
-import com.jaky.mupdf.data.Annotation;
+import com.jaky.mupdf.core.Annotation;
 import com.jaky.mupdf.task.AsyncTask;
 import com.jaky.mupdf.task.CancellableTaskDefinition;
 import com.jaky.mupdf.data.FilePicker;
-import com.jaky.mupdf.data.LinkInfo;
+import com.jaky.mupdf.core.LinkInfo;
 import com.jaky.mupdf.task.MuPDFCancellableTaskDefinition;
 import com.jaky.mupdf.core.MuPDFCore;
 import com.jaky.mupdf.R;

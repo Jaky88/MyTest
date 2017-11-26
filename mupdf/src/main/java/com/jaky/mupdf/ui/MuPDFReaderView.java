@@ -10,7 +10,7 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.jaky.mupdf.data.LinkInfo;
+import com.jaky.mupdf.core.LinkInfo;
 import com.jaky.mupdf.data.LinkInfoExternal;
 import com.jaky.mupdf.data.LinkInfoInternal;
 import com.jaky.mupdf.data.LinkInfoRemote;

@@ -19,6 +19,7 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,14 +37,14 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ViewAnimator;
 
-import com.jaky.mupdf.data.Annotation;
+import com.jaky.mupdf.R;
+import com.jaky.mupdf.core.Annotation;
 import com.jaky.mupdf.task.AsyncTask;
 import com.jaky.mupdf.data.FilePicker;
 import com.jaky.mupdf.data.MuPDFAlert;
 import com.jaky.mupdf.core.MuPDFCore;
 import com.jaky.mupdf.data.OutlineActivityData;
 import com.jaky.mupdf.data.OutlineItem;
-import com.jaky.mupdf.R;
 import com.jaky.mupdf.data.SafeAnimatorInflater;
 import com.jaky.mupdf.task.SearchTask;
 import com.jaky.mupdf.task.SearchTaskResult;
@@ -55,6 +56,7 @@ import java.lang.reflect.Method;
 
 public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupport
 {
+	private static final String TAG = MuPDFActivity.class.getSimpleName();
 	/* The core rendering instance */
 	enum TopBarMode {Main, Search, Annot, Delete, More, Accept};
 	enum AcceptMode {Highlight, Underline, StrikeOut, Ink, CopyText};
@@ -228,7 +230,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		mFileName = new String(lastSlashPos == -1
 					? path
 					: path.substring(lastSlashPos+1));
-		System.out.println("Trying to open " + path);
+		Log.d(TAG,"Trying to open " + path);
 		try
 		{
 			core = new MuPDFCore(this, path);
@@ -405,7 +407,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 			//  show the separations button
 			mSepsButton.setVisibility(View.VISIBLE);
 
-			//  hide some other buttons
+			//  hide some other main_buttons_bar
 			mLinkButton.setVisibility(View.INVISIBLE);
 			mReflowButton.setVisibility(View.INVISIBLE);
 			mOutlineButton.setVisibility(View.INVISIBLE);
@@ -520,7 +522,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 			}
 		};
 
-		// Make the buttons overlay, and store all its
+		// Make the main_buttons_bar overlay, and store all its
 		// controls in variables
 		makeButtonsView();
 
@@ -573,7 +575,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 			mAnnotButton.setVisibility(View.GONE);
 		}
 
-		// Search invoking buttons are disabled while there is no text specified
+		// Search invoking main_buttons_bar are disabled while there is no text specified
 		mSearchBack.setEnabled(false);
 		mSearchFwd.setEnabled(false);
 		mSearchBack.setColorFilter(Color.argb(255, 128, 128, 128));
@@ -616,7 +618,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 			}
 		});
 
-		// Activate search invoking buttons
+		// Activate search invoking main_buttons_bar
 		mSearchBack.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				search(-1);
@@ -662,7 +664,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 		if(savedInstanceState != null && savedInstanceState.getBoolean("ReflowMode", false))
 			reflowModeSet(true);
 
-		// Stick the document view and the buttons overlay into a parent view
+		// Stick the document view and the main_buttons_bar overlay into a parent view
 		RelativeLayout layout = new RelativeLayout(this);
 		layout.addView(mDocView);
 		layout.addView(mButtonsView);
@@ -945,9 +947,9 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 	}
 
 	private void makeButtonsView() {
-		mButtonsView = getLayoutInflater().inflate(R.layout.buttons,null);
+		mButtonsView = getLayoutInflater().inflate(R.layout.main_buttons_bar,null);
 		mFilenameView = (TextView)mButtonsView.findViewById(R.id.docNameText);
-		mPageSlider = (SeekBar)mButtonsView.findViewById(R.id.pageSlider);
+		mPageSlider = (SeekBar)mButtonsView.findViewById(R.id.sb_pageSlider);
 		mPageNumberView = (TextView)mButtonsView.findViewById(R.id.pageNumber);
 		mInfoView = (TextView)mButtonsView.findViewById(R.id.info);
 		mSearchButton = (ImageButton)mButtonsView.findViewById(R.id.searchButton);
