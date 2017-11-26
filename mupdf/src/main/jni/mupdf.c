@@ -250,6 +250,10 @@ static globals *get_globals_any_thread(JNIEnv *env, jobject thiz)
 JNIEXPORT jlong JNICALL
 JNI_MuPDFCore(openFile)(JNIEnv * env, jobject thiz, jstring jfilename)
 {
+    if(jfilename == NULL){
+        LOGE("jfilename is null!");
+        return 0;
+    }
 	const char *filename;
 	globals *glo;
 	fz_context *ctx;
@@ -258,10 +262,8 @@ JNI_MuPDFCore(openFile)(JNIEnv * env, jobject thiz, jstring jfilename)
 #ifdef NDK_PROFILER
 	monstartup("libmupdf_jaky.so");
 #endif
-
 	clazz = (*env)->GetObjectClass(env, thiz);
 	global_fid = (*env)->GetFieldID(env, clazz, "globals", "J");
-
 	glo = calloc(1, sizeof(*glo));
 	if (glo == NULL)
 		return 0;
@@ -276,7 +278,6 @@ JNI_MuPDFCore(openFile)(JNIEnv * env, jobject thiz, jstring jfilename)
 	freopen("/storage/emulated/0/Download/stdout.txt", "a", stdout);
 	freopen("/storage/emulated/0/Download/stderr.txt", "a", stderr);
 #endif
-
 	filename = (*env)->GetStringUTFChars(env, jfilename, NULL);
 	if (filename == NULL)
 	{
@@ -284,7 +285,6 @@ JNI_MuPDFCore(openFile)(JNIEnv * env, jobject thiz, jstring jfilename)
 		free(glo);
 		return 0;
 	}
-
 	/* 128 MB store for low memory devices. Tweak as necessary. */
 	glo->ctx = ctx = fz_new_context(NULL, NULL, 128 << 20);
 	if (!ctx)
@@ -294,7 +294,6 @@ JNI_MuPDFCore(openFile)(JNIEnv * env, jobject thiz, jstring jfilename)
 		free(glo);
 		return 0;
 	}
-
 	fz_register_document_handlers(ctx);
 
 	glo->doc = NULL;

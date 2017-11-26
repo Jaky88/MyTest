@@ -19,7 +19,8 @@
 #define JNI_MuPDFCore(A) Java_com_jaky_mupdf_core_MuPDFCore_ ## A
 #define PACKAGENAME "com/jaky/mupdf/core"
 
-#define LOG_TAG "libmupdf"
+//Log输出
+#define LOG_TAG "JNICALL_libmupdf"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 #define LOGT(...) __android_log_print(ANDROID_LOG_INFO,"alert",__VA_ARGS__)
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)

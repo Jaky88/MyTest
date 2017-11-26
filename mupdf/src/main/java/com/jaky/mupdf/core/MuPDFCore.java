@@ -74,11 +74,13 @@ public class MuPDFCore {
     }
 
     public MuPDFCore(Context context, String filename) throws Exception {
+        if (filename == null && filename.isEmpty()) {
+            throw new Exception(String.format(context.getString(R.string.cannot_open_file_Path), filename));
+        }
         id = nextId();
-        Log.d("", "=========openFile========id==" + id +"====filename==="+filename);
+        Log.d("", "=========openFile========id==" + id + "====filename===" + filename);
         globals = openFile(id, filename);
         if (globals == 0) {
-            Log.d("", "=========globals=1=========" + globals);
             throw new Exception(String.format(context.getString(R.string.cannot_open_file_Path), filename));
         }
         Log.d("", "=========globals====2======" + globals);
