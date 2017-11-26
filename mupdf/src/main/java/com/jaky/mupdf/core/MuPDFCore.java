@@ -79,7 +79,7 @@ public class MuPDFCore {
         }
         id = nextId();
         Log.d("", "=========openFile========id==" + id + "====filename===" + filename);
-        globals = openFile(id, filename);
+        globals = openFile(filename);
         if (globals == 0) {
             throw new Exception(String.format(context.getString(R.string.cannot_open_file_Path), filename));
         }
@@ -361,7 +361,7 @@ public class MuPDFCore {
     /* The native functions */
     private static native boolean gprfSupportedInternal();
 
-    private native long openFile(int id, String filename);
+    private native long openFile(String filename);
 
     private native long openBuffer(int id, String magic);
 
