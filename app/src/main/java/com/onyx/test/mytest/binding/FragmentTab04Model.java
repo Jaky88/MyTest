@@ -170,9 +170,10 @@ public class FragmentTab04Model extends BaseObservable {
     }
 
     private void startReader() {
-        String fileName = "test.pdf";
-        String filePath = FileUtil.getSDCardPath() + File.separator + File.separator + fileName;
-        ActivityUtil.startActivityWithData(context, "com.onyx.test.mytest", new File(filePath));
+        if(selectfilePath ==null || selectfilePath.isEmpty()){
+            selectfilePath = FileUtil.getSDCardPath() + File.separator + File.separator + "test.pdf";
+        }
+        ActivityUtil.startActivityWithData(context, "com.onyx.test.mytest", new File(selectfilePath));
     }
 
     private void openCurDir(String curPath) {
