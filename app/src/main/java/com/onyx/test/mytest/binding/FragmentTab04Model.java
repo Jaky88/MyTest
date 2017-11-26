@@ -16,7 +16,6 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.SimpleAdapter;
@@ -127,8 +126,8 @@ public class FragmentTab04Model extends BaseObservable {
         audiomanage.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);
     }
 
-    public void onStartKreaderClick(View view) {
-        startKreader();
+    public void onStartReaderClick(View view) {
+        startReader();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -170,10 +169,10 @@ public class FragmentTab04Model extends BaseObservable {
         }
     }
 
-    private void startKreader() {
-        String fileName = "西游记.pdf";
-        String filePath = FileUtil.getSDCardPath() + File.separator + "Books" + File.separator + fileName;
-        ActivityUtil.startActivityWithData(context, "com.onyx.kreader", new File(filePath));
+    private void startReader() {
+        String fileName = "test.pdf";
+        String filePath = FileUtil.getSDCardPath() + File.separator + File.separator + fileName;
+        ActivityUtil.startActivityWithData(context, "com.onyx.test.mytest", new File(filePath));
     }
 
     private void openCurDir(String curPath) {

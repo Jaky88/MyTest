@@ -46,8 +46,8 @@
             android:id="@+id/btn_start_kreader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{bean::onStartKreaderClick}"
-            android:text="启动kreader"/>
+            android:onClick="@{bean::onStartReaderClick}"
+            android:text="启动reader"/>
 
         <LinearLayout
             android:layout_width="match_parent"

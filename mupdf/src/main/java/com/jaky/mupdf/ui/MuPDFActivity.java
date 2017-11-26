@@ -949,7 +949,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 	private void makeButtonsView() {
 		mButtonsView = getLayoutInflater().inflate(R.layout.main_buttons_bar,null);
 		mFilenameView = (TextView)mButtonsView.findViewById(R.id.docNameText);
-		mPageSlider = (SeekBar)mButtonsView.findViewById(R.id.sb_pageSlider);
+		mPageSlider = (SeekBar)mButtonsView.findViewById(R.id.pageSlider);
 		mPageNumberView = (TextView)mButtonsView.findViewById(R.id.pageNumber);
 		mInfoView = (TextView)mButtonsView.findViewById(R.id.info);
 		mSearchButton = (ImageButton)mButtonsView.findViewById(R.id.searchButton);
