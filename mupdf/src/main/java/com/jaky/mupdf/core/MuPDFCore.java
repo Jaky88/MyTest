@@ -7,6 +7,8 @@ import android.graphics.RectF;
 import android.util.Log;
 
 import com.jaky.mupdf.R;
+import com.jaky.mupdf.data.Annotation;
+import com.jaky.mupdf.data.LinkInfo;
 import com.jaky.mupdf.data.MuPDFAlert;
 import com.jaky.mupdf.data.MuPDFAlertInternal;
 import com.jaky.mupdf.data.OutlineItem;
@@ -86,10 +88,10 @@ public class MuPDFCore {
     private native int setFocusedWidgetTextInternal(String text);
     private native String getFocusedWidgetTextInternal();
     private native int getFocusedWidgetTypeInternal();
-    private native LinkInfo [] getPageLinksInternal(int page);
+    private native LinkInfo[] getPageLinksInternal(int page);
     private native RectF[] getWidgetAreasInternal(int page);
     private native Annotation[] getAnnotationsInternal(int page);
-    private native OutlineItem [] getOutlineInternal();
+    private native OutlineItem[] getOutlineInternal();
     private native boolean hasOutlineInternal();
     private native boolean needsPasswordInternal();
     private native boolean authenticatePasswordInternal(String password);

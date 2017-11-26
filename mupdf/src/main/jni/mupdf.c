@@ -1669,7 +1669,7 @@ JNI_MuPDFCore(addInkAnnotationInternal)(JNIEnv * env, jobject thiz, jobjectArray
 }
 
 JNIEXPORT void JNICALL
-JNI_MuPDFCore(deleteAnnotationInternal)(JNIEnv * env, jobject thiz, int annot_index)
+JNI_MuPDFCore(deleteAnnotationInternal)(JNIEnv * env, jobject thiz, jint annot_index)
 {
 	globals *glo = get_globals(env, thiz);
 	fz_context *ctx = glo->ctx;
@@ -1749,7 +1749,7 @@ JNI_MuPDFCore(destroying)(JNIEnv * env, jobject thiz)
 }
 
 JNIEXPORT jobjectArray JNICALL
-JNI_MuPDFCore(getPageLinksInternal)(JNIEnv * env, jobject thiz, int pageNumber)
+JNI_MuPDFCore(getPageLinksInternal)(JNIEnv * env, jobject thiz, jint pageNumber)
 {
 	jclass linkInfoClass;
 	jclass linkInfoInternalClass;
@@ -1864,7 +1864,7 @@ JNI_MuPDFCore(getPageLinksInternal)(JNIEnv * env, jobject thiz, int pageNumber)
 }
 
 JNIEXPORT jobjectArray JNICALL
-JNI_MuPDFCore(getWidgetAreasInternal)(JNIEnv * env, jobject thiz, int pageNumber)
+JNI_MuPDFCore(getWidgetAreasInternal)(JNIEnv * env, jobject thiz, jint pageNumber)
 {
 	jclass rectFClass;
 	jmethodID ctor;
@@ -1925,7 +1925,7 @@ JNI_MuPDFCore(getWidgetAreasInternal)(JNIEnv * env, jobject thiz, int pageNumber
 }
 
 JNIEXPORT jobjectArray JNICALL
-JNI_MuPDFCore(getAnnotationsInternal)(JNIEnv * env, jobject thiz, int pageNumber)
+JNI_MuPDFCore(getAnnotationsInternal)(JNIEnv * env, jobject thiz, jint pageNumber)
 {
 	jclass annotClass;
 	jmethodID ctor;
@@ -1982,7 +1982,7 @@ JNI_MuPDFCore(getAnnotationsInternal)(JNIEnv * env, jobject thiz, int pageNumber
 }
 
 JNIEXPORT int JNICALL
-JNI_MuPDFCore(passClickEventInternal)(JNIEnv * env, jobject thiz, int pageNumber, float x, float y)
+JNI_MuPDFCore(passClickEventInternal)(JNIEnv * env, jobject thiz, jint pageNumber, jfloat x, jfloat y)
 {
 	globals *glo = get_globals(env, thiz);
 	fz_context *ctx = glo->ctx;
@@ -2697,7 +2697,7 @@ static char *tmp_gproof_path(char *path)
 }
 
 JNIEXPORT jstring JNICALL
-JNI_MuPDFCore(startProofInternal)(JNIEnv * env, jobject thiz, int inResolution)
+JNI_MuPDFCore(startProofInternal)(JNIEnv * env, jobject thiz, jint inResolution)
 {
 #ifdef SUPPORT_GPROOF
 	globals *glo = get_globals(env, thiz);

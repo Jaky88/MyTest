@@ -21,11 +21,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.jaky.mupdf.core.Annotation;
+import com.jaky.mupdf.data.Annotation;
 import com.jaky.mupdf.task.AsyncTask;
 import com.jaky.mupdf.task.CancellableAsyncTask;
 import com.jaky.mupdf.task.CancellableTaskDefinition;
-import com.jaky.mupdf.core.LinkInfo;
+import com.jaky.mupdf.data.LinkInfo;
 import com.jaky.mupdf.R;
 import com.jaky.mupdf.data.TextWord;
 

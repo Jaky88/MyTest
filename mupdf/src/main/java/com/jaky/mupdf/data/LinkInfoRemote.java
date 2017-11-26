@@ -1,7 +1,5 @@
 package com.jaky.mupdf.data;
 
-import com.jaky.mupdf.core.LinkInfo;
-
 public class LinkInfoRemote extends LinkInfo {
 	final public String fileSpec;
 	final public int pageNumber;

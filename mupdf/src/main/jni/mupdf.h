@@ -17,7 +17,7 @@
 #include "mupdf/include/mupdf/pdf.h"
 
 #define JNI_MuPDFCore(A) Java_com_jaky_mupdf_core_MuPDFCore_ ## A
-#define PACKAGENAME "com/jaky/mupdf/core"
+#define PACKAGENAME "com/jaky/mupdf/data"
 
 //Log输出
 #define LOG_TAG "JNICALL_libmupdf"

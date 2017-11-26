@@ -33,7 +33,7 @@ android {
         }
 
         tasks.withType(JavaCompile) {
-//            compileTask -> compileTask.dependsOn ndkBuild
+            compileTask -> compileTask.dependsOn ndkBuild
         }
 
         task ndkClean(type: Exec) {
@@ -44,7 +44,7 @@ android {
             }
         }
 
-//        clean.dependsOn 'ndkClean'
+        clean.dependsOn 'ndkClean'
 
     }
     buildTypes {

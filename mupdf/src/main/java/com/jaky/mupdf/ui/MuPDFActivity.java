@@ -38,7 +38,7 @@ import android.widget.TextView;
 import android.widget.ViewAnimator;
 
 import com.jaky.mupdf.R;
-import com.jaky.mupdf.core.Annotation;
+import com.jaky.mupdf.data.Annotation;
 import com.jaky.mupdf.task.AsyncTask;
 import com.jaky.mupdf.data.FilePicker;
 import com.jaky.mupdf.data.MuPDFAlert;
