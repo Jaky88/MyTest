@@ -2,6 +2,7 @@ package com.onyx.test.mytest.view.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.view.View;
 import android.widget.CompoundButton;
 
 import com.leon.lfilepickerlibrary.LFilePicker;
@@ -26,6 +27,12 @@ public class Tab4Fragment extends BaseFragment<FragmentTab4Binding> {
     @Override
     public void bindData() {
         bindingView.setBean(new FragmentTab04Model(getActivity()));
+        bindingView.btnSelectFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectFile();
+            }
+        });
         bindingView.cbOpenWifi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
