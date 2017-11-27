@@ -50,12 +50,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-//    sourceSets {
-//        main{
-//            jniLibs.srcDirs = ['libs']
-//        }
-//
-//    }
 
     repositories{
         flatDir {
@@ -69,8 +63,6 @@ android {
 
     lintOptions {
         checkReleaseBuilds false
-        // Or, if you prefer, you can continue to check for errors in release builds,
-        // but continue the build even when errors are found:
         abortOnError false
     }
 
@@ -78,11 +70,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-//    compile(name:'onyxsdk-base-release', ext:'aar')
-
-
     compile project(path: ':lfilepickerlibrary')
-//    compile project(path: ':xposelibrary')
     compile project(path: ':mupdf')
 
 
@@ -105,9 +93,6 @@ dependencies {
     //RxAndroid1/RxJava1
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'io.reactivex:rxandroid:1.1.0'
-    //butterknife
-//    compile 'com.jakewharton:butterknife:7.0.1'
-//    compile 'com.jakewharton:butterknife:8.4.0'
     //retrofit2
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
