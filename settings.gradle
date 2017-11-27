@@ -1,2 +1,2 @@
-include ':app', ':xposelibrary', ':mupdf',
+include ':app', ':mupdf',
         ':lfilepickerlibrary'

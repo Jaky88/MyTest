@@ -358,16 +358,19 @@
         </RelativeLayout>
     </ViewAnimator>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/lowerButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal">
 
         <SeekBar
         android:id="@+id/pageSlider"
         android:layout_width="match_parent"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
@@ -391,7 +394,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#FFFFFF" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/info"

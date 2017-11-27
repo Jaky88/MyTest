@@ -82,7 +82,7 @@ dependencies {
 
 
     compile project(path: ':lfilepickerlibrary')
-    compile project(path: ':xposelibrary')
+//    compile project(path: ':xposelibrary')
     compile project(path: ':mupdf')
 
 
