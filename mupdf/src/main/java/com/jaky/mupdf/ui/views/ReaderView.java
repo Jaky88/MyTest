@@ -21,7 +21,7 @@ import android.widget.Scroller;
 
 import com.jaky.mupdf.R;
 import com.jaky.mupdf.data.Stepper;
-import com.jaky.mupdf.ui.ViewMapper;
+import com.jaky.mupdf.async.ViewMapper;
 import com.jaky.mupdf.ui.activity.MuPDFActivity;
 import com.jaky.mupdf.ui.adapter.MuPDFPageAdapter;
 

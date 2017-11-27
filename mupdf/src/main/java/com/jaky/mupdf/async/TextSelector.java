@@ -1,7 +1,8 @@
-package com.jaky.mupdf.ui;
+package com.jaky.mupdf.async;
 
 import android.graphics.RectF;
 
+import com.jaky.mupdf.async.TextProcessor;
 import com.jaky.mupdf.data.TextWord;
 
 import java.util.ArrayList;

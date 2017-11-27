@@ -23,8 +23,7 @@ import android.widget.ListView;
 
 import com.jaky.mupdf.data.ChoosePDFItem;
 import com.jaky.mupdf.R;
-import com.jaky.mupdf.ui.Purpose;
-import com.jaky.mupdf.ui.activity.MuPDFActivity;
+import com.jaky.mupdf.data.ReaderConstants;
 import com.jaky.mupdf.ui.adapter.ChoosePDFAdapter;
 
 public class ChoosePDFActivity extends ListActivity {
@@ -37,14 +36,14 @@ public class ChoosePDFActivity extends ListActivity {
 	private Handler	     mHandler;
 	private Runnable     mUpdateFiles;
 	private ChoosePDFAdapter adapter;
-	private Purpose mPurpose;
+    @ReaderConstants.Purpose
+    private String mPurpose;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		mPurpose = PICK_KEY_FILE.equals(getIntent().getAction()) ? Purpose.PickKeyFile : Purpose.PickPDF;
-
+		mPurpose = PICK_KEY_FILE.equals(getIntent().getAction()) ? ReaderConstants.PICKKEYFILE : ReaderConstants.PICKPDF;
 
 		String storageState = Environment.getExternalStorageState();
 
@@ -100,7 +99,7 @@ public class ChoosePDFActivity extends ListActivity {
 							return false;
 						String fname = file.getName().toLowerCase();
 						switch (mPurpose) {
-						case PickPDF:
+						case ReaderConstants.PICKPDF:
 							if (fname.endsWith(".pdf"))
 								return true;
 							if (fname.endsWith(".xps"))
@@ -126,7 +125,7 @@ public class ChoosePDFActivity extends ListActivity {
 							if (fname.endsWith(".tiff"))
 								return true;
 							return false;
-						case PickKeyFile:
+						case ReaderConstants.PICKKEYFILE:
 							if (fname.endsWith(".pfx"))
 								return true;
 							return false;
@@ -152,11 +151,11 @@ public class ChoosePDFActivity extends ListActivity {
 
 				adapter.clear();
 				if (mParent != null)
-					adapter.add(new ChoosePDFItem(ChoosePDFItem.Type.PARENT, getString(R.string.parent_directory)));
+					adapter.add(new ChoosePDFItem(ChoosePDFItem.PARENT, getString(R.string.parent_directory)));
 				for (File f : mDirs)
-					adapter.add(new ChoosePDFItem(ChoosePDFItem.Type.DIR, f.getName()));
+					adapter.add(new ChoosePDFItem(ChoosePDFItem.DIR, f.getName()));
 				for (File f : mFiles)
-					adapter.add(new ChoosePDFItem(ChoosePDFItem.Type.DOC, f.getName()));
+					adapter.add(new ChoosePDFItem(ChoosePDFItem.DOC, f.getName()));
 
 				lastPosition();
 			}
@@ -207,11 +206,11 @@ public class ChoosePDFActivity extends ListActivity {
 		intent.setAction(Intent.ACTION_VIEW);
 		intent.setData(uri);
 		switch (mPurpose) {
-		case PickPDF:
+		case ReaderConstants.PICKPDF:
 			// Start an activity to display the PDF file
 			startActivity(intent);
 			break;
-		case PickKeyFile:
+		case ReaderConstants.PICKKEYFILE:
 			// Return the uri to the caller
 			setResult(RESULT_OK, intent);
 			finish();

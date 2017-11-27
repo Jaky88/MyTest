@@ -28,8 +28,8 @@ import com.jaky.mupdf.task.CancellableTaskDefinition;
 import com.jaky.mupdf.data.LinkInfo;
 import com.jaky.mupdf.R;
 import com.jaky.mupdf.data.TextWord;
-import com.jaky.mupdf.ui.TextProcessor;
-import com.jaky.mupdf.ui.TextSelector;
+import com.jaky.mupdf.async.TextProcessor;
+import com.jaky.mupdf.async.TextSelector;
 
 // Make our ImageViews opaque to optimize redraw
 
@@ -87,7 +87,7 @@ public abstract class PageView extends ViewGroup {
 	protected abstract CancellableTaskDefinition<Void, Void> getUpdatePageTask(Bitmap bm, int sizeX, int sizeY, int patchX, int patchY, int patchWidth, int patchHeight);
 	protected abstract LinkInfo[] getLinkInfo();
 	protected abstract TextWord[][] getText();
-	protected abstract void addMarkup(PointF[] quadPoints, Annotation.Type type);
+	protected abstract void addMarkup(PointF[] quadPoints, @Annotation.Type int type);
 
 	private void reinit() {
 		// Cancel pending render task

@@ -1,4 +1,8 @@
-package com.jaky.mupdf.ui;
+package com.jaky.mupdf.async;
+
+import com.jaky.mupdf.async.PassClickResultChoice;
+import com.jaky.mupdf.async.PassClickResultSignature;
+import com.jaky.mupdf.async.PassClickResultText;
 
 /**
  * Created by jaky on 2017/11/22 0022.

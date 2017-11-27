@@ -39,6 +39,7 @@ import android.widget.ViewAnimator;
 
 import com.jaky.mupdf.R;
 import com.jaky.mupdf.data.Annotation;
+import com.jaky.mupdf.data.ReaderConstants;
 import com.jaky.mupdf.task.AsyncTask;
 import com.jaky.mupdf.data.FilePicker;
 import com.jaky.mupdf.data.MuPDFAlert;
@@ -49,9 +50,8 @@ import com.jaky.mupdf.data.SafeAnimatorInflater;
 import com.jaky.mupdf.task.SearchTask;
 import com.jaky.mupdf.task.SearchTaskResult;
 import com.jaky.mupdf.data.Separation;
-import com.jaky.mupdf.ui.Hit;
-import com.jaky.mupdf.ui.ThreadPerTaskExecutor;
-import com.jaky.mupdf.ui.ViewMapper;
+import com.jaky.mupdf.async.ThreadPerTaskExecutor;
+import com.jaky.mupdf.async.ViewMapper;
 import com.jaky.mupdf.ui.adapter.MuPDFPageAdapter;
 import com.jaky.mupdf.ui.adapter.MuPDFReflowAdapter;
 import com.jaky.mupdf.ui.views.MuPDFReaderView;
@@ -491,10 +491,10 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 			}
 
 			@Override
-			protected void onHit(Hit item) {
+			protected void onHit(@ReaderConstants.Hit String item) {
 				switch (mTopBarMode) {
 				case Annot:
-					if (item == Hit.Annotation) {
+					if (ReaderConstants.ANNOTATION.equals(item)) {
 						showButtons();
 						mTopBarMode = TopBarMode.Delete;
 						mTopBarSwitcher.setDisplayedChild(mTopBarMode.ordinal());
@@ -1281,7 +1281,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 
 		case Highlight:
 			if (pageView != null)
-				success = pageView.markupSelection(Annotation.Type.HIGHLIGHT);
+				success = pageView.markupSelection(Annotation.HIGHLIGHT);
 			mTopBarMode = TopBarMode.Annot;
 			if (!success)
 				showInfo(getString(R.string.no_text_selected));
@@ -1289,7 +1289,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 
 		case Underline:
 			if (pageView != null)
-				success = pageView.markupSelection(Annotation.Type.UNDERLINE);
+				success = pageView.markupSelection(Annotation.UNDERLINE);
 			mTopBarMode = TopBarMode.Annot;
 			if (!success)
 				showInfo(getString(R.string.no_text_selected));
@@ -1297,7 +1297,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
 
 		case StrikeOut:
 			if (pageView != null)
-				success = pageView.markupSelection(Annotation.Type.STRIKEOUT);
+				success = pageView.markupSelection(Annotation.STRIKEOUT);
 			mTopBarMode = TopBarMode.Annot;
 			if (!success)
 				showInfo(getString(R.string.no_text_selected));

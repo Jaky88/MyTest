@@ -15,9 +15,9 @@ import com.jaky.mupdf.data.LinkInfoExternal;
 import com.jaky.mupdf.data.LinkInfoInternal;
 import com.jaky.mupdf.data.LinkInfoRemote;
 import com.jaky.mupdf.data.LinkInfoVisitor;
+import com.jaky.mupdf.data.ReaderConstants;
 import com.jaky.mupdf.task.SearchTaskResult;
-import com.jaky.mupdf.ui.Hit;
-import com.jaky.mupdf.ui.ViewMapper;
+import com.jaky.mupdf.async.ViewMapper;
 
 public class MuPDFReaderView extends ReaderView {
 	public enum Mode {Viewing, Selecting, Drawing}
@@ -29,7 +29,8 @@ public class MuPDFReaderView extends ReaderView {
 
 	protected void onTapMainDocArea() {}
 	protected void onDocMotion() {}
-	protected void onHit(Hit item) {};
+	@ReaderConstants.Hit
+	protected void onHit(String item) {};
 
 	public void setLinksEnabled(boolean b) {
 		mLinksEnabled = b;
@@ -72,14 +73,16 @@ public class MuPDFReaderView extends ReaderView {
 		setup();
 	}
 
+
 	public boolean onSingleTapUp(MotionEvent e) {
 		LinkInfo link = null;
 
 		if (mMode == Mode.Viewing && !tapDisabled) {
 			MuPDFView pageView = (MuPDFView) getDisplayedView();
-			Hit item = pageView.passClickEvent(e.getX(), e.getY());
+			@ReaderConstants.Hit
+			String item = pageView.passClickEvent(e.getX(), e.getY());
 			onHit(item);
-			if (item == Hit.Nothing) {
+			if (item == ReaderConstants.NOTHING) {
 				if (mLinksEnabled && pageView != null
 				&& (link = pageView.hitLink(e.getX(), e.getY())) != null) {
 					link.acceptVisitor(new LinkInfoVisitor() {

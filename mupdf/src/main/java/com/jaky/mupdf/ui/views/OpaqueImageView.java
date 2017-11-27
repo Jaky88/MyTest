@@ -1,13 +1,12 @@
 package com.jaky.mupdf.ui.views;
 
 import android.content.Context;
-import android.widget.ImageView;
 
 /**
  * Created by jaky on 2017/11/22 0022.
  */
 
-public class OpaqueImageView extends ImageView {
+public class OpaqueImageView extends android.support.v7.widget.AppCompatImageView {
 
     public OpaqueImageView(Context context) {
         super(context);

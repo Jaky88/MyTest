@@ -1,4 +1,4 @@
-package com.jaky.mupdf.ui;
+package com.jaky.mupdf.async;
 
 import java.util.concurrent.Executor;
 

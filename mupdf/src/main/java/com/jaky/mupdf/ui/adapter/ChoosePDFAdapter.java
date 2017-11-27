@@ -43,11 +43,11 @@ public class ChoosePDFAdapter extends BaseAdapter {
 		return 0;
 	}
 
-	private int iconForType(ChoosePDFItem.Type type) {
+	private int iconForType(@ChoosePDFItem.Type int type) {
 		switch (type) {
-		case PARENT: return R.drawable.ic_arrow_up;
-		case DIR: return R.drawable.ic_dir;
-		case DOC: return R.drawable.ic_doc;
+		case ChoosePDFItem.PARENT: return R.drawable.ic_arrow_up;
+		case ChoosePDFItem.DIR: return R.drawable.ic_dir;
+		case ChoosePDFItem.DOC: return R.drawable.ic_doc;
 		default: return 0;
 		}
 	}

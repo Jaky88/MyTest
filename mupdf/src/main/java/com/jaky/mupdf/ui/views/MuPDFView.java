@@ -5,19 +5,19 @@ import android.graphics.RectF;
 
 import com.jaky.mupdf.data.Annotation;
 import com.jaky.mupdf.data.LinkInfo;
-import com.jaky.mupdf.ui.Hit;
+import com.jaky.mupdf.data.ReaderConstants;
 
 public interface MuPDFView {
 	void setPage(int page, PointF size);
 	void setScale(float scale);
 	int getPage();
 	void blank(int page);
-	Hit passClickEvent(float x, float y);
+	@ReaderConstants.Hit String passClickEvent(float x, float y);
 	LinkInfo hitLink(float x, float y);
 	void selectText(float x0, float y0, float x1, float y1);
 	void deselectText();
 	boolean copySelection();
-	boolean markupSelection(Annotation.Type type);
+	boolean markupSelection(@Annotation.Type int type);
 	void deleteSelectedAnnotation();
 	void setSearchBoxes(RectF searchBoxes[]);
 	void setLinkHighlighting(boolean f);

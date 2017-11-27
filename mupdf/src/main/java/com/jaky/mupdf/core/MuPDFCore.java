@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.graphics.RectF;
-import android.util.Log;
 
 import com.jaky.mupdf.R;
 import com.jaky.mupdf.data.Annotation;
@@ -12,14 +11,14 @@ import com.jaky.mupdf.data.LinkInfo;
 import com.jaky.mupdf.data.MuPDFAlert;
 import com.jaky.mupdf.data.MuPDFAlertInternal;
 import com.jaky.mupdf.data.OutlineItem;
+import com.jaky.mupdf.data.ReaderConstants;
 import com.jaky.mupdf.data.Separation;
 import com.jaky.mupdf.data.TextChar;
 import com.jaky.mupdf.data.TextWord;
-import com.jaky.mupdf.data.WidgetType;
-import com.jaky.mupdf.ui.PassClickResult;
-import com.jaky.mupdf.ui.PassClickResultChoice;
-import com.jaky.mupdf.ui.PassClickResultSignature;
-import com.jaky.mupdf.ui.PassClickResultText;
+import com.jaky.mupdf.async.PassClickResult;
+import com.jaky.mupdf.async.PassClickResultChoice;
+import com.jaky.mupdf.async.PassClickResultSignature;
+import com.jaky.mupdf.async.PassClickResultText;
 
 import java.util.ArrayList;
 
@@ -246,14 +245,14 @@ public class MuPDFCore {
     public synchronized PassClickResult passClickEvent(int page, float x, float y) {
         boolean changed = passClickEventInternal(page, x, y) != 0;
 
-        switch (WidgetType.values()[getFocusedWidgetTypeInternal()])
+        switch (ReaderConstants.WidgetType.values[getFocusedWidgetTypeInternal()])
         {
-            case TEXT:
+            case ReaderConstants.TEXT:
                 return new PassClickResultText(changed, getFocusedWidgetTextInternal());
-            case LISTBOX:
-            case COMBOBOX:
+            case ReaderConstants.LISTBOX:
+            case ReaderConstants.COMBOBOX:
                 return new PassClickResultChoice(changed, getFocusedWidgetChoiceOptions(), getFocusedWidgetChoiceSelected());
-            case SIGNATURE:
+            case ReaderConstants.SIGNATURE:
                 return new PassClickResultSignature(changed, getFocusedWidgetSignatureState());
             default:
                 return new PassClickResult(changed);
@@ -341,9 +340,9 @@ public class MuPDFCore {
         return lns.toArray(new TextWord[lns.size()][]);
     }
 
-    public synchronized void addMarkupAnnotation(int page, PointF[] quadPoints, Annotation.Type type) {
+    public synchronized void addMarkupAnnotation(int page, PointF[] quadPoints, @Annotation.Type int type) {
         gotoPage(page);
-        addMarkupAnnotationInternal(quadPoints, type.ordinal());
+        addMarkupAnnotationInternal(quadPoints, type);
     }
 
     public synchronized void addInkAnnotation(int page, PointF[][] arcs) {

@@ -11,11 +11,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.jaky.mupdf.data.Annotation;
+import com.jaky.mupdf.data.ReaderConstants;
 import com.jaky.mupdf.task.AsyncTask;
 import com.jaky.mupdf.data.LinkInfo;
 import com.jaky.mupdf.core.MuPDFCore;
-import com.jaky.mupdf.ui.Hit;
-import com.jaky.mupdf.ui.views.MuPDFView;
 
 public class MuPDFReflowView extends WebView implements MuPDFView {
 	private final MuPDFCore mCore;
@@ -90,8 +89,9 @@ public class MuPDFReflowView extends WebView implements MuPDFView {
 	public void blank(int page) {
 	}
 
-	public Hit passClickEvent(float x, float y) {
-		return Hit.Nothing;
+	@ReaderConstants.Hit
+	public String passClickEvent(float x, float y) {
+		return ReaderConstants.NOTHING;
 	}
 
 	public LinkInfo hitLink(float x, float y) {
@@ -108,7 +108,9 @@ public class MuPDFReflowView extends WebView implements MuPDFView {
 		return false;
 	}
 
-	public boolean markupSelection(Annotation.Type type) {
+
+	@Override
+	public boolean markupSelection(@Annotation.Type int  type) {
 		return false;
 	}
 

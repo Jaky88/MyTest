@@ -1,24 +1,5 @@
 package com.jaky.mupdf.ui.views;
 
-import java.util.ArrayList;
-
-import com.jaky.mupdf.data.Annotation;
-import com.jaky.mupdf.task.AsyncTask;
-import com.jaky.mupdf.task.CancellableTaskDefinition;
-import com.jaky.mupdf.data.FilePicker;
-import com.jaky.mupdf.data.LinkInfo;
-import com.jaky.mupdf.task.MuPDFCancellableTaskDefinition;
-import com.jaky.mupdf.core.MuPDFCore;
-import com.jaky.mupdf.R;
-import com.jaky.mupdf.data.TextWord;
-import com.jaky.mupdf.ui.Hit;
-import com.jaky.mupdf.ui.PassClickResult;
-import com.jaky.mupdf.ui.PassClickResultChoice;
-import com.jaky.mupdf.ui.PassClickResultSignature;
-import com.jaky.mupdf.ui.PassClickResultText;
-import com.jaky.mupdf.ui.PassClickResultVisitor;
-import com.jaky.mupdf.ui.TextProcessor;
-
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.ClipData;
@@ -35,6 +16,25 @@ import android.view.LayoutInflater;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+
+import com.jaky.mupdf.R;
+import com.jaky.mupdf.async.PassClickResult;
+import com.jaky.mupdf.async.PassClickResultChoice;
+import com.jaky.mupdf.async.PassClickResultSignature;
+import com.jaky.mupdf.async.PassClickResultText;
+import com.jaky.mupdf.async.PassClickResultVisitor;
+import com.jaky.mupdf.async.TextProcessor;
+import com.jaky.mupdf.core.MuPDFCore;
+import com.jaky.mupdf.data.Annotation;
+import com.jaky.mupdf.data.FilePicker;
+import com.jaky.mupdf.data.LinkInfo;
+import com.jaky.mupdf.data.ReaderConstants;
+import com.jaky.mupdf.data.TextWord;
+import com.jaky.mupdf.task.AsyncTask;
+import com.jaky.mupdf.task.CancellableTaskDefinition;
+import com.jaky.mupdf.task.MuPDFCancellableTaskDefinition;
+
+import java.util.ArrayList;
 
 
 
@@ -265,7 +265,8 @@ public class MuPDFPageView extends PageView implements MuPDFView {
 		changeReporter = reporter;
 	}
 
-	public Hit passClickEvent(float x, float y) {
+	@ReaderConstants.Hit
+	public String passClickEvent(float x, float y) {
 		float scale = mSourceScale*(float)getWidth()/(float)mSize.x;
 		final float docRelX = (x - getLeft())/scale;
 		final float docRelY = (y - getTop())/scale;
@@ -281,14 +282,14 @@ public class MuPDFPageView extends PageView implements MuPDFView {
 
 			if (hit) {
 				switch (mAnnotations[i].type) {
-				case HIGHLIGHT:
-				case UNDERLINE:
-				case SQUIGGLY:
-				case STRIKEOUT:
-				case INK:
+				case Annotation.HIGHLIGHT:
+				case Annotation.UNDERLINE:
+				case Annotation.SQUIGGLY:
+				case Annotation.STRIKEOUT:
+				case Annotation.INK:
 					mSelectedAnnotationIndex = i;
 					setItemSelectBox(mAnnotations[i]);
-					return Hit.Annotation;
+					return ReaderConstants.ANNOTATION;
 				}
 			}
 		}
@@ -297,7 +298,7 @@ public class MuPDFPageView extends PageView implements MuPDFView {
 		setItemSelectBox(null);
 
 		if (!mCore.javascriptSupported())
-			return Hit.Nothing;
+			return ReaderConstants.NOTHING;
 
 		if (mWidgetAreas != null) {
 			for (i = 0; i < mWidgetAreas.length && !hit; i++)
@@ -332,13 +333,13 @@ public class MuPDFPageView extends PageView implements MuPDFView {
 						@Override
 						public void visitSignature(PassClickResultSignature result) {
 							switch (result.state) {
-							case NoSupport:
+							case ReaderConstants.NOSUPPORT:
 								warnNoSignatureSupport();
 								break;
-							case Unsigned:
+							case ReaderConstants.UNSIGNED:
 								invokeSigningDialog();
 								break;
-							case Signed:
+							case ReaderConstants.SIGNED:
 								invokeSignatureCheckingDialog();
 								break;
 							}
@@ -348,10 +349,10 @@ public class MuPDFPageView extends PageView implements MuPDFView {
 			};
 
 			mPassClick.execute();
-			return Hit.Widget;
+			return ReaderConstants.WIDGET;
 		}
 
-		return Hit.Nothing;
+		return ReaderConstants.NOTHING;
 	}
 
 	@TargetApi(11)
@@ -396,7 +397,7 @@ public class MuPDFPageView extends PageView implements MuPDFView {
 		return true;
 	}
 
-	public boolean markupSelection(final Annotation.Type type) {
+	public boolean markupSelection(final @Annotation.Type int type) {
 		final ArrayList<PointF> quadPoints = new ArrayList<PointF>();
 		processSelectedText(new TextProcessor() {
 			RectF rect;
@@ -553,7 +554,7 @@ public class MuPDFPageView extends PageView implements MuPDFView {
 	}
 
 	@Override
-	protected void addMarkup(PointF[] quadPoints, Annotation.Type type) {
+	protected void addMarkup(PointF[] quadPoints, @Annotation.Type int type) {
 		mCore.addMarkupAnnotation(mPageNumber, quadPoints, type);
 	}
 
