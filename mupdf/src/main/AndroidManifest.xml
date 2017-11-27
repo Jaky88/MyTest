@@ -21,7 +21,7 @@
         android:supportsRtl="true">
 
         <activity
-            android:name=".ui.ChoosePDFActivity"
+            android:name=".ui.activity.ChoosePDFActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Light">
             <intent-filter>
@@ -31,7 +31,7 @@
         </activity>
 
         <activity
-            android:name=".ui.MuPDFActivity"
+            android:name=".ui.activity.MuPDFActivity"
             android:label="@string/app_name"
             android:theme="@style/AppBaseTheme">
             <!--<intent-filter>-->
@@ -207,14 +207,14 @@
         </activity>
 
         <activity
-            android:name=".ui.OutlineActivity"
+            android:name=".ui.activity.OutlineActivity"
             android:label="@string/outline_title"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen">
 
         </activity>
 
         <activity
-            android:name=".ui.PrintDialogActivity"
+            android:name=".ui.activity.PrintDialogActivity"
             android:label="@string/print"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen">
 

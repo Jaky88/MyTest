@@ -27,12 +27,11 @@ public class MuPDFCore {
     private static boolean gs_so_available = false;
 
     static {
+        //load mupdf so library
         System.loadLibrary("mupdf_jaky");
-        Log.d("", "=====loadLibrary===============");
-//        if (gprfSupportedInternal()) {
-        if (false) {
+        if (gprfSupportedInternal()) {
             try {
-                //提供交互式颜色校正工具的库
+                //加载提供交互式颜色校正工具的库
                 System.loadLibrary("gs");
                 gs_so_available = true;
             } catch (UnsatisfiedLinkError e) {
