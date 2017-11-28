@@ -440,16 +440,16 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.btn_addbookmark:
-                    String url = webview.getUrl().replaceAll("%20", " ").substring(("file://" + extractPath).length() + 1);
-                    if (listBookmark.indexOf(url) == -1) {
-                        listBookmark.add(url);
-                        adapter.notifyDataSetChanged();
-                    } else {
-                        Toast.makeText(mainActivity, "Bookmark already exist", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
+            int i = v.getId();
+            if (i == R.id.btn_addbookmark) {
+                String url = webview.getUrl().replaceAll("%20", " ").substring(("file://" + extractPath).length() + 1);
+                if (listBookmark.indexOf(url) == -1) {
+                    listBookmark.add(url);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(mainActivity, "Bookmark already exist", Toast.LENGTH_SHORT).show();
+                }
+
             }
         }
     }
@@ -498,48 +498,48 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.btn_search:
-                    if (editText.getText().toString().length() > 0)
-                        new AsyncTask<Void, Integer, Void>() {
-                            String textSearch;
+            int i = v.getId();
+            if (i == R.id.btn_search) {
+                if (editText.getText().toString().length() > 0)
+                    new AsyncTask<Void, Integer, Void>() {
+                        String textSearch;
 
-                            @Override
-                            protected void onPreExecute() {
-                                super.onPreExecute();
-                                searchProgress.setProgress(0);
-                                textSearch = editText.getText().toString();
-                            }
+                        @Override
+                        protected void onPreExecute() {
+                            super.onPreExecute();
+                            searchProgress.setProgress(0);
+                            textSearch = editText.getText().toString();
+                        }
 
-                            @Override
-                            protected Void doInBackground(Void... voids) {
-                                for (int i = 1; i < listSite.size(); i++) {
-                                    if (searchDoc(listSite.get(i), textSearch)) {
-                                        publishProgress(i, 1);
-                                    } else {
-                                        publishProgress(i, 0);
-                                    }
-                                }
-                                return null;
-                            }
-
-                            @Override
-                            protected void onProgressUpdate(Integer... values) {
-                                super.onProgressUpdate(values);
-                                searchProgress.setProgress(values[0]);
-                                if (values[1] == 1) {
-                                    searchResult.add(listSite.get(values[0]));
-                                    adapter.notifyDataSetChanged();
-                                    CustomDialogSearchAll.this.setTitle(searchResult.size() + " Results");
+                        @Override
+                        protected Void doInBackground(Void... voids) {
+                            for (int i = 1; i < listSite.size(); i++) {
+                                if (searchDoc(listSite.get(i), textSearch)) {
+                                    publishProgress(i, 1);
+                                } else {
+                                    publishProgress(i, 0);
                                 }
                             }
+                            return null;
+                        }
 
-                            @Override
-                            protected void onPostExecute(Void aVoid) {
-                                super.onPostExecute(aVoid);
+                        @Override
+                        protected void onProgressUpdate(Integer... values) {
+                            super.onProgressUpdate(values);
+                            searchProgress.setProgress(values[0]);
+                            if (values[1] == 1) {
+                                searchResult.add(listSite.get(values[0]));
+                                adapter.notifyDataSetChanged();
                                 CustomDialogSearchAll.this.setTitle(searchResult.size() + " Results");
                             }
-                        }.execute();
+                        }
+
+                        @Override
+                        protected void onPostExecute(Void aVoid) {
+                            super.onPostExecute(aVoid);
+                            CustomDialogSearchAll.this.setTitle(searchResult.size() + " Results");
+                        }
+                    }.execute();
             }
         }
 
