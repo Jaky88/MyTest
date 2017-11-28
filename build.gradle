@@ -3,6 +3,10 @@
 buildscript {
     repositories {
         jcenter()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
@@ -21,6 +25,10 @@ allprojects {
         maven { url "https://jitpack.io" }
         maven { url  "http://dl.bintray.com/dasar/maven" }
         maven { url "http://mvn.leancloud.cn/nexus/content/repositories/releases" }
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
 }
 
@@ -31,10 +39,10 @@ task clean(type: Delete) {
 ext {
     // Sdk and tools
     minSdkVersion = 15
-    targetSdkVersion = 23
-    compileSdkVersion = 25
+    targetSdkVersion = 26
+    compileSdkVersion = 26
     buildToolsVersion = "26.0.1"
-    supportLibraryVersion = '25.+'
+    supportLibraryVersion = '26.+'
     //compatible
     compatibleSdkVersion = 23 // for projects which can't be built with sdk 24+
     compatibleSupportLibraryVersion = '23.4.0' // for projects which can't be built with sdk 24+

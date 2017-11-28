@@ -1,2 +1,2 @@
-include ':app', ':mupdf',
+include ':app', ':mupdf', ':libchm',
         ':lfilepickerlibrary'
