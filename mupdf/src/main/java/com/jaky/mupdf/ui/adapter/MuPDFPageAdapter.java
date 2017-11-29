@@ -12,7 +12,7 @@ import android.widget.BaseAdapter;
 import com.jaky.mupdf.task.AsyncTask;
 import com.jaky.mupdf.data.FilePicker;
 import com.jaky.mupdf.core.MuPDFCore;
-import com.jaky.mupdf.ui.views.MuPDFPageView;
+import com.jaky.mupdf.ui.views.pageview.MuPDFPageView;
 
 public class MuPDFPageAdapter extends BaseAdapter {
 	private final Context mContext;

@@ -1,4 +1,4 @@
-package com.jaky.mupdf.ui.views;
+package com.jaky.mupdf.ui.views.imageview;
 
 import android.content.Context;
 

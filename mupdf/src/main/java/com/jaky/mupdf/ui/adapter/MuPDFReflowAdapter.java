@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.jaky.mupdf.core.MuPDFCore;
-import com.jaky.mupdf.ui.views.MuPDFReflowView;
+import com.jaky.mupdf.ui.views.webview.MuPDFReflowView;
 
 public class MuPDFReflowAdapter extends BaseAdapter {
 	private final Context mContext;

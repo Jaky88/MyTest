@@ -1,4 +1,4 @@
-package com.jaky.mupdf.ui.views;
+package com.jaky.mupdf.ui.views.baseview;
 
 import android.graphics.PointF;
 import android.graphics.RectF;

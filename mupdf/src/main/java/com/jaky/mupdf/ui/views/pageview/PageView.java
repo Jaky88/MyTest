@@ -1,4 +1,4 @@
-package com.jaky.mupdf.ui.views;
+package com.jaky.mupdf.ui.views.pageview;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -30,6 +30,7 @@ import com.jaky.mupdf.R;
 import com.jaky.mupdf.data.TextWord;
 import com.jaky.mupdf.async.TextProcessor;
 import com.jaky.mupdf.async.TextSelector;
+import com.jaky.mupdf.ui.views.imageview.OpaqueImageView;
 
 // Make our ImageViews opaque to optimize redraw
 

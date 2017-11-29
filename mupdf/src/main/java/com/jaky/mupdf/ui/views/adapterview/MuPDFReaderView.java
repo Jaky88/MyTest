@@ -1,4 +1,4 @@
-package com.jaky.mupdf.ui.views;
+package com.jaky.mupdf.ui.views.adapterview;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +18,7 @@ import com.jaky.mupdf.data.LinkInfoVisitor;
 import com.jaky.mupdf.data.ReaderConstants;
 import com.jaky.mupdf.task.SearchTaskResult;
 import com.jaky.mupdf.async.ViewMapper;
+import com.jaky.mupdf.ui.views.baseview.MuPDFView;
 
 public class MuPDFReaderView extends ReaderView {
 	public enum Mode {Viewing, Selecting, Drawing}

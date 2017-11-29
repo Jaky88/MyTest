@@ -1,4 +1,4 @@
-package com.jaky.mupdf.ui.views;
+package com.jaky.mupdf.ui.views.pageview;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -33,6 +33,7 @@ import com.jaky.mupdf.data.TextWord;
 import com.jaky.mupdf.task.AsyncTask;
 import com.jaky.mupdf.task.CancellableTaskDefinition;
 import com.jaky.mupdf.task.MuPDFCancellableTaskDefinition;
+import com.jaky.mupdf.ui.views.baseview.MuPDFView;
 
 import java.util.ArrayList;
 

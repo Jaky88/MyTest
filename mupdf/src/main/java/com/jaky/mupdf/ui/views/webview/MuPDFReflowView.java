@@ -1,4 +1,4 @@
-package com.jaky.mupdf.ui.views;
+package com.jaky.mupdf.ui.views.webview;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -15,6 +15,7 @@ import com.jaky.mupdf.data.ReaderConstants;
 import com.jaky.mupdf.task.AsyncTask;
 import com.jaky.mupdf.data.LinkInfo;
 import com.jaky.mupdf.core.MuPDFCore;
+import com.jaky.mupdf.ui.views.baseview.MuPDFView;
 
 public class MuPDFReflowView extends WebView implements MuPDFView {
 	private final MuPDFCore mCore;

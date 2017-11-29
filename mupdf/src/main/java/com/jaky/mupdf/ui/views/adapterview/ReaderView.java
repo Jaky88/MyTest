@@ -1,4 +1,4 @@
-package com.jaky.mupdf.ui.views;
+package com.jaky.mupdf.ui.views.adapterview;
 
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
@@ -25,9 +25,10 @@ import com.jaky.mupdf.async.ViewMapper;
 import com.jaky.mupdf.ui.activity.MuPDFActivity;
 import com.jaky.mupdf.ui.adapter.MuPDFPageAdapter;
 
-public class ReaderView
-		extends AdapterView<Adapter>
-		implements GestureDetector.OnGestureListener, ScaleGestureDetector.OnScaleGestureListener, Runnable {
+public class ReaderView extends AdapterView<Adapter> implements
+		GestureDetector.OnGestureListener,
+		ScaleGestureDetector.OnScaleGestureListener,
+		Runnable {
 	private static final int  MOVING_DIAGONALLY = 0;
 	private static final int  MOVING_LEFT       = 1;
 	private static final int  MOVING_RIGHT      = 2;
