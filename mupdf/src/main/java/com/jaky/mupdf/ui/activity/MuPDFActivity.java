@@ -464,7 +464,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
         // Stick the document view and the main_tool_bar overlay into a parent view
         RelativeLayout layout = new RelativeLayout(this);
         layout.addView(mDocView);
-        layout.addView(mButtonsView);
+        layout.addView(mToolBarbinding.getRoot());
         setContentView(layout);
 
         if (mToolBarbinding.getToolBarModel().isProof()) {
