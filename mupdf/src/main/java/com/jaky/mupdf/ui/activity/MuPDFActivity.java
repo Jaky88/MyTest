@@ -258,10 +258,10 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
                 if (core == null)
                     return;
 
-                mToolBarbinding.tvPageNumber.setText(String.format("%d / %d", i + 1,
+                mToolBarbinding.bottomBar.tvPageNumber.setText(String.format("%d / %d", i + 1,
                         core.countPages()));
-                mToolBarbinding.sbPageSlider.setMax((core.countPages() - 1) * mPageSliderRes);
-                mToolBarbinding.sbPageSlider.setProgress(i * mPageSliderRes);
+                mToolBarbinding.bottomBar.sbPageSlider.setMax((core.countPages() - 1) * mPageSliderRes);
+                mToolBarbinding.bottomBar.sbPageSlider.setProgress(i * mPageSliderRes);
                 super.onMoveToChild(i);
             }
 
@@ -329,7 +329,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
         int smax = Math.max(core.countPages() - 1, 1);
         mPageSliderRes = ((10 + smax - 1) / smax) * 2;
         mToolBarbinding.tvDocName.setText(mFileName);
-        mToolBarbinding.sbPageSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        mToolBarbinding.bottomBar.sbPageSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 mDocView.setDisplayedViewIndex((seekBar.getProgress() + mPageSliderRes / 2) / mPageSliderRes);
             }
@@ -578,8 +578,8 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
             // Update page number text and slider
             int index = mDocView.getDisplayedViewIndex();
             updatePageNumView(index);
-            mToolBarbinding.sbPageSlider.setMax((core.countPages() - 1) * mPageSliderRes);
-            mToolBarbinding.sbPageSlider.setProgress(index * mPageSliderRes);
+            mToolBarbinding.bottomBar.sbPageSlider.setMax((core.countPages() - 1) * mPageSliderRes);
+            mToolBarbinding.bottomBar.sbPageSlider.setProgress(index * mPageSliderRes);
             if (mTopBarMode == TopBarMode.Search) {
                 mToolBarbinding.etSearch.requestFocus();
                 showKeyboard();
@@ -600,21 +600,21 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
             });
             mToolBarbinding.switcher.startAnimation(anim);
 
-            anim = new TranslateAnimation(0, 0, mToolBarbinding.sbPageSlider.getHeight(), 0);
+            anim = new TranslateAnimation(0, 0, mToolBarbinding.bottomBar.sbPageSlider.getHeight(), 0);
             anim.setDuration(200);
             anim.setAnimationListener(new Animation.AnimationListener() {
                 public void onAnimationStart(Animation animation) {
-                    mToolBarbinding.sbPageSlider.setVisibility(View.VISIBLE);
+                    mToolBarbinding.bottomBar.sbPageSlider.setVisibility(View.VISIBLE);
                 }
 
                 public void onAnimationRepeat(Animation animation) {
                 }
 
                 public void onAnimationEnd(Animation animation) {
-                    mToolBarbinding.tvPageNumber.setVisibility(View.VISIBLE);
+                    mToolBarbinding.bottomBar.tvPageNumber.setVisibility(View.VISIBLE);
                 }
             });
-            mToolBarbinding.sbPageSlider.startAnimation(anim);
+            mToolBarbinding.bottomBar.sbPageSlider.startAnimation(anim);
         }
     }
 
@@ -638,21 +638,21 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
             });
             mToolBarbinding.switcher.startAnimation(anim);
 
-            anim = new TranslateAnimation(0, 0, 0, mToolBarbinding.sbPageSlider.getHeight());
+            anim = new TranslateAnimation(0, 0, 0, mToolBarbinding.bottomBar.sbPageSlider.getHeight());
             anim.setDuration(200);
             anim.setAnimationListener(new Animation.AnimationListener() {
                 public void onAnimationStart(Animation animation) {
-                    mToolBarbinding.tvPageNumber.setVisibility(View.INVISIBLE);
+                    mToolBarbinding.bottomBar.tvPageNumber.setVisibility(View.INVISIBLE);
                 }
 
                 public void onAnimationRepeat(Animation animation) {
                 }
 
                 public void onAnimationEnd(Animation animation) {
-                    mToolBarbinding.sbPageSlider.setVisibility(View.INVISIBLE);
+                    mToolBarbinding.bottomBar.sbPageSlider.setVisibility(View.INVISIBLE);
                 }
             });
-            mToolBarbinding.sbPageSlider.startAnimation(anim);
+            mToolBarbinding.bottomBar.sbPageSlider.startAnimation(anim);
         }
     }
 
@@ -681,7 +681,7 @@ public class MuPDFActivity extends Activity implements FilePicker.FilePickerSupp
     private void updatePageNumView(int index) {
         if (core == null)
             return;
-        mToolBarbinding.tvPageNumber.setText(String.format("%d / %d", index + 1, core.countPages()));
+        mToolBarbinding.bottomBar.tvPageNumber.setText(String.format("%d / %d", index + 1, core.countPages()));
     }
 
     private void printDoc() {

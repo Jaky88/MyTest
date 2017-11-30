@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="toolBarModel"
             type="com.jaky.mupdf.binding.MainToolBarModel" />
@@ -16,8 +20,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:visibility="invisible"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible">
 
             <RelativeLayout
                 android:id="@+id/topBar0Main"
@@ -46,9 +50,9 @@
                     android:layout_centerVertical="true"
                     android:background="@drawable/button"
                     android:contentDescription="Separations"
-                    android:visibility="@{toolBarModel.proof ? View.VISIBLE : View.INVISIBLE}"
                     android:onClick="@{toolBarModel::OnSepsButtonClick}"
-                    android:src="@drawable/ic_sep" />
+                    android:src="@drawable/ic_sep"
+                    android:visibility="@{toolBarModel.proof ? View.VISIBLE : View.INVISIBLE}" />
 
                 <ImageButton
                     android:id="@+id/linkButton"
@@ -58,8 +62,8 @@
                     android:layout_toLeftOf="@+id/reflowButton"
                     android:background="@drawable/button"
                     android:contentDescription="@string/toggle_links"
-                    android:visibility="@{toolBarModel.canProof ? View.VISIBLE : View.INVISIBLE}"
-                    android:src="@drawable/ic_link" />
+                    android:src="@drawable/ic_link"
+                    android:visibility="@{toolBarModel.canProof ? View.VISIBLE : View.INVISIBLE}" />
 
                 <ImageButton
                     android:id="@+id/reflowButton"
@@ -69,8 +73,8 @@
                     android:layout_toLeftOf="@+id/outlineButton"
                     android:background="@drawable/button"
                     android:contentDescription="@string/toggle_reflow_mode"
-                    android:visibility="@{toolBarModel.canProof ? View.VISIBLE : View.INVISIBLE}"
-                    android:src="@drawable/ic_reflow" />
+                    android:src="@drawable/ic_reflow"
+                    android:visibility="@{toolBarModel.canProof ? View.VISIBLE : View.INVISIBLE}" />
 
                 <ImageButton
                     android:id="@+id/outlineButton"
@@ -80,8 +84,8 @@
                     android:layout_toLeftOf="@+id/searchButton"
                     android:background="@drawable/button"
                     android:contentDescription="@string/outline_title"
-                    android:visibility="@{toolBarModel.canProof ? View.VISIBLE : View.INVISIBLE}"
-                    android:src="@drawable/ic_list" />
+                    android:src="@drawable/ic_list"
+                    android:visibility="@{toolBarModel.canProof ? View.VISIBLE : View.INVISIBLE}" />
 
                 <ImageButton
                     android:id="@+id/searchButton"
@@ -91,8 +95,8 @@
                     android:layout_toLeftOf="@+id/moreButton"
                     android:background="@drawable/button"
                     android:contentDescription="@string/search_document"
-                    android:visibility="@{toolBarModel.canProof ? View.VISIBLE : View.INVISIBLE}"
-                    android:src="@drawable/ic_magnifying_glass" />
+                    android:src="@drawable/ic_magnifying_glass"
+                    android:visibility="@{toolBarModel.canProof ? View.VISIBLE : View.INVISIBLE}" />
 
                 <ImageButton
                     android:id="@+id/moreButton"
@@ -102,9 +106,9 @@
                     android:layout_centerVertical="true"
                     android:background="@drawable/button"
                     android:contentDescription="@string/more"
-                    android:visibility="@{toolBarModel.canProof ? View.VISIBLE : View.INVISIBLE}"
                     android:onClick="@{toolBarModel::OnMoreButtonClick}"
-                    android:src="@drawable/ic_more" />
+                    android:src="@drawable/ic_more"
+                    android:visibility="@{toolBarModel.canProof ? View.VISIBLE : View.INVISIBLE}" />
 
             </RelativeLayout>
 
@@ -291,9 +295,9 @@
                     android:layout_toLeftOf="@+id/printButton"
                     android:background="@drawable/button"
                     android:contentDescription="@string/proof"
-                    android:visibility="@{(toolBarModel.canProof &amp;&amp; toolBarModel.gprfSurpport)? View.VISIBLE : View.INVISIBLE}"
                     android:onClick="@{toolBarModel::OnProofButtonClick}"
-                    android:src="@drawable/ic_proof" />
+                    android:src="@drawable/ic_proof"
+                    android:visibility="@{(toolBarModel.canProof &amp;&amp; toolBarModel.gprfSurpport)? View.VISIBLE : View.INVISIBLE}" />
 
                 <ImageButton
                     android:id="@+id/printButton"
@@ -373,43 +377,14 @@
             </RelativeLayout>
         </ViewAnimator>
 
-        <LinearLayout
-            android:id="@+id/lowerButtons"
+        <include
+            android:id="@+id/bottom_bar"
+            layout="@layout/main_tool_bar_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            bind:toolBarModel="@{toolBarModel}"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:orientation="horizontal">
-
-            <SeekBar
-                android:id="@+id/sb_page_slider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="0dp"
-                android:layout_weight="1"
-                android:background="@color/toolbar"
-                android:paddingBottom="8dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="12dp"
-                android:visibility="invisible"
-                android:progressDrawable="@drawable/seek_progress"
-                android:thumb="@drawable/seek_thumb" />
-
-            <TextView
-                android:id="@+id/tv_page_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="16dp"
-                android:background="@color/toolbar"
-                android:visibility="invisible"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#FFFFFF" />
-
-        </LinearLayout>
+            android:layout_centerHorizontal="true" />
 
         <TextView
             android:id="@+id/tv_info"
@@ -418,9 +393,9 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:background="@color/toolbar"
-            android:visibility="invisible"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:visibility="invisible" />
 
     </RelativeLayout>
 </layout>

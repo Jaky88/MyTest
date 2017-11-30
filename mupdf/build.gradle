@@ -71,4 +71,7 @@ dependencies {
     })
     compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     testCompile "junit:junit:$rootProject.junitVersion"
+
+    //https://github.com/Kelin-Hong/MVVMLight
+    compile 'com.kelin.mvvmlight:library:1.0.0'
 }
