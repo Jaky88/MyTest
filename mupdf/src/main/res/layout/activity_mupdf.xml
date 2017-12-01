@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="bookModel"
+            type="com.jaky.mupdf.binding.ActivityMupdfModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.jaky.mupdf.ui.views.adapterview.MuPDFReaderView
+            android:id="@+id/book_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+        <include
+            android:id="@+id/tool_bar"
+            layout="@layout/main_tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+</layout>

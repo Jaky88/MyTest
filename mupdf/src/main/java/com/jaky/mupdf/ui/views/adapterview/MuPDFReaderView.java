@@ -27,11 +27,11 @@ public class MuPDFReaderView extends ReaderView {
 	private Mode mMode = Mode.Viewing;
 	private boolean tapDisabled = false;
 	private int tapPageMargin;
+	private ReaderCallback callback;
 
-	protected void onTapMainDocArea() {}
-	protected void onDocMotion() {}
-	@ReaderConstants.Hit
-	protected void onHit(String item) {};
+	public void setCallback(ReaderCallback callback) {
+		this.callback = callback;
+	}
 
 	public void setLinksEnabled(boolean b) {
 		mLinksEnabled = b;
@@ -82,7 +82,7 @@ public class MuPDFReaderView extends ReaderView {
 			MuPDFView pageView = (MuPDFView) getDisplayedView();
 			@ReaderConstants.Hit
 			String item = pageView.passClickEvent(e.getX(), e.getY());
-			onHit(item);
+			callback.onHit(item);
 			if (item == ReaderConstants.NOTHING) {
 				if (mLinksEnabled && pageView != null
 				&& (link = pageView.hitLink(e.getX(), e.getY())) != null) {
@@ -114,7 +114,7 @@ public class MuPDFReaderView extends ReaderView {
 				} else if (e.getY() > super.getHeight() - tapPageMargin) {
 					super.smartMoveForwards();
 				} else {
-					onTapMainDocArea();
+					callback.onTapMainDocArea();
 				}
 			}
 		}
@@ -133,7 +133,7 @@ public class MuPDFReaderView extends ReaderView {
 		switch (mMode) {
 		case Viewing:
 			if (!tapDisabled)
-				onDocMotion();
+				callback.onDocMotion();
 
 			return super.onScroll(e1, e2, distanceX, distanceY);
 		case Selecting:
@@ -250,10 +250,14 @@ public class MuPDFReaderView extends ReaderView {
 	}
 
 	protected void onMoveToChild(int i) {
-		if (SearchTaskResult.get() != null
-				&& SearchTaskResult.get().pageNumber != i) {
-			SearchTaskResult.set(null);
-			resetupChildren();
+		if(callback != null){
+			callback.onMoveToChild(i);
+		}else {
+			if (SearchTaskResult.get() != null
+					&& SearchTaskResult.get().pageNumber != i) {
+				SearchTaskResult.set(null);
+				resetupChildren();
+			}
 		}
 	}
 
