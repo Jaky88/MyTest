@@ -21,8 +21,8 @@ public class MuPDFPageAdapter extends BaseAdapter {
 	private final SparseArray<PointF> mPageSizes = new SparseArray<PointF>();
 	private       Bitmap mSharedHqBm;
 
-	public MuPDFPageAdapter(Context c, FilePicker.FilePickerSupport filePickerSupport, MuPDFCore core) {
-		mContext = c;
+	public MuPDFPageAdapter(Context context, FilePicker.FilePickerSupport filePickerSupport, MuPDFCore core) {
+		mContext = context;
 		mFilePickerSupport = filePickerSupport;
 		mCore = core;
 	}
