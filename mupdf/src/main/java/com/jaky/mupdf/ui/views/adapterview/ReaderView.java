@@ -22,7 +22,7 @@ import android.widget.Scroller;
 import com.jaky.mupdf.R;
 import com.jaky.mupdf.data.Stepper;
 import com.jaky.mupdf.async.ViewMapper;
-import com.jaky.mupdf.ui.activity.MuPDFActivity;
+import com.jaky.mupdf.ui.activity.ReaderActivity;
 import com.jaky.mupdf.ui.adapter.MuPDFPageAdapter;
 
 public class ReaderView extends AdapterView<Adapter> implements
@@ -589,7 +589,7 @@ public class ReaderView extends AdapterView<Adapter> implements
 
 			if (!memAlert) {
 				memAlert = true;
-				AlertDialog alertDialog = MuPDFActivity.getAlertBuilder().create();
+				AlertDialog alertDialog = ReaderActivity.getAlertBuilder().create();
 				alertDialog.setMessage("Out of memory during layout");
 				alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
 					new DialogInterface.OnClickListener() {

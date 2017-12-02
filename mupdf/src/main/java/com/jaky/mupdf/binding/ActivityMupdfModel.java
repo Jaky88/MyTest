@@ -1,6 +1,6 @@
 package com.jaky.mupdf.binding;
 
-import com.jaky.mupdf.ui.activity.MuPDFActivity;
+import com.jaky.mupdf.ui.activity.ReaderActivity;
 
 /**
  * Created by jaky on 2017/12/1 0001.
@@ -8,8 +8,8 @@ import com.jaky.mupdf.ui.activity.MuPDFActivity;
 
 public class ActivityMupdfModel {
 
-    private MuPDFActivity context;
-    public ActivityMupdfModel(MuPDFActivity muPDFActivity) {
+    private ReaderActivity context;
+    public ActivityMupdfModel(ReaderActivity muPDFActivity) {
         this.context = muPDFActivity;
     }
 }
