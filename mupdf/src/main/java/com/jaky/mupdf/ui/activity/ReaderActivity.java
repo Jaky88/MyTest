@@ -71,9 +71,7 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
     private static final String TAG = ReaderActivity.class.getSimpleName();
     private ActivityMupdfBinding readerBinding;
 
-    enum TopBarMode {
-        Main, Search, Annot, Delete, More, Accept
-    }
+    enum TopBarMode {Main, Search, Annot, Delete, More, Accept}
 
     enum AcceptMode {Highlight, Underline, StrikeOut, Ink, CopyText}
 
@@ -110,14 +108,11 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
         return gAlertBuilder;
     }
 
-    /**
-     * Called when the activity is first created.
-     */
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getCore(savedInstanceState)) return;
-        createUI(savedInstanceState);
+        initView(savedInstanceState);
     }
 
     private boolean getCore(Bundle savedInstanceState) {
@@ -234,7 +229,7 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         if (core.authenticatePassword(mPasswordView.getText().toString())) {
-                            createUI(savedInstanceState);
+                            initView(savedInstanceState);
                         } else {
                             requestPassword(savedInstanceState);
                         }
@@ -250,11 +245,10 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
         alert.show();
     }
 
-    public void createUI(Bundle savedInstanceState) {
-        if (core == null)
+    public void initView(Bundle savedInstanceState) {
+        if (core == null){
             return;
-        // First create the document view
-
+        }
         readerBinding = DataBindingUtil.setContentView(this, R.layout.activity_mupdf);
         readerBinding.setReaderModel(new ActivityReaderModel(this));
         readerBinding.toolBar.setToolBarModel(new MainToolBarModel(this, core));
@@ -500,11 +494,6 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
 
         if (mFileName != null && readerBinding.readerPager != null) {
             outState.putString("FileName", mFileName);
-
-            // Store current page in the prefs against the file name,
-            // so that we can pick it up each time the file is loaded
-            // Other info is needed only for screen-orientation change,
-            // so it can go in the bundle
             SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor edit = prefs.edit();
             edit.putInt("page" + mFileName, readerBinding.readerPager.getDisplayedViewIndex());
@@ -561,9 +550,7 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
 
     private void setLinkHighlight(boolean highlight) {
         mLinkHighlight = highlight;
-        // LINK_COLOR tint
         readerBinding.toolBar.linkButton.setColorFilter(highlight ? Color.argb(0xFF, 172, 114, 37) : Color.argb(0xFF, 255, 255, 255));
-        // Inform pages of the change.
         readerBinding.readerPager.setLinksEnabled(highlight);
     }
 
@@ -572,7 +559,6 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
             return;
         if (!mButtonsVisible) {
             mButtonsVisible = true;
-            // Update page number text and slider
             int index = readerBinding.readerPager.getDisplayedViewIndex();
             updatePageNumView(index);
             readerBinding.toolBar.bottomBar.sbPageSlider.setMax((core.countPages() - 1) * mPageSliderRes);
@@ -669,8 +655,6 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
             hideKeyboard();
             readerBinding.toolBar.switcher.setDisplayedChild(mTopBarMode.ordinal());
             SearchTaskResult.set(null);
-            // Make the ReaderView act on the change to mSearchTaskResult
-            // via overridden onChildSetup method.
             readerBinding.readerPager.resetupChildren();
         }
     }
@@ -725,7 +709,6 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
         Intent intent = new Intent(this, ReaderActivity.class);
         intent.setAction(Intent.ACTION_VIEW);
         intent.setData(uri);
-        // add the current page so it can be found when the activity is running
         intent.putExtra("startingPage", readerBinding.readerPager.getDisplayedViewIndex());
         startActivityForResult(intent, PROOF_REQUEST);
     }
@@ -847,14 +830,11 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
                     }
                 }
             case PROOF_REQUEST:
-                //  we're returning from a proofing activity
-
                 if (mProofFile != null) {
                     core.endProof(mProofFile);
                     mProofFile = null;
                 }
 
-                //  return the top bar to default
                 mTopBarMode = TopBarMode.Main;
                 readerBinding.toolBar.switcher.setDisplayedChild(mTopBarMode.ordinal());
         }
@@ -884,7 +864,6 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
 
             @Override
             protected void onPostExecute(final MuPDFAlert result) {
-                // core.waitForAlert may return null when shutting down
                 if (result == null)
                     return;
                 final MuPDFAlert.ButtonPressed pressed[] = new MuPDFAlert.ButtonPressed[3];
@@ -907,10 +886,7 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
                                     break;
                             }
                             result.buttonPressed = pressed[index];
-                            // Send the user's response to the core, so that it can
-                            // continue processing.
                             core.replyToAlert(result);
-                            // Create another alert-waiter to pick up the next alert.
                             createAlertWaiter();
                         }
                     }
@@ -990,7 +966,6 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
             System.out.println(e);
             return null;
         } catch (OutOfMemoryError e) {
-            //  out of memory is not an Exception, so we catch it separately.
             System.out.println(e);
             return null;
         }
@@ -1010,8 +985,6 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
         return core;
     }
 
-    //  determine whether the current activity is a proofing activity.
-
     public void OnMoreButtonClick(View v) {
         mTopBarMode = ReaderActivity.TopBarMode.More;
         readerBinding.toolBar.switcher.setDisplayedChild(mTopBarMode.ordinal());
@@ -1028,15 +1001,9 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
 
     public void OnSepsButtonClick(final View v) {
         if (isProofing()) {
-
-            //  get the current page
             final int currentPage = readerBinding.readerPager.getDisplayedViewIndex();
-
-            //  buid a popup menu based on the given separations
             final PopupMenu menu = new PopupMenu(this, v);
 
-            //  This makes the popup menu display icons, which by default it does not do.
-            //  I worry that this relies on the internals of PopupMenu, which could change.
             try {
                 Field[] fields = menu.getClass().getDeclaredFields();
                 for (Field field : fields) {
@@ -1054,9 +1021,6 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            //  get the maximum number of seps on any page.
-            //  We use this to dimension an array further down
             int maxSeps = 0;
             int numPages = core.countPages();
             for (int page = 0; page < numPages; page++) {
@@ -1065,7 +1029,6 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
                     maxSeps = numSeps;
             }
 
-            //  if this is the first time, create the "enabled" array
             if (mSepEnabled == null) {
                 mSepEnabled = new boolean[numPages][maxSeps];
                 for (int page = 0; page < numPages; page++) {
@@ -1074,17 +1037,9 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
                 }
             }
 
-            //  count the seps on this page
             int numSeps = core.getNumSepsOnPage(currentPage);
 
-            //  for each sep,
             for (int i = 0; i < numSeps; i++) {
-
-//				//  Robin use this to skip separations
-//				if (i==12)
-//					break;
-
-                //  get the name
                 Separation sep = core.getSep(currentPage, i);
                 String name = sep.name;
 
@@ -1108,23 +1063,14 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
                 swatch.getPaint().setColor(color);
                 item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
                 item.setIcon(swatch);
-
-                //  check it (or not)
                 item.setChecked(mSepEnabled[currentPage][i]);
-
-                //  establishing a menu item listener
                 item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        //  someone tapped a menu item.  get the ID
                         int sep = item.getItemId();
-
-                        //  toggle the sep
                         mSepEnabled[currentPage][sep] = !mSepEnabled[currentPage][sep];
                         item.setChecked(mSepEnabled[currentPage][sep]);
                         core.controlSepOnPage(currentPage, sep, !mSepEnabled[currentPage][sep]);
-
-                        //  prevent the menu from being dismissed by these items
                         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
                         item.setActionView(new View(v.getContext()));
                         item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
@@ -1142,23 +1088,18 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
                     }
                 });
 
-                //  tell core to enable or disable each sep as appropriate
-                //  but don't refresh the page yet.
                 core.controlSepOnPage(currentPage, i, !mSepEnabled[currentPage][i]);
             }
 
-            //  add one for done
             MenuItem itemDone = menu.getMenu().add(0, 0, 0, "Done");
             itemDone.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-                    //  refresh the view
                     readerBinding.readerPager.refresh(false);
                     return true;
                 }
             });
 
-            //  show the menu
             menu.show();
         }
 
@@ -1317,8 +1258,6 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
         popup.getMenu().add(0, 1200, 0, "1200");
         popup.getMenu().add(0, 2400, 0, "2400");
 
-        //  prevent the first item from being dismissed.
-        //  is there not a better way to do this?  It requires minimum API 14
         MenuItem item = popup.getMenu().getItem(0);
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
         item.setActionView(new View(v.getContext()));
@@ -1339,14 +1278,12 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
             public boolean onMenuItemClick(MenuItem item) {
                 int id = item.getItemId();
                 if (id != 1) {
-                    //  it's a resolution.  The id is also the resolution value
                     proofWithResolution(id);
                     return true;
                 }
                 return false;
             }
         });
-
         popup.show();
     }
 

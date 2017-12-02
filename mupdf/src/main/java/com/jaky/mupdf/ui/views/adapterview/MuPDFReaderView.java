@@ -44,13 +44,6 @@ public class MuPDFReaderView extends ReaderView {
 
 	private void setup()
 	{
-		// Get the screen size etc to customise tap margins.
-		// We calculate the size of 1 inch of the screen for tapping.
-		// On some devices the dpi values returned are wrong, so we
-		// sanity check it: we first restrict it so that we are never
-		// less than 100 pixels (the smallest Android device screen
-		// dimension I've seen is 480 pixels or so). Then we check
-		// to ensure we are never more than 1/5 of the screen width.
 		DisplayMetrics dm = new DisplayMetrics();
 		WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
 		wm.getDefaultDisplay().getMetrics(dm);
@@ -102,7 +95,6 @@ public class MuPDFReaderView extends ReaderView {
 
 						@Override
 						public void visitRemote(LinkInfoRemote li) {
-							// Clicked on a remote (GoToR) link
 						}
 					});
 				} else if (e.getX() < tapPageMargin) {
@@ -157,9 +149,6 @@ public class MuPDFReaderView extends ReaderView {
 	}
 
 	public boolean onScaleBegin(ScaleGestureDetector d) {
-		// Disabled showing the buttons until next touch.
-		// Not sure why this is needed, but without it
-		// pinch zoom can make the buttons appear
 		tapDisabled = true;
 		return super.onScaleBegin(d);
 	}
@@ -224,8 +213,6 @@ public class MuPDFReaderView extends ReaderView {
 	}
 
 	private void touch_up() {
-
-		// NOOP
 	}
 
 	protected void onChildSetup(int i, View v) {
@@ -269,14 +256,10 @@ public class MuPDFReaderView extends ReaderView {
 	}
 
 	protected void onSettle(View v) {
-		// When the layout has settled ask the page to render
-		// in HQ
 		((MuPDFView) v).updateHq(false);
 	}
 
 	protected void onUnsettle(View v) {
-		// When something changes making the previous settled view
-		// no longer appropriate, tell the page to remove HQ
 		((MuPDFView) v).removeHq();
 	}
 
