@@ -118,14 +118,14 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
                 showToolBar();
             } else {
                 if (mTopBarMode == TopBarMode.Main) {
-                    hideButtons();
+                    hideToolBar();
                 }
             }
         }
 
         @Override
         protected void onDocMotion() {
-            hideButtons();
+            hideToolBar();
         }
 
         @Override
@@ -175,14 +175,32 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getCore(savedInstanceState)) return;
+        restoreData(savedInstanceState);
+
+        if (core == null && !initCore()) {
+            return;
+        }
         initView(savedInstanceState);
     }
 
-    private boolean getCore(Bundle savedInstanceState) {
+    @Override
+    protected void onStart() {
+        if (core != null) {
+            core.startAlerts();
+            createAlertWaiter();
+        }
+
+        super.onStart();
+    }
+
+    private void restoreData(final Bundle savedInstanceState) {
         if (core == null) {
             restoreCore(savedInstanceState);
         }
+    }
+
+    private boolean initCore() {
+
         if (core == null) {
             Intent intent = getIntent();
             byte buffer[] = null;
@@ -315,7 +333,7 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
     }
 
     public void initView(Bundle savedInstanceState) {
-        if (core == null){
+        if (core == null) {
             return;
         }
         readerBinding = DataBindingUtil.setContentView(this, R.layout.activity_mupdf);
@@ -437,15 +455,15 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
         SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
         readerBinding.readerPager.setDisplayedViewIndex(prefs.getInt("page" + mFileName, 0));
 
-        if (savedInstanceState == null || !savedInstanceState.getBoolean("ButtonsHidden", false)){
+        if (savedInstanceState == null || !savedInstanceState.getBoolean("ButtonsHidden", false)) {
             showToolBar();
         }
 
-        if (savedInstanceState != null && savedInstanceState.getBoolean("SearchMode", false)){
+        if (savedInstanceState != null && savedInstanceState.getBoolean("SearchMode", false)) {
             searchModeOn();
         }
 
-        if (savedInstanceState != null && savedInstanceState.getBoolean("ReflowMode", false)){
+        if (savedInstanceState != null && savedInstanceState.getBoolean("ReflowMode", false)) {
             reflowModeSet(true);
         }
 
@@ -600,7 +618,7 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
         }
     }
 
-    private void hideButtons() {
+    private void hideToolBar() {
         if (mButtonsVisible) {
             mButtonsVisible = false;
             hideKeyboard();
@@ -735,7 +753,7 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
     @Override
     public boolean onSearchRequested() {
         if (mButtonsVisible && mTopBarMode == TopBarMode.Search) {
-            hideButtons();
+            hideToolBar();
         } else {
             showToolBar();
             searchModeOn();
@@ -746,22 +764,12 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         if (mButtonsVisible && mTopBarMode != TopBarMode.Search) {
-            hideButtons();
+            hideToolBar();
         } else {
             showToolBar();
             searchModeOff();
         }
         return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    protected void onStart() {
-        if (core != null) {
-            core.startAlerts();
-            createAlertWaiter();
-        }
-
-        super.onStart();
     }
 
     @Override
