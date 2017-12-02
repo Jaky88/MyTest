@@ -68,9 +68,21 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
 
-public class ReaderActivity extends Activity implements FilePicker.FilePickerSupport {
+public class ReaderActivity extends Activity implements FilePicker.FilePickerSupport, SeekBar.OnSeekBarChangeListener {
     private static final String TAG = ReaderActivity.class.getSimpleName();
     private ActivityMupdfBinding readerBinding;
+
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        readerBinding.readerPager.setDisplayedViewIndex((seekBar.getProgress() + mPageSliderRes / 2) / mPageSliderRes);
+    }
+
+    public void onStartTrackingTouch(SeekBar seekBar) {
+    }
+
+    public void onProgressChanged(SeekBar seekBar, int progress,
+                                  boolean fromUser) {
+        updatePageNumView((progress + mPageSliderRes / 2) / mPageSliderRes);
+    }
 
     enum TopBarMode {Main, Search, Annot, Delete, More, Accept}
 
@@ -103,7 +115,7 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
         @Override
         protected void onTapMainDocArea() {
             if (!mButtonsVisible) {
-                showButtons();
+                showToolBar();
             } else {
                 if (mTopBarMode == TopBarMode.Main) {
                     hideButtons();
@@ -121,7 +133,7 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
             switch (mTopBarMode) {
                 case Annot:
                     if (ReaderConstants.ANNOTATION.equals(item)) {
-                        showButtons();
+                        showToolBar();
                         mTopBarMode = TopBarMode.Delete;
                         readerBinding.toolBar.switcher.setDisplayedChild(mTopBarMode.ordinal());
                     }
@@ -311,40 +323,17 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
         readerBinding.toolBar.setToolBarModel(new MainToolBarModel(this, core));
         readerBinding.readerPager.setCallback(callback);
         readerBinding.readerPager.setAdapter(new MuPDFPageAdapter(this, this, core));
-
-
-        mSearchTask = new SearchTask(this, core) {
-            @Override
-            protected void onTextFound(SearchTaskResult result) {
-                SearchTaskResult.set(result);
-                readerBinding.readerPager.setDisplayedViewIndex(result.pageNumber);
-                readerBinding.readerPager.resetupChildren();
-            }
-        };
-
-
         if (!core.gprfSupported()) {
             readerBinding.toolBar.proofButton.setVisibility(View.INVISIBLE);
         }
         readerBinding.toolBar.sepsButton.setVisibility(View.INVISIBLE);
 
+        initSerchTask();
 
         int smax = Math.max(core.countPages() - 1, 1);
         mPageSliderRes = ((10 + smax - 1) / smax) * 2;
         readerBinding.toolBar.tvDocName.setText(mFileName);
-        readerBinding.toolBar.bottomBar.sbPageSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                readerBinding.readerPager.setDisplayedViewIndex((seekBar.getProgress() + mPageSliderRes / 2) / mPageSliderRes);
-            }
-
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            public void onProgressChanged(SeekBar seekBar, int progress,
-                                          boolean fromUser) {
-                updatePageNumView((progress + mPageSliderRes / 2) / mPageSliderRes);
-            }
-        });
+        readerBinding.toolBar.bottomBar.sbPageSlider.setOnSeekBarChangeListener(this);
 
         readerBinding.toolBar.searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -449,7 +438,7 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
         readerBinding.readerPager.setDisplayedViewIndex(prefs.getInt("page" + mFileName, 0));
 
         if (savedInstanceState == null || !savedInstanceState.getBoolean("ButtonsHidden", false)){
-            showButtons();
+            showToolBar();
         }
 
         if (savedInstanceState != null && savedInstanceState.getBoolean("SearchMode", false)){
@@ -464,6 +453,17 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
             int currentPage = getIntent().getIntExtra("startingPage", 0);
             readerBinding.readerPager.setDisplayedViewIndex(currentPage);
         }
+    }
+
+    private void initSerchTask() {
+        mSearchTask = new SearchTask(this, core) {
+            @Override
+            protected void onTextFound(SearchTaskResult result) {
+                SearchTaskResult.set(result);
+                readerBinding.readerPager.setDisplayedViewIndex(result.pageNumber);
+                readerBinding.readerPager.resetupChildren();
+            }
+        };
     }
 
     public Object onRetainNonConfigurationInstance() {
@@ -552,7 +552,7 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
         readerBinding.readerPager.setLinksEnabled(highlight);
     }
 
-    private void showButtons() {
+    private void showToolBar() {
         if (core == null) {
             return;
         }
@@ -737,7 +737,7 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
         if (mButtonsVisible && mTopBarMode == TopBarMode.Search) {
             hideButtons();
         } else {
-            showButtons();
+            showToolBar();
             searchModeOn();
         }
         return super.onSearchRequested();
@@ -748,7 +748,7 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
         if (mButtonsVisible && mTopBarMode != TopBarMode.Search) {
             hideButtons();
         } else {
-            showButtons();
+            showToolBar();
             searchModeOff();
         }
         return super.onPrepareOptionsMenu(menu);
