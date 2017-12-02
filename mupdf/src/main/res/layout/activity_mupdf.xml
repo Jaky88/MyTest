@@ -16,7 +16,7 @@
         android:layout_height="match_parent">
 
         <com.jaky.mupdf.ui.views.adapterview.MuPDFReaderView
-            android:id="@+id/book_view"
+            android:id="@+id/reader_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
