@@ -6,10 +6,10 @@ import com.jaky.mupdf.ui.activity.ReaderActivity;
  * Created by jaky on 2017/12/1 0001.
  */
 
-public class ActivityMupdfModel {
+public class ActivityReaderModel {
 
     private ReaderActivity context;
-    public ActivityMupdfModel(ReaderActivity muPDFActivity) {
+    public ActivityReaderModel(ReaderActivity muPDFActivity) {
         this.context = muPDFActivity;
     }
 }

@@ -36,10 +36,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.jaky.mupdf.R;
-import com.jaky.mupdf.binding.ActivityMupdfModel;
+import com.jaky.mupdf.binding.ActivityReaderModel;
 import com.jaky.mupdf.binding.MainToolBarModel;
 import com.jaky.mupdf.data.Annotation;
-//import com.jaky.mupdf.databinding.MainToolBarBinding;
 import com.jaky.mupdf.data.ReaderConstants;
 import com.jaky.mupdf.data.Separation;
 import com.jaky.mupdf.databinding.ActivityMupdfBinding;
@@ -70,10 +69,8 @@ import java.util.List;
 
 public class ReaderActivity extends Activity implements FilePicker.FilePickerSupport {
     private static final String TAG = ReaderActivity.class.getSimpleName();
-    //    private MainToolBarBinding activityMupdfBinding.toolBar;
     private ActivityMupdfBinding activityMupdfBinding;
 
-    /* The core rendering instance */
     enum TopBarMode {
         Main, Search, Annot, Delete, More, Accept
     }
@@ -86,7 +83,6 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
     private final int PROOF_REQUEST = 3;
     private MuPDFCore core;
     private String mFileName;
-//    private MuPDFReaderView activityMupdfBinding.readerPager;
     private boolean mButtonsVisible;
     private EditText mPasswordView;
     private int mPageSliderRes;
@@ -260,7 +256,7 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
         // First create the document view
 
         activityMupdfBinding = DataBindingUtil.setContentView(this, R.layout.activity_mupdf);
-        activityMupdfBinding.setBookModel(new ActivityMupdfModel(this));
+        activityMupdfBinding.setReaderModel(new ActivityReaderModel(this));
         activityMupdfBinding.toolBar.setToolBarModel(new MainToolBarModel(this, core));
         activityMupdfBinding.readerPager.setCallback(new ReaderCallback() {
             @Override

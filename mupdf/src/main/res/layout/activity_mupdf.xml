@@ -7,8 +7,8 @@
         <import type="android.view.View" />
 
         <variable
-            name="bookModel"
-            type="com.jaky.mupdf.binding.ActivityMupdfModel" />
+            name="readerModel"
+            type="com.jaky.mupdf.binding.ActivityReaderModel" />
     </data>
 
     <RelativeLayout
