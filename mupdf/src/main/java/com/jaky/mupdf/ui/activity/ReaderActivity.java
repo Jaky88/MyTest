@@ -71,9 +71,6 @@ import java.util.List;
 public class ReaderActivity extends Activity implements FilePicker.FilePickerSupport, SeekBar.OnSeekBarChangeListener {
     private static final String TAG = ReaderActivity.class.getSimpleName();
     private ActivityMupdfBinding readerBinding;
-    private boolean isShowToolBar = false;
-    private boolean isSearchMode = false;
-    private boolean isReflowMode = false;
 
     public void onStopTrackingTouch(SeekBar seekBar) {
         readerBinding.readerPager.setDisplayedViewIndex((seekBar.getProgress() + mPageSliderRes / 2) / mPageSliderRes);
@@ -183,7 +180,7 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
         if (core == null && !initCore()) {
             return;
         }
-        initView();
+        initView(savedInstanceState);
     }
 
     @Override
@@ -197,21 +194,9 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
     }
 
     private void restoreData(final Bundle savedInstanceState) {
-        if(savedInstanceState == null){
-            isShowToolBar = true;
-            return;
+        if (core == null) {
+            restoreCore(savedInstanceState);
         }
-        restoreCore(savedInstanceState);
-
-        savedInstanceState.containsKey("FileName");
-        if (savedInstanceState.containsKey("FileName")) {
-            mFileName = savedInstanceState.getString("FileName");
-        }
-        isShowToolBar = !savedInstanceState.getBoolean("ButtonsHidden", false);
-
-        isSearchMode = savedInstanceState.getBoolean("SearchMode", false);
-
-        isReflowMode = savedInstanceState.getBoolean("ReflowMode", false);
     }
 
     private boolean initCore() {
@@ -280,7 +265,7 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
 
 
             if (core != null && core.needsPassword()) {
-                requestPassword();
+                requestPassword(savedInstanceState);
                 return true;
             }
             if (core != null && core.countPages() == 0) {
@@ -314,9 +299,12 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
 
     private void restoreCore(Bundle savedInstanceState) {
         core = (MuPDFCore) getLastNonConfigurationInstance();
+        if (savedInstanceState != null && savedInstanceState.containsKey("FileName")) {
+            mFileName = savedInstanceState.getString("FileName");
+        }
     }
 
-    public void requestPassword() {
+    public void requestPassword(final Bundle savedInstanceState) {
         mPasswordView = new EditText(this);
         mPasswordView.setInputType(EditorInfo.TYPE_TEXT_VARIATION_PASSWORD);
         mPasswordView.setTransformationMethod(new PasswordTransformationMethod());
@@ -328,9 +316,9 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         if (core.authenticatePassword(mPasswordView.getText().toString())) {
-                            initView();
+                            initView(savedInstanceState);
                         } else {
-                            requestPassword();
+                            requestPassword(savedInstanceState);
                         }
                     }
                 });
@@ -344,7 +332,7 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
         alert.show();
     }
 
-    public void initView() {
+    public void initView(Bundle savedInstanceState) {
         if (core == null) {
             return;
         }
@@ -467,15 +455,15 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
         SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
         readerBinding.readerPager.setDisplayedViewIndex(prefs.getInt("page" + mFileName, 0));
 
-        if (isShowToolBar) {
+        if (savedInstanceState == null || !savedInstanceState.getBoolean("ButtonsHidden", false)) {
             showToolBar();
         }
 
-        if (isSearchMode) {
+        if (savedInstanceState != null && savedInstanceState.getBoolean("SearchMode", false)) {
             searchModeOn();
         }
 
-        if (isReflowMode) {
+        if (savedInstanceState != null && savedInstanceState.getBoolean("ReflowMode", false)) {
             reflowModeSet(true);
         }
 
