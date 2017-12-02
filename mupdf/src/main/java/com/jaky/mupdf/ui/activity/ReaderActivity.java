@@ -99,6 +99,57 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
     private FilePicker mFilePicker;
     private String mProofFile;
     private boolean mSepEnabled[][];
+    private ReaderCallback callback = new ReaderCallback() {
+        @Override
+        protected void onTapMainDocArea() {
+            if (!mButtonsVisible) {
+                showButtons();
+            } else {
+                if (mTopBarMode == TopBarMode.Main) {
+                    hideButtons();
+                }
+            }
+        }
+
+        @Override
+        protected void onDocMotion() {
+            hideButtons();
+        }
+
+        @Override
+        protected void onHit(String item) {
+            switch (mTopBarMode) {
+                case Annot:
+                    if (ReaderConstants.ANNOTATION.equals(item)) {
+                        showButtons();
+                        mTopBarMode = TopBarMode.Delete;
+                        readerBinding.toolBar.switcher.setDisplayedChild(mTopBarMode.ordinal());
+                    }
+                    break;
+                case Delete:
+                    mTopBarMode = TopBarMode.Annot;
+                    readerBinding.toolBar.switcher.setDisplayedChild(mTopBarMode.ordinal());
+                default:
+                    MuPDFView pageView = (MuPDFView) readerBinding.readerPager.getDisplayedView();
+                    if (pageView != null)
+                        pageView.deselectAnnotation();
+                    break;
+            }
+        }
+
+        @Override
+        protected void onMoveToChild(int i) {
+            if (core == null) {
+                return;
+            }
+            readerBinding.toolBar.bottomBar.tvPageNumber.setText(String.format("%d / %d", i + 1,
+                    core.countPages()));
+            readerBinding.toolBar.bottomBar.sbPageSlider.setMax((core.countPages() - 1) * mPageSliderRes);
+            readerBinding.toolBar.bottomBar.sbPageSlider.setProgress(i * mPageSliderRes);
+            super.onMoveToChild(i);
+
+        }
+    };
 
     private String[] pickFiles = new String[]{
             ".pdf", ".xps", ".cbz", ".epub", ".png", ".jpe", ".jpeg", ".jpg", ".jfif", ".jfif-tbnl", ".tif", ".tiff"};
@@ -258,57 +309,7 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
         readerBinding = DataBindingUtil.setContentView(this, R.layout.activity_mupdf);
         readerBinding.setReaderModel(new ActivityReaderModel(this));
         readerBinding.toolBar.setToolBarModel(new MainToolBarModel(this, core));
-        readerBinding.readerPager.setCallback(new ReaderCallback() {
-            @Override
-            protected void onTapMainDocArea() {
-                if (!mButtonsVisible) {
-                    showButtons();
-                } else {
-                    if (mTopBarMode == TopBarMode.Main) {
-                        hideButtons();
-                    }
-                }
-            }
-
-            @Override
-            protected void onDocMotion() {
-                hideButtons();
-            }
-
-            @Override
-            protected void onHit(String item) {
-                switch (mTopBarMode) {
-                    case Annot:
-                        if (ReaderConstants.ANNOTATION.equals(item)) {
-                            showButtons();
-                            mTopBarMode = TopBarMode.Delete;
-                            readerBinding.toolBar.switcher.setDisplayedChild(mTopBarMode.ordinal());
-                        }
-                        break;
-                    case Delete:
-                        mTopBarMode = TopBarMode.Annot;
-                        readerBinding.toolBar.switcher.setDisplayedChild(mTopBarMode.ordinal());
-                    default:
-                        MuPDFView pageView = (MuPDFView) readerBinding.readerPager.getDisplayedView();
-                        if (pageView != null)
-                            pageView.deselectAnnotation();
-                        break;
-                }
-            }
-
-            @Override
-            protected void onMoveToChild(int i) {
-                if (core == null) {
-                    return;
-                }
-                readerBinding.toolBar.bottomBar.tvPageNumber.setText(String.format("%d / %d", i + 1,
-                        core.countPages()));
-                readerBinding.toolBar.bottomBar.sbPageSlider.setMax((core.countPages() - 1) * mPageSliderRes);
-                readerBinding.toolBar.bottomBar.sbPageSlider.setProgress(i * mPageSliderRes);
-                super.onMoveToChild(i);
-
-            }
-        });
+        readerBinding.readerPager.setCallback(callback);
         readerBinding.readerPager.setAdapter(new MuPDFPageAdapter(this, this, core));
 
 
