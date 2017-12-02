@@ -1,14 +1,29 @@
 package com.jaky.mupdf.binding;
 
+import android.graphics.Rect;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.PopupMenu;
+
+import com.jaky.mupdf.R;
 import com.jaky.mupdf.core.MuPDFCore;
-import com.jaky.mupdf.ui.activity.ReaderActivity;
+import com.jaky.mupdf.data.Annotation;
+import com.jaky.mupdf.data.Separation;
+import com.jaky.mupdf.ui.activity.MuPDFActivity;
+import com.jaky.mupdf.ui.views.adapterview.MuPDFReaderView;
+import com.jaky.mupdf.ui.views.baseview.MuPDFView;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 /**
  * Created by Jack on 2017/11/30.
  */
 
 public class MainToolBarModel {
-    private ReaderActivity context;
+    private MuPDFActivity context;
     private MuPDFCore core;
     private boolean canProof;
     private boolean proof;
@@ -43,7 +58,7 @@ public class MainToolBarModel {
         return (format.equals("GPROOF"));
     }
 
-    public MainToolBarModel(ReaderActivity context, MuPDFCore core) {
+    public MainToolBarModel(MuPDFActivity context, MuPDFCore core) {
         this.context = context;
         this.core = core;
         canProof = core.canProof();
