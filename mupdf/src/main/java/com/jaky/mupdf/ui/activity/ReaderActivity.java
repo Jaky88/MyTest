@@ -58,6 +58,7 @@ import com.jaky.mupdf.ui.adapter.MuPDFReflowAdapter;
 import com.jaky.mupdf.ui.views.adapterview.MuPDFReaderView;
 import com.jaky.mupdf.ui.views.adapterview.ReaderCallback;
 import com.jaky.mupdf.ui.views.baseview.MuPDFView;
+import com.jaky.mupdf.utils.Debug;
 import com.leon.lfilepickerlibrary.LFilePicker;
 import com.leon.lfilepickerlibrary.utils.Constant;
 
@@ -117,11 +118,7 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
 
     private boolean getCore(Bundle savedInstanceState) {
         if (core == null) {
-            core = (MuPDFCore) getLastNonConfigurationInstance();
-
-            if (savedInstanceState != null && savedInstanceState.containsKey("FileName")) {
-                mFileName = savedInstanceState.getString("FileName");
-            }
+            restoreCore(savedInstanceState);
         }
         if (core == null) {
             Intent intent = getIntent();
@@ -129,7 +126,7 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
 
             if (Intent.ACTION_VIEW.equals(intent.getAction())) {
                 Uri uri = intent.getData();
-                System.out.println("URI to open is: " + uri);
+                Debug.i("URI to open is: " + uri);
                 if (uri.toString().startsWith("content://")) {
                     String reason = null;
                     try {
@@ -139,10 +136,10 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
                         is.read(buffer, 0, len);
                         is.close();
                     } catch (OutOfMemoryError e) {
-                        System.out.println("Out of memory during buffer reading");
+                        Debug.i("Out of memory during buffer reading");
                         reason = e.toString();
                     } catch (Exception e) {
-                        System.out.println("Exception reading from stream: " + e);
+                        Debug.i("Exception reading from stream: " + e);
                         try {
                             Cursor cursor = getContentResolver().query(uri, new String[]{"_data"}, null, null, null);
                             if (cursor.moveToFirst()) {
@@ -154,7 +151,7 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
                                 }
                             }
                         } catch (Exception e2) {
-                            System.out.println("Exception in Transformer Prime file manager code: " + e2);
+                            Debug.i("Exception in Transformer Prime file manager code: " + e2);
                             reason = e2.toString();
                         }
                     }
@@ -184,6 +181,8 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
                 }
                 SearchTaskResult.set(null);
             }
+
+
             if (core != null && core.needsPassword()) {
                 requestPassword(savedInstanceState);
                 return true;
@@ -215,6 +214,13 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
             return true;
         }
         return false;
+    }
+
+    private void restoreCore(Bundle savedInstanceState) {
+        core = (MuPDFCore) getLastNonConfigurationInstance();
+        if (savedInstanceState != null && savedInstanceState.containsKey("FileName")) {
+            mFileName = savedInstanceState.getString("FileName");
+        }
     }
 
     public void requestPassword(final Bundle savedInstanceState) {
@@ -339,14 +345,12 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
             }
         });
 
-        // Activate the search-preparing button
         readerBinding.toolBar.searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 searchModeOn();
             }
         });
 
-        // Activate the reflow button
         readerBinding.toolBar.reflowButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 toggleReflow();
@@ -364,13 +368,11 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
             readerBinding.toolBar.editAnnotButton.setVisibility(View.GONE);
         }
 
-        // Search invoking main_tool_bar are disabled while there is no text specified
         readerBinding.toolBar.btnSearchBack.setEnabled(false);
         readerBinding.toolBar.btnsSearchForward.setEnabled(false);
         readerBinding.toolBar.btnSearchBack.setColorFilter(Color.argb(255, 128, 128, 128));
         readerBinding.toolBar.btnsSearchForward.setColorFilter(Color.argb(255, 128, 128, 128));
 
-        // React to interaction with the text widget
         readerBinding.toolBar.etSearch.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
@@ -394,7 +396,6 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
             }
         });
 
-        //React to Done button on keyboard
         readerBinding.toolBar.etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE)
@@ -411,7 +412,6 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
             }
         });
 
-        // Activate search invoking main_tool_bar
         readerBinding.toolBar.btnSearchBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 search(-1);
@@ -444,25 +444,25 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
             readerBinding.toolBar.outlineButton.setVisibility(View.GONE);
         }
 
-        // Reenstate last state if it was recorded
         SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
         readerBinding.readerPager.setDisplayedViewIndex(prefs.getInt("page" + mFileName, 0));
 
-        if (savedInstanceState == null || !savedInstanceState.getBoolean("ButtonsHidden", false))
+        if (savedInstanceState == null || !savedInstanceState.getBoolean("ButtonsHidden", false)){
             showButtons();
+        }
 
-        if (savedInstanceState != null && savedInstanceState.getBoolean("SearchMode", false))
+        if (savedInstanceState != null && savedInstanceState.getBoolean("SearchMode", false)){
             searchModeOn();
+        }
 
-        if (savedInstanceState != null && savedInstanceState.getBoolean("ReflowMode", false))
+        if (savedInstanceState != null && savedInstanceState.getBoolean("ReflowMode", false)){
             reflowModeSet(true);
-
+        }
 
         if (readerBinding.toolBar.getToolBarModel().isProof()) {
             int currentPage = getIntent().getIntExtra("startingPage", 0);
             readerBinding.readerPager.setDisplayedViewIndex(currentPage);
         }
-
     }
 
     public Object onRetainNonConfigurationInstance() {
@@ -491,7 +491,6 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
         if (mFileName != null && readerBinding.readerPager != null) {
             outState.putString("FileName", mFileName);
             SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
@@ -513,10 +512,8 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
     @Override
     protected void onPause() {
         super.onPause();
-
         if (mSearchTask != null)
             mSearchTask.stop();
-
         if (mFileName != null && readerBinding.readerPager != null) {
             SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor edit = prefs.edit();
@@ -555,8 +552,9 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
     }
 
     private void showButtons() {
-        if (core == null)
+        if (core == null) {
             return;
+        }
         if (!mButtonsVisible) {
             mButtonsVisible = true;
             int index = readerBinding.readerPager.getDisplayedViewIndex();
@@ -642,7 +640,6 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
     private void searchModeOn() {
         if (mTopBarMode != TopBarMode.Search) {
             mTopBarMode = TopBarMode.Search;
-            //Focus on EditTextWidget
             readerBinding.toolBar.etSearch.requestFocus();
             showKeyboard();
             readerBinding.toolBar.switcher.setDisplayedChild(mTopBarMode.ordinal());
@@ -963,23 +960,22 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
             // New file: drop the old outline data
             OutlineActivityData.set(null);
         } catch (Exception e) {
-            System.out.println(e);
+            Debug.w(this.getClass(), e);
             return null;
         } catch (OutOfMemoryError e) {
-            System.out.println(e);
+            Debug.w(this.getClass(), e);
             return null;
         }
         return core;
     }
 
     private MuPDFCore openBuffer(byte buffer[], String magic) {
-        System.out.println("Trying to open byte buffer");
+        Debug.i("Trying to open byte buffer");
         try {
             core = new MuPDFCore(this, buffer, magic);
-            // New file: drop the old outline data
             OutlineActivityData.set(null);
         } catch (Exception e) {
-            System.out.println(e);
+            Debug.w(this.getClass(), e);
             return null;
         }
         return core;
