@@ -11,6 +11,8 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/lfilepickerlibrary" />
             <option value="$PROJECT_DIR$/libchm" />
+            <option value="$PROJECT_DIR$/libdata" />
+            <option value="$PROJECT_DIR$/libutils" />
             <option value="$PROJECT_DIR$/mupdf" />
           </set>
         </option>

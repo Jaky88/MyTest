@@ -58,7 +58,7 @@ import com.jaky.mupdf.ui.adapter.MuPDFReflowAdapter;
 import com.jaky.mupdf.ui.views.adapterview.MuPDFReaderView;
 import com.jaky.mupdf.ui.views.adapterview.ReaderCallback;
 import com.jaky.mupdf.ui.views.baseview.MuPDFView;
-import com.jaky.mupdf.utils.Debug;
+import com.jaky.utils.Debug;
 import com.leon.lfilepickerlibrary.LFilePicker;
 import com.leon.lfilepickerlibrary.utils.Constant;
 
@@ -84,9 +84,9 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
         updatePageNumView((progress + mPageSliderRes / 2) / mPageSliderRes);
     }
 
-    enum TopBarMode {Main, Search, Annot, Delete, More, Accept}
+    public enum TopBarMode {Main, Search, Annot, Delete, More, Accept}
 
-    enum AcceptMode {Highlight, Underline, StrikeOut, Ink, CopyText}
+    public enum AcceptMode {Highlight, Underline, StrikeOut, Ink, CopyText}
 
     private final int OUTLINE_REQUEST = 0;
     private final int PRINT_REQUEST = 1;

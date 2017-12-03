@@ -2,6 +2,7 @@ package com.jaky.mupdf.binding;
 
 import com.jaky.mupdf.core.MuPDFCore;
 import com.jaky.mupdf.ui.activity.ReaderActivity;
+import com.jaky.mupdf.ui.activity.ReaderActivity.TopBarMode;
 
 /**
  * Created by Jack on 2017/11/30.

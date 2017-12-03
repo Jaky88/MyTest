@@ -1,4 +1,4 @@
-package com.jaky.mupdf.utils;
+package com.jaky.utils;
 
 import android.util.Log;
 

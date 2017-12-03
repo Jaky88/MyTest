@@ -6,6 +6,8 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/lfilepickerlibrary/lfilepickerlibrary.iml" filepath="$PROJECT_DIR$/lfilepickerlibrary/lfilepickerlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/libchm/libchm.iml" filepath="$PROJECT_DIR$/libchm/libchm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libdata/libdata.iml" filepath="$PROJECT_DIR$/libdata/libdata.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libutils/libutils.iml" filepath="$PROJECT_DIR$/libutils/libutils.iml" />
       <module fileurl="file://$PROJECT_DIR$/mupdf/mupdf.iml" filepath="$PROJECT_DIR$/mupdf/mupdf.iml" />
     </modules>
   </component>
