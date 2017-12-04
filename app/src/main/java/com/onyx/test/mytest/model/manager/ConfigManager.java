@@ -3,11 +3,11 @@ package com.onyx.test.mytest.model.manager;
 import android.content.Context;
 import android.util.Log;
 
+import com.jaky.utils.FileUtil;
+import com.jaky.utils.JsonUtil;
 import com.onyx.test.mytest.model.bean.ConfigBean;
 import com.onyx.test.mytest.model.bean.ReaderSlideshowBean;
 import com.onyx.test.mytest.model.constants.Constant;
-import com.onyx.test.mytest.model.utils.FileUtil;
-import com.onyx.test.mytest.model.utils.JsonUtil;
 
 import org.apache.commons.lang3.StringUtils;
 

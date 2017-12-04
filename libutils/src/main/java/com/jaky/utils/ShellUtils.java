@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.model.utils;
+package com.jaky.utils;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -7,40 +7,42 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 /**
- * Created by jaky on 2017/11/2 0002.
+ * Created by jaky on 2017/12/4 0004.
  */
 
 public class ShellUtils {
-    public static final String COMMAND_SU = "su";
-    public static final String COMMAND_SH = "sh";
-    public static final String COMMAND_EXIT = "exit\n";
-    public static final String COMMAND_LINE_END = "\n";
 
-    private ShellUtils() {
-        throw new AssertionError();
-    }
+    public static final String COMMAND_SU       = "su";
+    public static final String COMMAND_SH       = "sh";
+    public static final String COMMAND_EXIT     = "exit\n";
+    public static final String COMMAND_LINE_END = "\n";
+    public static final String COMMAND_NEW_LINE = "\r\n";
 
     public static boolean checkRootPermission() {
         return execCommand("echo root", true, false).result == 0;
     }
 
     public static CommandResult execCommand(String command, boolean isRoot) {
-        return execCommand(new String[]{command}, isRoot, true);
+        return execCommand(new String[] {command}, isRoot, true, true);
     }
 
     public static CommandResult execCommand(List<String> commands, boolean isRoot) {
-        return execCommand(commands == null ? null : commands.toArray(new String[]{}), isRoot, true);
+        return execCommand(commands == null ? null : commands.toArray(new String[] {}), isRoot, true, true);
+    }
+
+    public static CommandResult execCommand(String[] commands, boolean isRoot) {
+        return execCommand(commands, isRoot, true, true);
     }
 
     public static CommandResult execCommand(String command, boolean isRoot, boolean isNeedResultMsg) {
-        return execCommand(new String[]{command}, isRoot, isNeedResultMsg);
+        return execCommand(new String[] {command}, isRoot, isNeedResultMsg, true);
     }
 
     public static CommandResult execCommand(List<String> commands, boolean isRoot, boolean isNeedResultMsg) {
-        return execCommand(commands == null ? null : commands.toArray(new String[]{}), isRoot, isNeedResultMsg);
+        return execCommand(commands == null ? null : commands.toArray(new String[] {}), isRoot, isNeedResultMsg, true);
     }
 
-    public static CommandResult execCommand(String[] commands, boolean isRoot, boolean isNeedResultMsg) {
+    public static CommandResult execCommand(String[] commands, boolean isRoot, boolean isNeedResultMsg, boolean destroy) {
         int result = -1;
         if (commands == null || commands.length == 0) {
             return new CommandResult(result, null, null);
@@ -69,7 +71,6 @@ public class ShellUtils {
             os.writeBytes(COMMAND_EXIT);
             os.flush();
 
-            result = process.waitFor();
             // get command result
             if (isNeedResultMsg) {
                 successMsg = new StringBuilder();
@@ -78,12 +79,13 @@ public class ShellUtils {
                 errorResult = new BufferedReader(new InputStreamReader(process.getErrorStream()));
                 String s;
                 while ((s = successResult.readLine()) != null) {
-                    successMsg.append(s);
+                    successMsg.append(s).append(COMMAND_NEW_LINE);
                 }
                 while ((s = errorResult.readLine()) != null) {
-                    errorMsg.append(s);
+                    errorMsg.append(s).append(COMMAND_NEW_LINE);
                 }
             }
+            result = process.waitFor();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -103,18 +105,25 @@ public class ShellUtils {
                 e.printStackTrace();
             }
 
-            if (process != null) {
-                process.destroy();
+            if (process != null && destroy) {
+                destroyProcess(process);
             }
         }
         return new CommandResult(result, successMsg == null ? null : successMsg.toString(), errorMsg == null ? null
                 : errorMsg.toString());
     }
 
+    private static void destroyProcess(Process process) {
+        try {
+            process.exitValue();
+        } catch (IllegalThreadStateException e) {
+            process.destroy();
+        }
+    }
 
     public static class CommandResult {
 
-        public int result;
+        public int    result;
         public String successMsg;
         public String errorMsg;
 

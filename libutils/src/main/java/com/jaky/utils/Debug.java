@@ -2,7 +2,7 @@ package com.jaky.utils;
 
 import android.util.Log;
 
-import com.leon.lfilepickerlibrary.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

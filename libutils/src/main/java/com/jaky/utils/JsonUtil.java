@@ -2,6 +2,7 @@ package com.jaky.utils;
 
 import android.text.TextUtils;
 
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.TypeReference;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.alibaba.fastjson.JSON.parseObject;
+
 
 /**
  * Created by jaky on 2017/9/8 0008.

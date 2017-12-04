@@ -10,7 +10,7 @@ import android.view.Window;
 import com.onyx.test.mytest.R;
 import com.onyx.test.mytest.binding.ActivityMainModel;
 import com.onyx.test.mytest.databinding.ActivityMainBinding;
-import com.onyx.test.mytest.model.utils.ActivityUtil;
+import com.jaky.utils.ActivityUtil;
 import com.onyx.test.mytest.view.adapter.ViewPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {

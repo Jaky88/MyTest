@@ -11,11 +11,11 @@ import android.os.Message;
 import android.provider.Settings;
 import android.view.View;
 
+import com.jaky.utils.ShellUtils;
 import com.onyx.test.mytest.BR;
 import com.onyx.test.mytest.R;
 import com.onyx.test.mytest.model.bean.ReaderSlideshowBean;
 import com.onyx.test.mytest.model.manager.ConfigManager;
-import com.onyx.test.mytest.model.utils.ShellUtils;
 
 import static android.provider.Settings.System.SCREEN_OFF_TIMEOUT;
 

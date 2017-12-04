@@ -1,4 +1,4 @@
-package com.onyx.test.mytest.model.utils;
+package com.jaky.utils;
 
 import android.content.Context;
 import android.content.Intent;

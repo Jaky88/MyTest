@@ -21,11 +21,11 @@ import android.view.View;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.jaky.utils.FileUtil;
 import com.onyx.test.mytest.R;
 import com.onyx.test.mytest.model.manager.ConfigManager;
 import com.onyx.test.mytest.model.bean.ReaderSlideshowBean;
-import com.onyx.test.mytest.model.utils.ActivityUtil;
-import com.onyx.test.mytest.model.utils.FileUtil;
+import com.jaky.utils.ActivityUtil;
 import com.onyx.test.mytest.model.utils.WifiConnector;
 import com.onyx.test.mytest.view.activity.MainActivity;
 

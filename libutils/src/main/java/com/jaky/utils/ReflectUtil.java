@@ -1,22 +1,18 @@
-package com.onyx.test.mytest.model.utils;
+package com.jaky.utils;
 
 import android.util.Log;
-
-import com.onyx.test.mytest.BuildConfig;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
-
 /**
- * Created by jaky on 2017/9/15 0015.
+ * Created by jaky on 2017/12/4 0004.
  */
 
-public class ReflectionUtil {
+public class ReflectUtil {
+    private static final String TAG = "ReflectUtil";
 
-        private static final String TAG = "ReflectUtil";
-
-        private static Object sDummyObject = new Object();
+    private static Object sDummyObject = new Object();
 
     public static boolean getConstructorSafely(RefValue<Constructor<?>> result, Class<?> cls, Class<?>... parameterTypes)
     {
@@ -55,7 +51,7 @@ public class ReflectionUtil {
         return cls;
     }
 
-    public static boolean getMethodSafely(RefValue<Method> result, Class<?> cls, String name,  Class<?>... parameterTypes)
+    public static boolean getMethodSafely(RefValue<Method> result, Class<?> cls, String name, Class<?>... parameterTypes)
     {
         try {
             if (cls == null) {
@@ -65,12 +61,12 @@ public class ReflectionUtil {
             return true;
         }
         catch (SecurityException e) {
-            if (BuildConfig.DEBUG) {
+            if (android.support.v4.BuildConfig.DEBUG) {
                 Log.w(TAG, e);
             }
         }
         catch (NoSuchMethodException e) {
-            if (BuildConfig.DEBUG) {
+            if (android.support.v4.BuildConfig.DEBUG) {
                 Log.w(TAG, e);
             }
         }
@@ -222,11 +218,55 @@ public class ReflectionUtil {
             if (result.getValue() != null) {
                 return result.getValue();
             }
-            else {
-                return sDummyObject;
-            }
+            return sDummyObject;
         }
 
         return null;
+    }
+
+    public static Method getDeclaredMethodSafely(Class<?> cls, String name,  Class<?>... parameterTypes) {
+        RefValue<Method> result = new RefValue<Method>();
+        if (getDeclaredMethod(result, cls, name, parameterTypes)) {
+            return result.getValue();
+        }
+        return null;
+    }
+
+    public static boolean getDeclaredMethod(RefValue<Method> result, Class<?> cls, String name,  Class<?>... parameterTypes) {
+        try {
+            if (cls == null) {
+                return false;
+            }
+            Method method = cls.getDeclaredMethod(name, parameterTypes);
+            method.setAccessible(true);
+            result.setValue(method);
+            return true;
+        } catch (SecurityException e) {
+        } catch (NoSuchMethodException e) {
+        }
+        return false;
+    }
+
+    static class RefValue<T>
+    {
+        private T mValue = null;
+
+        public RefValue()
+        {
+        }
+
+        public RefValue(T v)
+        {
+            mValue = v;
+        }
+
+        public T getValue()
+        {
+            return mValue;
+        }
+        public void setValue(T v)
+        {
+            mValue = v;
+        }
     }
 }
