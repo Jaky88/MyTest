@@ -21,255 +21,242 @@ import com.jaky.mupdf.async.ViewMapper;
 import com.jaky.mupdf.ui.views.baseview.MuPDFView;
 
 public class MuPDFReaderView extends ReaderView {
-	public enum Mode {Viewing, Selecting, Drawing}
-	private final Context mContext;
-	private boolean mLinksEnabled = false;
-	private Mode mMode = Mode.Viewing;
-	private boolean tapDisabled = false;
-	private int tapPageMargin;
-	private ReaderCallback callback;
+    public enum Mode {Viewing, Selecting, Drawing}
 
-	public void setCallback(ReaderCallback callback) {
-		this.callback = callback;
-	}
+    private final Context mContext;
+    private boolean mLinksEnabled = false;
+    private Mode mMode = Mode.Viewing;
+    private boolean tapDisabled = false;
+    private int tapPageMargin;
+    private ReaderCallback callback;
+    private float mX, mY;
+    private static final float TOUCH_TOLERANCE = 2;
 
-	public void setLinksEnabled(boolean b) {
-		mLinksEnabled = b;
-		resetupChildren();
-	}
+    public MuPDFReaderView(Context context) {
+        super(context);
+        mContext = context;
+        setup();
+    }
 
-	public void setMode(Mode m) {
-		mMode = m;
-	}
+    public MuPDFReaderView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        mContext = context;
+        setup();
+    }
 
-	private void setup()
-	{
-		DisplayMetrics dm = new DisplayMetrics();
-		WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-		wm.getDefaultDisplay().getMetrics(dm);
-		tapPageMargin = (int)dm.xdpi;
-		if (tapPageMargin < 100)
-			tapPageMargin = 100;
-		if (tapPageMargin > dm.widthPixels/5)
-			tapPageMargin = dm.widthPixels/5;
-	}
+    private void setup() {
+        DisplayMetrics dm = new DisplayMetrics();
+        WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+        wm.getDefaultDisplay().getMetrics(dm);
+        tapPageMargin = (int) dm.xdpi;
+        if (tapPageMargin < 100)
+            tapPageMargin = 100;
+        if (tapPageMargin > dm.widthPixels / 5)
+            tapPageMargin = dm.widthPixels / 5;
+    }
 
-	public MuPDFReaderView(Context context) {
-		super(context);
-		mContext = context;
-		setup();
-	}
+    public void setCallback(ReaderCallback callback) {
+        this.callback = callback;
+    }
 
-	public MuPDFReaderView(Context context, AttributeSet attrs)
-	{
-		super(context, attrs);
-		mContext = context;
-		setup();
-	}
+    public void setLinksEnabled(boolean b) {
+        mLinksEnabled = b;
+        resetupChildren();
+    }
 
+    public void setMode(Mode m) {
+        mMode = m;
+    }
 
-	public boolean onSingleTapUp(MotionEvent e) {
-		LinkInfo link = null;
+    public boolean onSingleTapUp(MotionEvent e) {
+        LinkInfo link = null;
 
-		if (mMode == Mode.Viewing && !tapDisabled) {
-			MuPDFView pageView = (MuPDFView) getDisplayedView();
-			@ReaderConstants.Hit
-			String item = pageView.passClickEvent(e.getX(), e.getY());
-			callback.onHit(item);
-			if (item == ReaderConstants.NOTHING) {
-				if (mLinksEnabled && pageView != null
-				&& (link = pageView.hitLink(e.getX(), e.getY())) != null) {
-					link.acceptVisitor(new LinkInfoVisitor() {
-						@Override
-						public void visitInternal(LinkInfoInternal li) {
-							// Clicked on an internal (GoTo) link
-							setDisplayedViewIndex(li.pageNumber);
-						}
+        if (mMode == Mode.Viewing && !tapDisabled) {
+            MuPDFView pageView = (MuPDFView) getDisplayedView();
+            @ReaderConstants.Hit
+            String item = pageView.passClickEvent(e.getX(), e.getY());
+            callback.onHit(item);
+            if (item == ReaderConstants.NOTHING) {
+                if (mLinksEnabled && pageView != null
+                        && (link = pageView.hitLink(e.getX(), e.getY())) != null) {
+                    link.acceptVisitor(new LinkInfoVisitor() {
+                        @Override
+                        public void visitInternal(LinkInfoInternal li) {
+                            // Clicked on an internal (GoTo) link
+                            setDisplayedViewIndex(li.pageNumber);
+                        }
 
-						@Override
-						public void visitExternal(LinkInfoExternal li) {
-							Intent intent = new Intent(Intent.ACTION_VIEW, Uri
-									.parse(li.url));
-							mContext.startActivity(intent);
-						}
+                        @Override
+                        public void visitExternal(LinkInfoExternal li) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri
+                                    .parse(li.url));
+                            mContext.startActivity(intent);
+                        }
 
-						@Override
-						public void visitRemote(LinkInfoRemote li) {
-						}
-					});
-				} else if (e.getX() < tapPageMargin) {
-					super.smartMoveBackwards();
-				} else if (e.getX() > super.getWidth() - tapPageMargin) {
-					super.smartMoveForwards();
-				} else if (e.getY() < tapPageMargin) {
-					super.smartMoveBackwards();
-				} else if (e.getY() > super.getHeight() - tapPageMargin) {
-					super.smartMoveForwards();
-				} else {
-					callback.onTapMainDocArea();
-				}
-			}
-		}
-		return super.onSingleTapUp(e);
-	}
+                        @Override
+                        public void visitRemote(LinkInfoRemote li) {
+                        }
+                    });
+                } else if (e.getX() < tapPageMargin) {
+                    super.smartMoveBackwards();
+                } else if (e.getX() > super.getWidth() - tapPageMargin) {
+                    super.smartMoveForwards();
+                } else if (e.getY() < tapPageMargin) {
+                    super.smartMoveBackwards();
+                } else if (e.getY() > super.getHeight() - tapPageMargin) {
+                    super.smartMoveForwards();
+                } else {
+                    callback.onTapMainDocArea();
+                }
+            }
+        }
+        return super.onSingleTapUp(e);
+    }
 
-	@Override
-	public boolean onDown(MotionEvent e) {
+    @Override
+    public boolean onDown(MotionEvent e) {
 
-		return super.onDown(e);
-	}
+        return super.onDown(e);
+    }
 
-	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-			float distanceY) {
-		MuPDFView pageView = (MuPDFView)getDisplayedView();
-		switch (mMode) {
-		case Viewing:
-			if (!tapDisabled)
-				callback.onDocMotion();
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+                            float distanceY) {
+        MuPDFView pageView = (MuPDFView) getDisplayedView();
+        switch (mMode) {
+            case Viewing:
+                if (!tapDisabled)
+                    callback.onDocMotion();
 
-			return super.onScroll(e1, e2, distanceX, distanceY);
-		case Selecting:
-			if (pageView != null)
-				pageView.selectText(e1.getX(), e1.getY(), e2.getX(), e2.getY());
-			return true;
-		default:
-			return true;
-		}
-	}
+                return super.onScroll(e1, e2, distanceX, distanceY);
+            case Selecting:
+                if (pageView != null)
+                    pageView.selectText(e1.getX(), e1.getY(), e2.getX(), e2.getY());
+                return true;
+            default:
+                return true;
+        }
+    }
 
-	@Override
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-			float velocityY) {
-		switch (mMode) {
-		case Viewing:
-			return super.onFling(e1, e2, velocityX, velocityY);
-		default:
-			return true;
-		}
-	}
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+                           float velocityY) {
+        switch (mMode) {
+            case Viewing:
+                return super.onFling(e1, e2, velocityX, velocityY);
+            default:
+                return true;
+        }
+    }
 
-	public boolean onScaleBegin(ScaleGestureDetector d) {
-		tapDisabled = true;
-		return super.onScaleBegin(d);
-	}
+    public boolean onScaleBegin(ScaleGestureDetector d) {
+        tapDisabled = true;
+        return super.onScaleBegin(d);
+    }
 
-	public boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(MotionEvent event) {
+        if (mMode == Mode.Drawing) {
+            float x = event.getX();
+            float y = event.getY();
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    touch_start(x, y);
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    touch_move(x, y);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    touch_up();
+                    break;
+            }
+        }
 
-		if ( mMode == Mode.Drawing )
-		{
-			float x = event.getX();
-			float y = event.getY();
-			switch (event.getAction())
-			{
-				case MotionEvent.ACTION_DOWN:
-					touch_start(x, y);
-					break;
-				case MotionEvent.ACTION_MOVE:
-					touch_move(x, y);
-					break;
-				case MotionEvent.ACTION_UP:
-					touch_up();
-					break;
-			}
-		}
+        if ((event.getAction() & event.getActionMasked()) == MotionEvent.ACTION_DOWN) {
+            tapDisabled = false;
+        }
 
-		if ((event.getAction() & event.getActionMasked()) == MotionEvent.ACTION_DOWN)
-		{
-			tapDisabled = false;
-		}
+        return super.onTouchEvent(event);
+    }
 
-		return super.onTouchEvent(event);
-	}
+    private void touch_start(float x, float y) {
 
-	private float mX, mY;
+        MuPDFView pageView = (MuPDFView) getDisplayedView();
+        if (pageView != null) {
+            pageView.startDraw(x, y);
+        }
+        mX = x;
+        mY = y;
+    }
 
-	private static final float TOUCH_TOLERANCE = 2;
+    private void touch_move(float x, float y) {
 
-	private void touch_start(float x, float y) {
+        float dx = Math.abs(x - mX);
+        float dy = Math.abs(y - mY);
+        if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
+            MuPDFView pageView = (MuPDFView) getDisplayedView();
+            if (pageView != null) {
+                pageView.continueDraw(x, y);
+            }
+            mX = x;
+            mY = y;
+        }
+    }
 
-		MuPDFView pageView = (MuPDFView)getDisplayedView();
-		if (pageView != null)
-		{
-			pageView.startDraw(x, y);
-		}
-		mX = x;
-		mY = y;
-	}
+    private void touch_up() {
+    }
 
-	private void touch_move(float x, float y) {
+    protected void onChildSetup(int i, View v) {
+        if (SearchTaskResult.get() != null && SearchTaskResult.get().pageNumber == i) {
+            ((MuPDFView) v).setSearchBoxes(SearchTaskResult.get().searchBoxes);
+        } else {
+            ((MuPDFView) v).setSearchBoxes(null);
+        }
+        ((MuPDFView) v).setLinkHighlighting(mLinksEnabled);
+        ((MuPDFView) v).setChangeReporter(new Runnable() {
+            public void run() {
+                applyToChildren(new ViewMapper() {
+                    @Override
+                    public void applyToView(View view) {
+                        ((MuPDFView) view).update();
+                    }
+                });
+            }
+        });
+    }
 
-		float dx = Math.abs(x - mX);
-		float dy = Math.abs(y - mY);
-		if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE)
-		{
-			MuPDFView pageView = (MuPDFView)getDisplayedView();
-			if (pageView != null)
-			{
-				pageView.continueDraw(x, y);
-			}
-			mX = x;
-			mY = y;
-		}
-	}
+    protected void onMoveToChild(int i) {
+        if (callback != null) {
+            callback.onMoveToChild(i);
+        } else {
+            if (SearchTaskResult.get() != null
+                    && SearchTaskResult.get().pageNumber != i) {
+                SearchTaskResult.set(null);
+                resetupChildren();
+            }
+        }
+    }
 
-	private void touch_up() {
-	}
+    @Override
+    protected void onMoveOffChild(int i) {
+        View v = getView(i);
+        if (v != null)
+            ((MuPDFView) v).deselectAnnotation();
+    }
 
-	protected void onChildSetup(int i, View v) {
-		if (SearchTaskResult.get() != null
-				&& SearchTaskResult.get().pageNumber == i)
-			((MuPDFView) v).setSearchBoxes(SearchTaskResult.get().searchBoxes);
-		else
-			((MuPDFView) v).setSearchBoxes(null);
+    protected void onSettle(View v) {
+        ((MuPDFView) v).updateHq(false);
+    }
 
-		((MuPDFView) v).setLinkHighlighting(mLinksEnabled);
+    protected void onUnsettle(View v) {
+        ((MuPDFView) v).removeHq();
+    }
 
-		((MuPDFView) v).setChangeReporter(new Runnable() {
-			public void run() {
-				applyToChildren(new ViewMapper() {
-					@Override
-					public void applyToView(View view) {
-						((MuPDFView) view).update();
-					}
-				});
-			}
-		});
-	}
+    @Override
+    protected void onNotInUse(View v) {
+        ((MuPDFView) v).releaseResources();
+    }
 
-	protected void onMoveToChild(int i) {
-		if(callback != null){
-			callback.onMoveToChild(i);
-		}else {
-			if (SearchTaskResult.get() != null
-					&& SearchTaskResult.get().pageNumber != i) {
-				SearchTaskResult.set(null);
-				resetupChildren();
-			}
-		}
-	}
-
-	@Override
-	protected void onMoveOffChild(int i) {
-		View v = getView(i);
-		if (v != null)
-			((MuPDFView)v).deselectAnnotation();
-	}
-
-	protected void onSettle(View v) {
-		((MuPDFView) v).updateHq(false);
-	}
-
-	protected void onUnsettle(View v) {
-		((MuPDFView) v).removeHq();
-	}
-
-	@Override
-	protected void onNotInUse(View v) {
-		((MuPDFView) v).releaseResources();
-	}
-
-	@Override
-	protected void onScaleChild(View v, Float scale) {
-		((MuPDFView) v).setScale(scale);
-	}
+    @Override
+    protected void onScaleChild(View v, Float scale) {
+        ((MuPDFView) v).setScale(scale);
+    }
 }
