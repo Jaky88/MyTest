@@ -29,44 +29,44 @@ public class ReaderView extends AdapterView<Adapter> implements
 		GestureDetector.OnGestureListener,
 		ScaleGestureDetector.OnScaleGestureListener,
 		Runnable {
-	private static final int  MOVING_DIAGONALLY = 0;
-	private static final int  MOVING_LEFT       = 1;
-	private static final int  MOVING_RIGHT      = 2;
-	private static final int  MOVING_UP         = 3;
-	private static final int  MOVING_DOWN       = 4;
+		private static final int  MOVING_DIAGONALLY = 0;
+		private static final int  MOVING_LEFT       = 1;
+		private static final int  MOVING_RIGHT      = 2;
+		private static final int  MOVING_UP         = 3;
+		private static final int  MOVING_DOWN       = 4;
 
-	private static final int  FLING_MARGIN      = 100;
-	private static final int  GAP               = 20;
+		private static final int  FLING_MARGIN      = 100;
+		private static final int  GAP               = 20;
 
-	private static final float MIN_SCALE        = 1.0f;
-	private static final float MAX_SCALE        = 5.0f;
-	private static final float REFLOW_SCALE_FACTOR = 0.5f;
+		private static final float MIN_SCALE        = 1.0f;
+		private static final float MAX_SCALE        = 5.0f;
+		private static final float REFLOW_SCALE_FACTOR = 0.5f;
 
-	private static final boolean HORIZONTAL_SCROLLING = true;
+		private static final boolean HORIZONTAL_SCROLLING = true;
 
-	private Adapter           mAdapter;
-	private int               mCurrent;
-	private boolean           mResetLayout;
-	private final SparseArray<View> mChildViews = new SparseArray<View>(3);
-	private final LinkedList<View>
-				  mViewCache = new LinkedList<View>();
-	private boolean           mUserInteracting;
-	private boolean           mScaling;
-	private float             mScale     = 1.0f;
-	private int               mXScroll;
-	private int               mYScroll;
-	private boolean           mReflow = false;
-	private boolean           mReflowChanged = false;
-	private final GestureDetector
-				  mGestureDetector;
-	private final ScaleGestureDetector
-				  mScaleGestureDetector;
-	private final Scroller    mScroller;
-	private final Stepper mStepper;
-	private int               mScrollerLastX;
-	private int               mScrollerLastY;
-	private float		  mLastScaleFocusX;
-	private float		  mLastScaleFocusY;
+		private Adapter           mAdapter;
+		private int               mCurrent;
+		private boolean           mResetLayout;
+		private final SparseArray<View> mChildViews = new SparseArray<View>(3);
+		private final LinkedList<View>
+					  mViewCache = new LinkedList<View>();
+		private boolean           mUserInteracting;
+		private boolean           mScaling;
+		private float             mScale     = 1.0f;
+		private int               mXScroll;
+		private int               mYScroll;
+		private boolean           mReflow = false;
+		private boolean           mReflowChanged = false;
+		private final GestureDetector
+					  mGestureDetector;
+		private final ScaleGestureDetector
+					  mScaleGestureDetector;
+		private final Scroller    mScroller;
+		private final Stepper mStepper;
+		private int               mScrollerLastX;
+		private int               mScrollerLastY;
+		private float		  mLastScaleFocusX;
+		private float		  mLastScaleFocusY;
 
 
 
@@ -270,6 +270,8 @@ public class ReaderView extends AdapterView<Adapter> implements
 		requestLayout();
 	}
 
+	//======================interface=============================
+
 	protected void onChildSetup(int i, View v) {}
 
 	protected void onMoveToChild(int i) {}
@@ -284,14 +286,7 @@ public class ReaderView extends AdapterView<Adapter> implements
 
 	protected void onScaleChild(View v, Float scale) {};
 
-	public View getView(int i) {
-		return mChildViews.get(i);
-	}
-
-	public View getDisplayedView() {
-		return mChildViews.get(mCurrent);
-	}
-
+	//======================run=============================
 	public void run() {
 		if (!mScroller.isFinished()) {
 			mScroller.computeScrollOffset();
@@ -311,13 +306,13 @@ public class ReaderView extends AdapterView<Adapter> implements
 		}
 	}
 
+	//======================OnGestureListener=============================
 	public boolean onDown(MotionEvent arg0) {
 		mScroller.forceFinished(true);
 		return true;
 	}
 
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-			float velocityY) {
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 		if (mScaling)
 			return true;
 
@@ -400,6 +395,8 @@ public class ReaderView extends AdapterView<Adapter> implements
 		return false;
 	}
 
+
+	//======================OnScaleGestureListener=============================
 	public boolean onScale(ScaleGestureDetector detector) {
 		float previousScale = mScale;
 		float scale_factor = mReflow ? REFLOW_SCALE_FACTOR : 1.0f;
@@ -457,6 +454,7 @@ public class ReaderView extends AdapterView<Adapter> implements
 		mScaling = false;
 	}
 
+	//======================onTouchEvent=============================
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		mScaleGestureDetector.onTouchEvent(event);
@@ -483,6 +481,8 @@ public class ReaderView extends AdapterView<Adapter> implements
 		requestLayout();
 		return true;
 	}
+
+
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -667,6 +667,17 @@ public class ReaderView extends AdapterView<Adapter> implements
 		}
 
 		invalidate();
+	}
+
+
+	//======================AdapterView=============================
+
+	public View getView(int i) {
+		return mChildViews.get(i);
+	}
+
+	public View getDisplayedView() {
+		return mChildViews.get(mCurrent);
 	}
 
 	@Override
