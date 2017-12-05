@@ -9,6 +9,10 @@ public class AppConfig {
     private String beanName = AppConfig.class.getSimpleName();
     private String savePath = "";
 
+    public AppConfig(String savePath) {
+        this.savePath = savePath;
+    }
+
     public String getBeanName() {
         return beanName;
     }

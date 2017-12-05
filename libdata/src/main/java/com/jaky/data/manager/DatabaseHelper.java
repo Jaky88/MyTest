@@ -7,6 +7,7 @@ import android.content.Context;
  */
 
 public class DatabaseHelper {
+
     public DatabaseHelper(Context context) {
 
     }

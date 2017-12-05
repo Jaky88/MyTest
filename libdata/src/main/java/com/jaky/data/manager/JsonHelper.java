@@ -8,8 +8,8 @@ import com.jaky.utils.FileUtil;
 import com.jaky.utils.JsonUtil;
 
 import org.apache.commons.lang3.StringUtils;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+
+import java.io.File;
 
 /**
  * Created by Jack on 2017/12/3.
@@ -17,37 +17,24 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class JsonHelper {
 
-    private static String BEAN_APPCONFIG = AppConfig.class.getSimpleName();
-    private Map<String, Object> beanMap = new ConcurrentHashMap<>();
-    private String savePath = Environment.getDataDirectory().getAbsolutePath();
+    private static final String BEAN_APPCONFIG = AppConfig.class.getSimpleName();
+    private String saveDir = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator;
+    private static final String FILE_EXTENSION = ".json";
+
+
     private AppConfig appConfig;
     private Context context;
 
     public JsonHelper(Context context) {
         this.context = context;
-        getSavePath();
-        initBeanMap();
-
-    }
-
-    private void initBeanMap() {
-        beanMap.put(BEAN_APPCONFIG, null);
     }
 
     public void loadBean() {
-        for (String key : beanMap.keySet()) {
-            if (BEAN_APPCONFIG.equals(key)) {
-                appConfig = (AppConfig) beanMap.get(key);
-                if (appConfig == null) {
-                    appConfig = loadBeanInternal(savePath, new AppConfig());
-                    beanMap.put(BEAN_APPCONFIG, appConfig);
-                }
-            }
-        }
+        appConfig = loadBean(getSavePath(BEAN_APPCONFIG), new AppConfig(saveDir));
     }
 
-    private <Bean> Bean loadBeanInternal(String savePath, Bean defBean) {
-        String content = FileUtil.readContentFromFile(savePath);
+    public <Bean> Bean loadBean(String fileName, Bean defBean) {
+        String content = FileUtil.readContentFromFile(getSavePath(fileName));
         if (StringUtils.isBlank(content)) {
             return defBean;
         }
@@ -59,15 +46,15 @@ public class JsonHelper {
     }
 
     public <Bean> boolean saveBean(Bean bean) {
-        return saveBean(bean, getSavePath());
+        return saveBean(bean, getSaveDir());
     }
 
-    public <Bean> boolean saveBean(Bean bean, String savePath) {
+    public <Bean> boolean saveBean(Bean bean, String fileName) {
         String json = JsonUtil.objectToJson(bean);
         if (StringUtils.isBlank(json)) {
             return false;
         }
-        return FileUtil.saveContentToFile(json, savePath);
+        return FileUtil.saveContentToFile(json, getSavePath(fileName));
     }
 
 
@@ -75,18 +62,23 @@ public class JsonHelper {
         return appConfig;
     }
 
-    public void setAppConfig(AppConfig appConfig) {
-        this.appConfig = appConfig;
-    }
 
-    public String getSavePath() {
-        if (StringUtils.isEmpty(savePath)) {
-            savePath = context.getCacheDir().getAbsolutePath();
+    public String getSaveDir() {
+        if (StringUtils.isEmpty(saveDir)) {
+            saveDir = context.getCacheDir().getAbsolutePath() + File.separator;
         }
-        return savePath;
+        return saveDir;
     }
 
-    public void setSavePath(String savePath) {
-        this.savePath = savePath;
+    public void setSaveDir(String saveDir) {
+        if(!saveDir.endsWith("/")) {
+            saveDir += File.separator;
+        }
+        this.saveDir = saveDir;
     }
+
+    private String getSavePath(String fileName) {
+        return getSaveDir() + fileName + FILE_EXTENSION;
+    }
+
 }
