@@ -68,6 +68,9 @@ public class MuPDFReaderView extends ReaderView {
         mMode = m;
     }
 
+
+    //======================onTouchEvent===============================
+    @Override
     public boolean onSingleTapUp(MotionEvent e) {
         LinkInfo link = null;
 
@@ -119,6 +122,7 @@ public class MuPDFReaderView extends ReaderView {
         return super.onDown(e);
     }
 
+    @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
                             float distanceY) {
         MuPDFView pageView = (MuPDFView) getDisplayedView();
@@ -148,11 +152,13 @@ public class MuPDFReaderView extends ReaderView {
         }
     }
 
+    @Override
     public boolean onScaleBegin(ScaleGestureDetector d) {
         tapDisabled = true;
         return super.onScaleBegin(d);
     }
 
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (mMode == Mode.Drawing) {
             float x = event.getX();
@@ -204,7 +210,11 @@ public class MuPDFReaderView extends ReaderView {
     private void touch_up() {
     }
 
-    protected void onChildSetup(int i, View v) {
+
+
+    //========================ReaderViewItemAction===============================
+    @Override
+    public void onChildSetup(int i, View v) {
         if (SearchTaskResult.get() != null && SearchTaskResult.get().pageNumber == i) {
             ((MuPDFView) v).setSearchBoxes(SearchTaskResult.get().searchBoxes);
         } else {
@@ -223,7 +233,8 @@ public class MuPDFReaderView extends ReaderView {
         });
     }
 
-    protected void onMoveToChild(int i) {
+    @Override
+    public void onMoveToChild(int i) {
         if (callback != null) {
             callback.onMoveToChild(i);
         } else {
@@ -236,27 +247,31 @@ public class MuPDFReaderView extends ReaderView {
     }
 
     @Override
-    protected void onMoveOffChild(int i) {
+    public void onMoveOffChild(int i) {
         View v = getView(i);
         if (v != null)
             ((MuPDFView) v).deselectAnnotation();
     }
 
-    protected void onSettle(View v) {
-        ((MuPDFView) v).updateHq(false);
-    }
-
-    protected void onUnsettle(View v) {
-        ((MuPDFView) v).removeHq();
-    }
-
     @Override
-    protected void onNotInUse(View v) {
+    public void onNotInUse(View v) {
         ((MuPDFView) v).releaseResources();
     }
 
     @Override
-    protected void onScaleChild(View v, Float scale) {
+    public void onScaleChild(View v, Float scale) {
         ((MuPDFView) v).setScale(scale);
     }
+
+    @Override
+    public void onSettle(View v) {
+        ((MuPDFView) v).updateHq(false);
+    }
+
+    @Override
+    public void onUnsettle(View v) {
+        ((MuPDFView) v).removeHq();
+    }
+
+
 }

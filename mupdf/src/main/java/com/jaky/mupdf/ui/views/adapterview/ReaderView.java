@@ -28,7 +28,8 @@ import com.jaky.mupdf.ui.adapter.MuPDFPageAdapter;
 public class ReaderView extends AdapterView<Adapter> implements
 		GestureDetector.OnGestureListener,
 		ScaleGestureDetector.OnScaleGestureListener,
-		Runnable {
+		Runnable,
+		ReaderViewItemAction {
 		private static final int  MOVING_DIAGONALLY = 0;
 		private static final int  MOVING_LEFT       = 1;
 		private static final int  MOVING_RIGHT      = 2;
@@ -272,19 +273,26 @@ public class ReaderView extends AdapterView<Adapter> implements
 
 	//======================interface=============================
 
-	protected void onChildSetup(int i, View v) {}
+	@Override
+	public void onChildSetup(int i, View v) {}
 
-	protected void onMoveToChild(int i) {}
+	@Override
+	public void onMoveToChild(int i) {}
 
-	protected void onMoveOffChild(int i) {}
+	@Override
+	public void onMoveOffChild(int i) {}
 
-	protected void onSettle(View v) {};
+	@Override
+	public void onSettle(View v) {};
 
-	protected void onUnsettle(View v) {};
+	@Override
+	public void onUnsettle(View v) {};
 
-	protected void onNotInUse(View v) {};
+	@Override
+	public void onNotInUse(View v) {};
 
-	protected void onScaleChild(View v, Float scale) {};
+	@Override
+	public void onScaleChild(View v, Float scale) {};
 
 	//======================run=============================
 	public void run() {
