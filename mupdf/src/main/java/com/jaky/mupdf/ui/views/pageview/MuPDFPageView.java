@@ -67,8 +67,8 @@ public class MuPDFPageView extends PageView implements MuPDFView {
 	private Runnable changeReporter;
 
 	public MuPDFPageView(Context c, FilePicker.FilePickerSupport filePickerSupport, MuPDFCore core,
-						 Point parentSize, Bitmap sharedHqBm) {
-		super(c, parentSize, sharedHqBm);
+						 Point parentSize, Bitmap sharedHqBmp) {
+		super(c, parentSize, sharedHqBmp);
 		mFilePickerSupport = filePickerSupport;
 		mCore = core;
 		mTextEntryBuilder = new AlertDialog.Builder(c);
@@ -506,32 +506,36 @@ public class MuPDFPageView extends PageView implements MuPDFView {
 
 
 	@Override
-	protected CancellableTaskDefinition<Void, Void> getDrawPageTask(final Bitmap bm, final int sizeX, final int sizeY,
+	protected CancellableTaskDefinition<Void, Void> getDrawPageTask(final Bitmap bitmap, final int sizeX, final int sizeY,
                                                                     final int patchX, final int patchY, final int patchWidth, final int patchHeight) {
 		return new MuPDFCancellableTaskDefinition<Void, Void>(mCore) {
 			@Override
 			public Void doInBackground(MuPDFCore.Cookie cookie, Void ... params) {
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB &&
-						Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-					bm.eraseColor(0);
-				mCore.drawPage(bm, mPageNumber, sizeX, sizeY, patchX, patchY, patchWidth, patchHeight, cookie);
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB && Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+					bitmap.eraseColor(0);
+				}
+
+				//绘制页面
+				mCore.drawPage(bitmap, mPageNumber, sizeX, sizeY, patchX, patchY, patchWidth, patchHeight, cookie);
 				return null;
 			}
 		};
 
 	}
 
-	protected CancellableTaskDefinition<Void, Void> getUpdatePageTask(final Bitmap bm, final int sizeX, final int sizeY,
+	protected CancellableTaskDefinition<Void, Void> getUpdatePageTask(final Bitmap bitmap, final int sizeX, final int sizeY,
 			final int patchX, final int patchY, final int patchWidth, final int patchHeight)
 	{
 		return new MuPDFCancellableTaskDefinition<Void, Void>(mCore) {
 
 			@Override
 			public Void doInBackground(MuPDFCore.Cookie cookie, Void ... params) {
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB &&
-						Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-					bm.eraseColor(0);
-				mCore.updatePage(bm, mPageNumber, sizeX, sizeY, patchX, patchY, patchWidth, patchHeight, cookie);
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB && Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+					bitmap.eraseColor(0);
+				}
+
+				//更新页面
+				mCore.updatePage(bitmap, mPageNumber, sizeX, sizeY, patchX, patchY, patchWidth, patchHeight, cookie);
 				return null;
 			}
 		};
