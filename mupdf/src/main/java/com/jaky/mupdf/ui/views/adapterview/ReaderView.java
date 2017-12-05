@@ -271,7 +271,7 @@ public class ReaderView extends AdapterView<Adapter> implements
 		requestLayout();
 	}
 
-	//======================interface=============================
+	//======================interface==ReaderViewItemAction===========================
 
 	@Override
 	public void onChildSetup(int i, View v) {}

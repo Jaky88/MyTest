@@ -60,12 +60,8 @@ public class MuPDFPageAdapter extends BaseAdapter {
 
 		PointF pageSize = mPageSizes.get(position);
 		if (pageSize != null) {
-			// We already know the page size. Set it up
-			// immediately
 			pageView.setPage(position, pageSize);
 		} else {
-			// Page size as yet unknown. Blank it for now, and
-			// start a background task to find the size
 			pageView.blank(position);
 			AsyncTask<Void,Void,PointF> sizingTask = new AsyncTask<Void,Void,PointF>() {
 				@Override
@@ -76,12 +72,10 @@ public class MuPDFPageAdapter extends BaseAdapter {
 				@Override
 				protected void onPostExecute(PointF result) {
 					super.onPostExecute(result);
-					// We now know the page size
 					mPageSizes.put(position, result);
-					// Check that this view hasn't been reused for
-					// another page since we started
-					if (pageView.getPage() == position)
+					if (pageView.getPage() == position) {
 						pageView.setPage(position, result);
+					}
 				}
 			};
 

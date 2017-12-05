@@ -32,9 +32,6 @@ import com.jaky.mupdf.async.TextProcessor;
 import com.jaky.mupdf.async.TextSelector;
 import com.jaky.mupdf.ui.views.imageview.OpaqueImageView;
 
-// Make our ImageViews opaque to optimize redraw
-
-
 public abstract class PageView extends ViewGroup {
 	private static final int HIGHLIGHT_COLOR = 0x802572AC;
 	private static final int LINK_COLOR = 0x80AC7225;
@@ -50,7 +47,7 @@ public abstract class PageView extends ViewGroup {
 	protected     float     mSourceScale;
 
 	private       ImageView mEntire; // Image rendered at minimum zoom
-	private       Bitmap    mEntireBm;
+	private       Bitmap mEntireBmp;
 	private       Matrix    mEntireMat;
 	private AsyncTask<Void,Void,TextWord[][]> mGetText;
 	private       AsyncTask<Void,Void,LinkInfo[]> mGetLinkInfo;
@@ -59,7 +56,7 @@ public abstract class PageView extends ViewGroup {
 	private       Point     mPatchViewSize; // View size on the basis of which the patch was created
 	private       Rect      mPatchArea;
 	private       ImageView mPatch;
-	private       Bitmap    mPatchBm;
+	private       Bitmap mPatchBmp;
 	private       CancellableAsyncTask<Void,Void> mDrawPatch;
 	private       RectF     mSearchBoxes[];
 	protected     LinkInfo  mLinks[];
@@ -74,13 +71,13 @@ public abstract class PageView extends ViewGroup {
 	private       ProgressBar mBusyIndicator;
 	private final Handler   mHandler = new Handler();
 
-	public PageView(Context c, Point parentSize, Bitmap sharedHqBm) {
+	public PageView(Context c, Point parentSize, Bitmap sharedHqBmp) {
 		super(c);
 		mContext    = c;
 		mParentSize = parentSize;
 		setBackgroundColor(BACKGROUND_COLOR);
-		mEntireBm = Bitmap.createBitmap(parentSize.x, parentSize.y, Config.ARGB_8888);
-		mPatchBm = sharedHqBm;
+		mEntireBmp = Bitmap.createBitmap(parentSize.x, parentSize.y, Config.ARGB_8888);
+		mPatchBmp = sharedHqBmp;
 		mEntireMat = new Matrix();
 	}
 
@@ -91,7 +88,6 @@ public abstract class PageView extends ViewGroup {
 	protected abstract void addMarkup(PointF[] quadPoints, @Annotation.Type int type);
 
 	private void reinit() {
-		// Cancel pending render task
 		if (mDrawEntire != null) {
 			mDrawEntire.cancelAndWait();
 			mDrawEntire = null;
@@ -149,16 +145,13 @@ public abstract class PageView extends ViewGroup {
 
 	public void releaseBitmaps() {
 		reinit();
+		if (mEntireBmp !=null)
+			mEntireBmp.recycle();
+		mEntireBmp = null;
 
-		//  recycle bitmaps before releasing them.
-
-		if (mEntireBm!=null)
-			mEntireBm.recycle();
-		mEntireBm = null;
-
-		if (mPatchBm!=null)
-			mPatchBm.recycle();
-		mPatchBm = null;
+		if (mPatchBmp !=null)
+			mPatchBmp.recycle();
+		mPatchBmp = null;
 	}
 
 	public void blank(int page) {
@@ -194,8 +187,6 @@ public abstract class PageView extends ViewGroup {
 			addView(mEntire);
 		}
 
-		// Calculate scaled size that fits within the screen limits
-		// This is the size at minimum zoom
 		mSourceScale = Math.min(mParentSize.x/size.x, mParentSize.y/size.y);
 		Point newSize = new Point((int)(size.x*mSourceScale), (int)(size.y*mSourceScale));
 		mSize = newSize;
@@ -219,7 +210,7 @@ public abstract class PageView extends ViewGroup {
 		mGetLinkInfo.execute();
 
 		// Render the page in the background
-		mDrawEntire = new CancellableAsyncTask<Void, Void>(getDrawPageTask(mEntireBm, mSize.x, mSize.y, 0, 0, mSize.x, mSize.y)) {
+		mDrawEntire = new CancellableAsyncTask<Void, Void>(getDrawPageTask(mEntireBmp, mSize.x, mSize.y, 0, 0, mSize.x, mSize.y)) {
 
 			@Override
 			public void onPreExecute() {
@@ -246,7 +237,7 @@ public abstract class PageView extends ViewGroup {
 			public void onPostExecute(Void result) {
 				removeView(mBusyIndicator);
 				mBusyIndicator = null;
-				mEntire.setImageBitmap(mEntireBm);
+				mEntire.setImageBitmap(mEntireBmp);
 				mEntire.invalidate();
 				setBackgroundColor(Color.TRANSPARENT);
 
@@ -567,11 +558,11 @@ public abstract class PageView extends ViewGroup {
 			CancellableTaskDefinition<Void, Void> task;
 
 			if (completeRedraw)
-				task = getDrawPageTask(mPatchBm, patchViewSize.x, patchViewSize.y,
+				task = getDrawPageTask(mPatchBmp, patchViewSize.x, patchViewSize.y,
 								patchArea.left, patchArea.top,
 								patchArea.width(), patchArea.height());
 			else
-				task = getUpdatePageTask(mPatchBm, patchViewSize.x, patchViewSize.y,
+				task = getUpdatePageTask(mPatchBmp, patchViewSize.x, patchViewSize.y,
 						patchArea.left, patchArea.top,
 						patchArea.width(), patchArea.height());
 
@@ -580,7 +571,7 @@ public abstract class PageView extends ViewGroup {
 				public void onPostExecute(Void result) {
 					mPatchViewSize = patchViewSize;
 					mPatchArea     = patchArea;
-					mPatch.setImageBitmap(mPatchBm);
+					mPatch.setImageBitmap(mPatchBmp);
 					mPatch.invalidate();
 					//requestLayout();
 					// Calling requestLayout here doesn't lead to a later call to layout. No idea
@@ -607,10 +598,10 @@ public abstract class PageView extends ViewGroup {
 
 
 		// Render the page in the background
-		mDrawEntire = new CancellableAsyncTask<Void, Void>(getUpdatePageTask(mEntireBm, mSize.x, mSize.y, 0, 0, mSize.x, mSize.y)) {
+		mDrawEntire = new CancellableAsyncTask<Void, Void>(getUpdatePageTask(mEntireBmp, mSize.x, mSize.y, 0, 0, mSize.x, mSize.y)) {
 
 			public void onPostExecute(Void result) {
-				mEntire.setImageBitmap(mEntireBm);
+				mEntire.setImageBitmap(mEntireBmp);
 				mEntire.invalidate();
 			}
 		};

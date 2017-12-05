@@ -66,7 +66,8 @@ public class MuPDFPageView extends PageView implements MuPDFView {
 	private AsyncTask<Void,Void,Boolean> mSign;
 	private Runnable changeReporter;
 
-	public MuPDFPageView(Context c, FilePicker.FilePickerSupport filePickerSupport, MuPDFCore core, Point parentSize, Bitmap sharedHqBm) {
+	public MuPDFPageView(Context c, FilePicker.FilePickerSupport filePickerSupport, MuPDFCore core,
+						 Point parentSize, Bitmap sharedHqBm) {
 		super(c, parentSize, sharedHqBm);
 		mFilePickerSupport = filePickerSupport;
 		mCore = core;
@@ -189,10 +190,6 @@ public class MuPDFPageView extends PageView implements MuPDFView {
 	}
 
 	public LinkInfo hitLink(float x, float y) {
-		// Since link highlighting was implemented, the super class
-		// PageView has had sufficient information to be able to
-		// perform this method directly. Making that change would
-		// make MuPDFCore.hitLinkPage superfluous.
 		float scale = mSourceScale*(float)getWidth()/(float)mSize.x;
 		float docRelX = (x - getLeft())/scale;
 		float docRelY = (y - getTop())/scale;
@@ -514,8 +511,6 @@ public class MuPDFPageView extends PageView implements MuPDFView {
 		return new MuPDFCancellableTaskDefinition<Void, Void>(mCore) {
 			@Override
 			public Void doInBackground(MuPDFCore.Cookie cookie, Void ... params) {
-				// Workaround bug in Android Honeycomb 3.x, where the bitmap generation count
-				// is not incremented when drawing.
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB &&
 						Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 					bm.eraseColor(0);
@@ -533,8 +528,6 @@ public class MuPDFPageView extends PageView implements MuPDFView {
 
 			@Override
 			public Void doInBackground(MuPDFCore.Cookie cookie, Void ... params) {
-				// Workaround bug in Android Honeycomb 3.x, where the bitmap generation count
-				// is not incremented when drawing.
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB &&
 						Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 					bm.eraseColor(0);
@@ -600,8 +593,6 @@ public class MuPDFPageView extends PageView implements MuPDFView {
 	}
 
 	public void setScale(float scale) {
-		// This type of view scales automatically to fit the size
-		// determined by the parent view groups during layout
 	}
 
 	@Override
