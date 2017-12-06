@@ -190,7 +190,7 @@ public class MuPDFPageView extends PageView implements MuPDFView {
 	}
 
 	public LinkInfo hitLink(float x, float y) {
-		float scale = mSourceScale*(float)getWidth()/(float)mSize.x;
+		float scale = mSrcScale *(float)getWidth()/(float) mPageSize.x;
 		float docRelX = (x - getLeft())/scale;
 		float docRelY = (y - getTop())/scale;
 
@@ -265,7 +265,7 @@ public class MuPDFPageView extends PageView implements MuPDFView {
 
 	@ReaderConstants.Hit
 	public String passClickEvent(float x, float y) {
-		float scale = mSourceScale*(float)getWidth()/(float)mSize.x;
+		float scale = mSrcScale *(float)getWidth()/(float) mPageSize.x;
 		final float docRelX = (x - getLeft())/scale;
 		final float docRelY = (y - getTop())/scale;
 		boolean hit = false;
