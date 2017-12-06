@@ -84,9 +84,11 @@ public abstract class PageView extends ViewGroup {
         mEntireMatrix = new Matrix();
     }
 
-    protected abstract CancellableTaskDefinition<Void, Void> getDrawPageTask(Bitmap bm, int sizeX, int sizeY, int patchX, int patchY, int patchWidth, int patchHeight);
+    protected abstract CancellableTaskDefinition<Void, Void> getDrawPageTaskParams(
+            Bitmap bm, int sizeX, int sizeY, int patchX, int patchY, int patchWidth, int patchHeight);
 
-    protected abstract CancellableTaskDefinition<Void, Void> getUpdatePageTask(Bitmap bm, int sizeX, int sizeY, int patchX, int patchY, int patchWidth, int patchHeight);
+    protected abstract CancellableTaskDefinition<Void, Void> getUpdatePageTaskParams(
+            Bitmap bm, int sizeX, int sizeY, int patchX, int patchY, int patchWidth, int patchHeight);
 
     protected abstract LinkInfo[] getLinkInfo();
 
@@ -155,8 +157,9 @@ public abstract class PageView extends ViewGroup {
         mGetLinkInfoTask.execute();
 
         //绘制整页
-        mDrawEntireTask = new CancellableAsyncTask<Void, Void>(
-                getDrawPageTask(mEntireBmp, mPageSize.x, mPageSize.y, 0, 0, mPageSize.x, mPageSize.y)) {
+        CancellableTaskDefinition<Void, Void> taskParams = getDrawPageTaskParams(
+                mEntireBmp, mPageSize.x, mPageSize.y, 0, 0, mPageSize.x, mPageSize.y);
+        mDrawEntireTask = new CancellableAsyncTask<Void, Void>(taskParams) {
 
             @Override
             public void onPreExecute() {
@@ -537,7 +540,7 @@ public abstract class PageView extends ViewGroup {
 
         //绘制整页
         mDrawEntireTask = new CancellableAsyncTask<Void, Void>(
-                getUpdatePageTask(mEntireBmp, mPageSize.x, mPageSize.y, 0, 0, mPageSize.x, mPageSize.y)) {
+                getUpdatePageTaskParams(mEntireBmp, mPageSize.x, mPageSize.y, 0, 0, mPageSize.x, mPageSize.y)) {
 
             public void onPostExecute(Void result) {
                 mIvEntirePicture.setImageBitmap(mEntireBmp);
@@ -586,19 +589,21 @@ public abstract class PageView extends ViewGroup {
                 mSearchView.bringToFront();
             }
 
-            CancellableTaskDefinition<Void, Void> task;
+            CancellableTaskDefinition<Void, Void> taskParams;
 
             if (completeRedraw) {
-                task = getDrawPageTask(mPatchBmp, patchViewSize.x, patchViewSize.y,
+                taskParams = getDrawPageTaskParams(mPatchBmp,
+                        patchViewSize.x, patchViewSize.y,
                         patchArea.left, patchArea.top,
                         patchArea.width(), patchArea.height());
             } else {
-                task = getUpdatePageTask(mPatchBmp, patchViewSize.x, patchViewSize.y,
+                taskParams = getUpdatePageTaskParams(mPatchBmp,
+                        patchViewSize.x, patchViewSize.y,
                         patchArea.left, patchArea.top,
                         patchArea.width(), patchArea.height());
             }
 
-            mDrawPatchTask = new CancellableAsyncTask<Void, Void>(task) {
+            mDrawPatchTask = new CancellableAsyncTask<Void, Void>(taskParams) {
 
                 public void onPostExecute(Void result) {
                     mPatchViewSize = patchViewSize;

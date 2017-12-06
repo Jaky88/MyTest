@@ -506,8 +506,8 @@ public class MuPDFPageView extends PageView implements MuPDFView {
 
 
 	@Override
-	protected CancellableTaskDefinition<Void, Void> getDrawPageTask(final Bitmap bitmap, final int sizeX, final int sizeY,
-                                                                    final int patchX, final int patchY, final int patchWidth, final int patchHeight) {
+	protected CancellableTaskDefinition<Void, Void> getDrawPageTaskParams(final Bitmap bitmap, final int sizeX, final int sizeY,
+																		  final int patchX, final int patchY, final int patchWidth, final int patchHeight) {
 		return new MuPDFCancellableTaskDefinition<Void, Void>(mCore) {
 			@Override
 			public Void doInBackground(MuPDFCore.Cookie cookie, Void ... params) {
@@ -523,8 +523,8 @@ public class MuPDFPageView extends PageView implements MuPDFView {
 
 	}
 
-	protected CancellableTaskDefinition<Void, Void> getUpdatePageTask(final Bitmap bitmap, final int sizeX, final int sizeY,
-			final int patchX, final int patchY, final int patchWidth, final int patchHeight)
+	protected CancellableTaskDefinition<Void, Void> getUpdatePageTaskParams(final Bitmap bitmap, final int sizeX, final int sizeY,
+																			final int patchX, final int patchY, final int patchWidth, final int patchHeight)
 	{
 		return new MuPDFCancellableTaskDefinition<Void, Void>(mCore) {
 
