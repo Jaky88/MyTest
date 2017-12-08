@@ -13,4 +13,9 @@
 	<color name="text_border_focused">#000000</color>
 	<color name="seek_thumb">#2572AC</color>
 	<color name="seek_progress">#FFFFFF</color>
+	<color name="seek_progress1">#FFFF0000</color>
+
+	private static final int LINK_COLOR = 0x80AC7225;
+	private static final int BOX_COLOR = 0xFF4444FF;
+	private static final int INK_COLOR = 0xFFFF0000;
 </resources>

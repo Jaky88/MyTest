@@ -62,7 +62,7 @@ public abstract class PageView extends ViewGroup {
     private RectF mSelectArea;
     private RectF mItemSelectArea;
 
-    private Point mParentSize;
+    private Point mViewPortSize;
     protected Point mPageSize;
     private Point mPatchViewSize;
     protected ArrayList<ArrayList<PointF>> mDrawingSizeList;
@@ -74,13 +74,13 @@ public abstract class PageView extends ViewGroup {
 
     private final Handler mHandler = new Handler();
 
-    public PageView(Context c, Point parentSize, Bitmap sharedHqBmp) {
+    public PageView(Context c, Point parentSize, Bitmap emptyHqBmp) {
         super(c);
         mContext = c;
-        mParentSize = parentSize;
+        mViewPortSize = parentSize;
         setBackgroundColor(BACKGROUND_COLOR);
         mEntireBmp = Bitmap.createBitmap(parentSize.x, parentSize.y, Config.ARGB_8888);
-        mPatchBmp = sharedHqBmp;
+        mPatchBmp = emptyHqBmp;
         mEntireMatrix = new Matrix();
     }
 
@@ -117,7 +117,7 @@ public abstract class PageView extends ViewGroup {
         mPatchBmp = null;
     }
 
-    public void setPage(int page, PointF size) {
+    public void setPage(int page, PointF coreSize) {
         if (mDrawEntireTask != null) {
             mDrawEntireTask.cancelAndWait();
             mDrawEntireTask = null;
@@ -130,14 +130,13 @@ public abstract class PageView extends ViewGroup {
         mPageNumber = page;
         if (mIvEntirePicture == null) {
             mIvEntirePicture = new OpaqueImageView(mContext);
+            mIvEntirePicture.setBackgroundColor(Color.WHITE);
             mIvEntirePicture.setScaleType(ImageView.ScaleType.MATRIX);
             addView(mIvEntirePicture);
         }
 
-        mSrcScale = Math.min(mParentSize.x / size.x, mParentSize.y / size.y);
-        Point pageSize = new Point((int) (size.x * mSrcScale), (int) (size.y * mSrcScale));
-        mPageSize = pageSize;
-
+        //适配页面大小
+        adaptPageSize(coreSize);
         mIvEntirePicture.setImageBitmap(null);
         mIvEntirePicture.invalidate();
 
@@ -167,6 +166,7 @@ public abstract class PageView extends ViewGroup {
                 mIvEntirePicture.setImageBitmap(null);
                 mIvEntirePicture.invalidate();
 
+                //显示进度条
                 if (mLoadingBar == null) {
                     mLoadingBar = new ProgressBar(mContext);
                     mLoadingBar.setIndeterminate(true);
@@ -184,8 +184,13 @@ public abstract class PageView extends ViewGroup {
 
             @Override
             public void onPostExecute(Void result) {
+
+                //隐藏进度条
                 removeView(mLoadingBar);
                 mLoadingBar = null;
+
+
+                //刷新页面显示
                 mIvEntirePicture.setImageBitmap(mEntireBmp);
                 mIvEntirePicture.invalidate();
                 setBackgroundColor(Color.TRANSPARENT);
@@ -193,7 +198,11 @@ public abstract class PageView extends ViewGroup {
             }
         };
         mDrawEntireTask.execute();
+        addSearchView();
+        requestLayout();
+    }
 
+    private void addSearchView() {
         if (mSearchView == null) {
             mSearchView = new View(mContext) {
                 @Override
@@ -288,7 +297,15 @@ public abstract class PageView extends ViewGroup {
 
             addView(mSearchView);
         }
-        requestLayout();
+    }
+
+    private void adaptPageSize(PointF coreSize) {
+        //获取显示界面大小与页面实际大小之间的比例
+        mSrcScale = Math.min(mViewPortSize.x / coreSize.x, mViewPortSize.y / coreSize.y);
+
+        //对页面实际大小进行缩放
+        Point newSize = new Point((int) (coreSize.x * mSrcScale), (int) (coreSize.y * mSrcScale));
+        mPageSize = newSize;
     }
 
     public void setSearchBoxes(RectF searchBoxes[]) {
@@ -419,7 +436,7 @@ public abstract class PageView extends ViewGroup {
         setMeasuredDimension(x, y);
 
         if (mLoadingBar != null) {
-            int limit = Math.min(mParentSize.x, mParentSize.y) / 2;
+            int limit = Math.min(mViewPortSize.x, mViewPortSize.y) / 2;
             mLoadingBar.measure(MeasureSpec.AT_MOST | limit, MeasureSpec.AT_MOST | limit);
         }
     }
@@ -490,7 +507,7 @@ public abstract class PageView extends ViewGroup {
         mPageNumber = 0;
 
         if (mPageSize == null) {
-            mPageSize = mParentSize;
+            mPageSize = mViewPortSize;
         }
 
         if (mIvEntirePicture != null) {
@@ -561,7 +578,7 @@ public abstract class PageView extends ViewGroup {
             }
         } else {
             final Point patchViewSize = new Point(viewArea.width(), viewArea.height());
-            final Rect patchArea = new Rect(0, 0, mParentSize.x, mParentSize.y);
+            final Rect patchArea = new Rect(0, 0, mViewPortSize.x, mViewPortSize.y);
 
             if (!patchArea.intersect(viewArea)) {
                 return;
@@ -584,7 +601,8 @@ public abstract class PageView extends ViewGroup {
 
             if (mIvPatchPicture == null) {
                 mIvPatchPicture = new OpaqueImageView(mContext);
-                mIvPatchPicture.setScaleType(ImageView.ScaleType.MATRIX);
+                mIvPatchPicture.setBackgroundColor(Color.WHITE);
+                mIvPatchPicture.setScaleType(ImageView.ScaleType.FIT_XY);
                 addView(mIvPatchPicture);
                 mSearchView.bringToFront();
             }
