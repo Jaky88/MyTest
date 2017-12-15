@@ -5,9 +5,9 @@ import java.util.concurrent.ExecutionException;
 
 // Ideally this would be a subclass of AsyncTask, however the cancel() method is final, and cannot
 // be overridden. I felt that having two different, but similar cancel methods was a bad idea.
-public class CancellableAsyncTask<Params, Result> {
+public class CAsyncTask<Params, Result> {
     private final AsyncTask<Params, Void, Result> asyncTask;
-    private final CancellableTaskDefinition<Params, Result> ourTask;
+    private final AsyncTaskImpl<Params, Result> ourTask;
 
     public void onPreExecute() {
 
@@ -17,7 +17,7 @@ public class CancellableAsyncTask<Params, Result> {
 
     }
 
-    public CancellableAsyncTask(final CancellableTaskDefinition<Params, Result> task) {
+    public CAsyncTask(final AsyncTaskImpl<Params, Result> task) {
         if (task == null)
             throw new IllegalArgumentException();
 
@@ -30,12 +30,12 @@ public class CancellableAsyncTask<Params, Result> {
 
             @Override
             protected void onPreExecute() {
-                CancellableAsyncTask.this.onPreExecute();
+                CAsyncTask.this.onPreExecute();
             }
 
             @Override
             protected void onPostExecute(Result result) {
-                CancellableAsyncTask.this.onPostExecute(result);
+                CAsyncTask.this.onPostExecute(result);
                 task.doCleanup();
             }
         };

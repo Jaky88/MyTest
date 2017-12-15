@@ -23,8 +23,8 @@ import android.widget.ProgressBar;
 
 import com.jaky.mupdf.data.Annotation;
 import com.jaky.mupdf.task.AsyncTask;
-import com.jaky.mupdf.task.CancellableAsyncTask;
-import com.jaky.mupdf.task.CancellableTaskDefinition;
+import com.jaky.mupdf.task.CAsyncTask;
+import com.jaky.mupdf.task.AsyncTaskImpl;
 import com.jaky.mupdf.data.LinkInfo;
 import com.jaky.mupdf.R;
 import com.jaky.mupdf.data.TextWord;
@@ -54,8 +54,8 @@ public abstract class PageView extends ViewGroup {
     private TextWord mText[][];
     private AsyncTask<Void, Void, TextWord[][]> mGetTextTask;
     private AsyncTask<Void, Void, LinkInfo[]> mGetLinkInfoTask;
-    private CancellableAsyncTask<Void, Void> mDrawEntireTask;
-    private CancellableAsyncTask<Void, Void> mDrawPatchTask;
+    private CAsyncTask<Void, Void> mDrawEntireTask;
+    private CAsyncTask<Void, Void> mDrawPatchTask;
 
     private Rect mPatchArea;
     private RectF mSearchArea[];
@@ -84,24 +84,216 @@ public abstract class PageView extends ViewGroup {
         mEntireMatrix = new Matrix();
     }
 
-    protected abstract CancellableTaskDefinition<Void, Void> getDrawPageTaskParams(
-            Bitmap bm, int sizeX, int sizeY, int patchX, int patchY, int patchWidth, int patchHeight);
 
-    protected abstract CancellableTaskDefinition<Void, Void> getUpdatePageTaskParams(
-            Bitmap bm, int sizeX, int sizeY, int patchX, int patchY, int patchWidth, int patchHeight);
-
+    //抽象方法----子类完成
+    protected abstract AsyncTaskImpl<Void, Void> doDrawPage(Bitmap bm, int sizeX, int sizeY, int patchX, int patchY, int patchWidth, int patchHeight);
+    protected abstract AsyncTaskImpl<Void, Void> doUpdatePage(Bitmap bm, int sizeX, int sizeY, int patchX, int patchY, int patchWidth, int patchHeight);
     protected abstract LinkInfo[] getLinkInfo();
-
     protected abstract TextWord[][] getText();
-
     protected abstract void addMarkup(PointF[] quadPoints, @Annotation.Type int type);
+
+    public int getPage() {
+        return mPageNumber;
+    }
+
+    public void setPage(int pageNum, PointF pageSize) {
+        cancelDrawEntireTask();
+        isEmpty = false;
+        updateSearchView();
+        mPageNumber = pageNum;
+        addEntirePicture();
+        adaptPageSize(pageSize);
+        showEmptyEntirePicture();
+
+        initGetLinkInfoTask();
+        mGetLinkInfoTask.execute();
+        initDrawEntirePictureTask();
+        mDrawEntireTask.execute();
+
+        addSearchView();
+        requestLayout();
+    }
+
+    //更新页面
+    public void update() {
+        cancelDrawEntireTask();
+        cancelDrawPatchTask();
+        initUpdateEntirePictureTask();
+        mDrawEntireTask.execute();
+        updateHq(true);
+    }
+
+    public void blank(int page) {
+        reinit();
+        mPageNumber = page;
+        showLoadingBar();
+        setBackgroundColor(BACKGROUND_COLOR);
+    }
+
+    public void updateHq(boolean update) {
+        Rect viewArea = new Rect(getLeft(), getTop(), getRight(), getBottom());
+        if (viewArea.width() == mPageSize.x || viewArea.height() == mPageSize.y) {
+            showEmptyPatchPicture();
+        } else {
+            final Point patchViewSize = new Point(viewArea.width(), viewArea.height());
+            final Rect patchArea = new Rect(0, 0, mViewPortSize.x, mViewPortSize.y);
+
+            if (!patchArea.intersect(viewArea)) {
+                return;
+            }
+
+            patchArea.offset(-viewArea.left, -viewArea.top);
+
+            boolean area_unchanged = patchArea.equals(mPatchArea) && patchViewSize.equals(mPatchViewSize);
+
+            if (area_unchanged && !update) {
+                return;
+            }
+
+            boolean completeRedraw = !(area_unchanged && update);
+
+            cancelDrawPatchTask();
+            showPatchPicture();
+            initDrawPatchPicture(patchViewSize, patchArea, completeRedraw);
+
+            mDrawPatchTask.execute();
+        }
+    }
+
+    public void removeHq() {
+        cancelDrawPatchTask();
+
+        mPatchViewSize = null;
+        mPatchArea = null;
+        showEmptyPatchPicture();
+    }
+
+    //==================init task==============================
+
+    private void initGetLinkInfoTask() {
+        mGetLinkInfoTask = new AsyncTask<Void, Void, LinkInfo[]>() {
+            protected LinkInfo[] doInBackground(Void... v) {
+                return getLinkInfo();
+            }
+
+            protected void onPostExecute(LinkInfo[] v) {
+                mLinks = v;
+                updateSearchView();
+            }
+        };
+    }
+
+    private void initDrawEntirePictureTask() {
+        mDrawEntireTask = new CAsyncTask<Void, Void>(
+                doDrawPage(mEntireBmp, mPageSize.x, mPageSize.y, 0, 0, mPageSize.x, mPageSize.y)) {
+            @Override
+            public void onPreExecute() {
+                setBackgroundColor(BACKGROUND_COLOR);
+                showEmptyEntirePicture();
+                showLoadingBar();
+                mLoadingBar.setVisibility(INVISIBLE);
+                mHandler.postDelayed(new Runnable() {
+                    public void run() {
+                        if (mLoadingBar != null)
+                            mLoadingBar.setVisibility(VISIBLE);
+                    }
+                }, PROGRESS_DIALOG_DELAY);
+            }
+
+            @Override
+            public void onPostExecute(Void result) {
+                hideLoadingBar();
+                showEntirePicture();
+                setBackgroundColor(Color.TRANSPARENT);
+            }
+        };
+    }
+
+    private void initUpdateEntirePictureTask() {
+        mDrawEntireTask = new CAsyncTask<Void, Void>(
+                doUpdatePage(mEntireBmp, mPageSize.x, mPageSize.y, 0, 0, mPageSize.x, mPageSize.y)) {
+
+            public void onPostExecute(Void result) {
+                showEntirePicture();
+            }
+        };
+    }
+
+    private void initDrawPatchPicture(final Point patchViewSize, final Rect patchArea, boolean completeRedraw) {
+        AsyncTaskImpl<Void, Void> taskDrawPage;
+
+        if (completeRedraw) {
+            taskDrawPage = doDrawPage(mPatchBmp,
+                    patchViewSize.x, patchViewSize.y,
+                    patchArea.left, patchArea.top,
+                    patchArea.width(), patchArea.height());
+        } else {
+            taskDrawPage = doUpdatePage(mPatchBmp,
+                    patchViewSize.x, patchViewSize.y,
+                    patchArea.left, patchArea.top,
+                    patchArea.width(), patchArea.height());
+        }
+
+        mDrawPatchTask = new CAsyncTask<Void, Void>(taskDrawPage) {
+
+            public void onPostExecute(Void result) {
+                mPatchViewSize = patchViewSize;
+                mPatchArea = patchArea;
+                mIvPatchPicture.setImageBitmap(mPatchBmp);
+                mIvPatchPicture.invalidate();
+                mIvPatchPicture.layout(mPatchArea.left, mPatchArea.top, mPatchArea.right, mPatchArea.bottom);
+            }
+        };
+    }
+
+    private void initGetTextTask() {
+        mGetTextTask = new AsyncTask<Void, Void, TextWord[][]>() {
+            @Override
+            protected TextWord[][] doInBackground(Void... params) {
+                return getText();
+            }
+
+            @Override
+            protected void onPostExecute(TextWord[][] result) {
+                mText = result;
+                mSearchView.invalidate();
+            }
+        };
+    }
+
+    //==================cancel task==============================
+
+    private void cancelDrawPatchTask() {
+        if (mDrawPatchTask != null) {
+            mDrawPatchTask.cancelAndWait();
+            mDrawPatchTask = null;
+        }
+    }
+
+    private void cancelDrawEntireTask() {
+        if (mDrawEntireTask != null) {
+            mDrawEntireTask.cancelAndWait();
+            mDrawEntireTask = null;
+        }
+    }
+
+    private void cancelGetTextTask() {
+        if (mGetTextTask != null) {
+            mGetTextTask.cancel(true);
+            mGetTextTask = null;
+        }
+    }
+
+    private void cancelGetLinkInfoTask() {
+        if (mGetLinkInfoTask != null) {
+            mGetLinkInfoTask.cancel(true);
+            mGetLinkInfoTask = null;
+        }
+    }
 
     public void releaseResources() {
         reinit();
-        if (mLoadingBar != null) {
-            removeView(mLoadingBar);
-            mLoadingBar = null;
-        }
+        hideLoadingBar();
     }
 
     public void releaseBitmaps() {
@@ -117,89 +309,88 @@ public abstract class PageView extends ViewGroup {
         mPatchBmp = null;
     }
 
-    public void setPage(int page, PointF coreSize) {
-        if (mDrawEntireTask != null) {
-            mDrawEntireTask.cancelAndWait();
-            mDrawEntireTask = null;
-        }
+    private void reinit() {
+        cancelDrawEntireTask();
+        cancelDrawPatchTask();
+        cancelGetLinkInfoTask();
+        cancelGetTextTask();
+        showEmptyEntirePicture();
+        showEmptyPatchPicture();
+        isEmpty = true;
+        mPageNumber = 0;
 
-        isEmpty = false;
-        if (mSearchView != null) {
-            mSearchView.invalidate();
+        if (mPageSize == null) {
+            mPageSize = mViewPortSize;
         }
-        mPageNumber = page;
+        mPatchViewSize = null;
+        mPatchArea = null;
+        mSearchArea = null;
+        mLinks = null;
+        mSelectArea = null;
+        mText = null;
+        mItemSelectArea = null;
+    }
+
+    //=========================ui=======================
+
+    private void addEntirePicture() {
         if (mIvEntirePicture == null) {
             mIvEntirePicture = new OpaqueImageView(mContext);
             mIvEntirePicture.setBackgroundColor(Color.WHITE);
             mIvEntirePicture.setScaleType(ImageView.ScaleType.MATRIX);
             addView(mIvEntirePicture);
         }
+    }
 
-        //适配页面大小
-        adaptPageSize(coreSize);
-        mIvEntirePicture.setImageBitmap(null);
+    private void showEmptyEntirePicture() {
+        if (mIvEntirePicture != null) {
+            mIvEntirePicture.setImageBitmap(null);
+            mIvEntirePicture.invalidate();
+        }
+    }
+
+    private void showEmptyPatchPicture() {
+        if (mIvPatchPicture != null) {
+            mIvPatchPicture.setImageBitmap(null);
+            mIvPatchPicture.invalidate();
+        }
+    }
+
+    private void showEntirePicture() {
+        mIvEntirePicture.setImageBitmap(mEntireBmp);
         mIvEntirePicture.invalidate();
+    }
 
-        //获取链接信息
-        mGetLinkInfoTask = new AsyncTask<Void, Void, LinkInfo[]>() {
-            protected LinkInfo[] doInBackground(Void... v) {
-                return getLinkInfo();
-            }
+    private void showPatchPicture() {
+        if (mIvPatchPicture == null) {
+            mIvPatchPicture = new OpaqueImageView(mContext);
+            mIvPatchPicture.setBackgroundColor(Color.WHITE);
+            mIvPatchPicture.setScaleType(ImageView.ScaleType.FIT_XY);
+            addView(mIvPatchPicture);
+            mSearchView.bringToFront();
+        }
+    }
 
-            protected void onPostExecute(LinkInfo[] v) {
-                mLinks = v;
-                if (mSearchView != null) {
-                    mSearchView.invalidate();
-                }
-            }
-        };
-        mGetLinkInfoTask.execute();
+    private void hideLoadingBar() {
+        if (mLoadingBar != null) {
+            removeView(mLoadingBar);
+            mLoadingBar = null;
+        }
+    }
 
-        //绘制整页
-        CancellableTaskDefinition<Void, Void> taskParams = getDrawPageTaskParams(
-                mEntireBmp, mPageSize.x, mPageSize.y, 0, 0, mPageSize.x, mPageSize.y);
-        mDrawEntireTask = new CancellableAsyncTask<Void, Void>(taskParams) {
+    private void showLoadingBar() {
+        if (mLoadingBar == null) {
+            mLoadingBar = new ProgressBar(mContext);
+            mLoadingBar.setIndeterminate(true);
+            mLoadingBar.setBackgroundResource(R.drawable.loading);
+            addView(mLoadingBar);
+        }
+    }
 
-            @Override
-            public void onPreExecute() {
-                setBackgroundColor(BACKGROUND_COLOR);
-                mIvEntirePicture.setImageBitmap(null);
-                mIvEntirePicture.invalidate();
-
-                //显示进度条
-                if (mLoadingBar == null) {
-                    mLoadingBar = new ProgressBar(mContext);
-                    mLoadingBar.setIndeterminate(true);
-                    mLoadingBar.setBackgroundResource(R.drawable.loading);
-                    addView(mLoadingBar);
-                    mLoadingBar.setVisibility(INVISIBLE);
-                    mHandler.postDelayed(new Runnable() {
-                        public void run() {
-                            if (mLoadingBar != null)
-                                mLoadingBar.setVisibility(VISIBLE);
-                        }
-                    }, PROGRESS_DIALOG_DELAY);
-                }
-            }
-
-            @Override
-            public void onPostExecute(Void result) {
-
-                //隐藏进度条
-                removeView(mLoadingBar);
-                mLoadingBar = null;
-
-
-                //刷新页面显示
-                mIvEntirePicture.setImageBitmap(mEntireBmp);
-                mIvEntirePicture.invalidate();
-                setBackgroundColor(Color.TRANSPARENT);
-
-            }
-        };
-        mDrawEntireTask.execute();
-        addSearchView();
-        requestLayout();
+    private void updateSearchView() {
+        if (mSearchView != null) {
+            mSearchView.invalidate();
+        }
     }
 
     private void addSearchView() {
@@ -299,27 +490,20 @@ public abstract class PageView extends ViewGroup {
         }
     }
 
-    private void adaptPageSize(PointF coreSize) {
-        //获取显示界面大小与页面实际大小之间的比例
-        mSrcScale = Math.min(mViewPortSize.x / coreSize.x, mViewPortSize.y / coreSize.y);
-
-        //对页面实际大小进行缩放
-        Point newSize = new Point((int) (coreSize.x * mSrcScale), (int) (coreSize.y * mSrcScale));
+    private void adaptPageSize(PointF pageSize) {
+        mSrcScale = Math.min(mViewPortSize.x / pageSize.x, mViewPortSize.y / pageSize.y);
+        Point newSize = new Point((int) (pageSize.x * mSrcScale), (int) (pageSize.y * mSrcScale));
         mPageSize = newSize;
     }
 
     public void setSearchBoxes(RectF searchBoxes[]) {
         mSearchArea = searchBoxes;
-        if (mSearchView != null) {
-            mSearchView.invalidate();
-        }
+        updateSearchView();
     }
 
     public void setLinkHighlighting(boolean f) {
         mHighlightLinks = f;
-        if (mSearchView != null) {
-            mSearchView.invalidate();
-        }
+        updateSearchView();
     }
 
     public void deselectText() {
@@ -341,19 +525,7 @@ public abstract class PageView extends ViewGroup {
         mSearchView.invalidate();
 
         if (mGetTextTask == null) {
-            mGetTextTask = new AsyncTask<Void, Void, TextWord[][]>() {
-                @Override
-                protected TextWord[][] doInBackground(Void... params) {
-                    return getText();
-                }
-
-                @Override
-                protected void onPostExecute(TextWord[][] result) {
-                    mText = result;
-                    mSearchView.invalidate();
-                }
-            };
-
+            initGetTextTask();
             mGetTextTask.execute();
         }
     }
@@ -408,9 +580,7 @@ public abstract class PageView extends ViewGroup {
 
     public void setItemSelectBox(RectF rect) {
         mItemSelectArea = rect;
-        if (mSearchView != null) {
-            mSearchView.invalidate();
-        }
+        updateSearchView();
     }
 
     //============================ViewGroup========================================
@@ -463,10 +633,7 @@ public abstract class PageView extends ViewGroup {
             if (mPatchViewSize.x != w || mPatchViewSize.y != h) {
                 mPatchViewSize = null;
                 mPatchArea = null;
-                if (mIvPatchPicture != null) {
-                    mIvPatchPicture.setImageBitmap(null);
-                    mIvPatchPicture.invalidate();
-                }
+                showEmptyPatchPicture();
             } else {
                 mIvPatchPicture.layout(mPatchArea.left, mPatchArea.top, mPatchArea.right, mPatchArea.bottom);
             }
@@ -482,180 +649,9 @@ public abstract class PageView extends ViewGroup {
 
     //====================================================================
 
-    private void reinit() {
-        if (mDrawEntireTask != null) {
-            mDrawEntireTask.cancelAndWait();
-            mDrawEntireTask = null;
-        }
-
-        if (mDrawPatchTask != null) {
-            mDrawPatchTask.cancelAndWait();
-            mDrawPatchTask = null;
-        }
-
-        if (mGetLinkInfoTask != null) {
-            mGetLinkInfoTask.cancel(true);
-            mGetLinkInfoTask = null;
-        }
-
-        if (mGetTextTask != null) {
-            mGetTextTask.cancel(true);
-            mGetTextTask = null;
-        }
-
-        isEmpty = true;
-        mPageNumber = 0;
-
-        if (mPageSize == null) {
-            mPageSize = mViewPortSize;
-        }
-
-        if (mIvEntirePicture != null) {
-            mIvEntirePicture.setImageBitmap(null);
-            mIvEntirePicture.invalidate();
-        }
-
-        if (mIvPatchPicture != null) {
-            mIvPatchPicture.setImageBitmap(null);
-            mIvPatchPicture.invalidate();
-        }
-
-        mPatchViewSize = null;
-        mPatchArea = null;
-
-        mSearchArea = null;
-        mLinks = null;
-        mSelectArea = null;
-        mText = null;
-        mItemSelectArea = null;
-    }
-
-    public void blank(int page) {
-        reinit();
-        mPageNumber = page;
-
-        if (mLoadingBar == null) {
-            mLoadingBar = new ProgressBar(mContext);
-            mLoadingBar.setIndeterminate(true);
-            mLoadingBar.setBackgroundResource(R.drawable.loading);
-            addView(mLoadingBar);
-        }
-
-        setBackgroundColor(BACKGROUND_COLOR);
-    }
-
-    public void update() {
-        if (mDrawEntireTask != null) {
-            mDrawEntireTask.cancelAndWait();
-            mDrawEntireTask = null;
-        }
-
-        if (mDrawPatchTask != null) {
-            mDrawPatchTask.cancelAndWait();
-            mDrawPatchTask = null;
-        }
-
-        //绘制整页
-        mDrawEntireTask = new CancellableAsyncTask<Void, Void>(
-                getUpdatePageTaskParams(mEntireBmp, mPageSize.x, mPageSize.y, 0, 0, mPageSize.x, mPageSize.y)) {
-
-            public void onPostExecute(Void result) {
-                mIvEntirePicture.setImageBitmap(mEntireBmp);
-                mIvEntirePicture.invalidate();
-            }
-        };
-        mDrawEntireTask.execute();
-
-        updateHq(true);
-    }
-
-    public void updateHq(boolean update) {
-        Rect viewArea = new Rect(getLeft(), getTop(), getRight(), getBottom());
-        if (viewArea.width() == mPageSize.x || viewArea.height() == mPageSize.y) {
-            if (mIvPatchPicture != null) {
-                mIvPatchPicture.setImageBitmap(null);
-                mIvPatchPicture.invalidate();
-            }
-        } else {
-            final Point patchViewSize = new Point(viewArea.width(), viewArea.height());
-            final Rect patchArea = new Rect(0, 0, mViewPortSize.x, mViewPortSize.y);
-
-            if (!patchArea.intersect(viewArea)) {
-                return;
-            }
-
-            patchArea.offset(-viewArea.left, -viewArea.top);
-
-            boolean area_unchanged = patchArea.equals(mPatchArea) && patchViewSize.equals(mPatchViewSize);
-
-            if (area_unchanged && !update) {
-                return;
-            }
-
-            boolean completeRedraw = !(area_unchanged && update);
-
-            if (mDrawPatchTask != null) {
-                mDrawPatchTask.cancelAndWait();
-                mDrawPatchTask = null;
-            }
-
-            if (mIvPatchPicture == null) {
-                mIvPatchPicture = new OpaqueImageView(mContext);
-                mIvPatchPicture.setBackgroundColor(Color.WHITE);
-                mIvPatchPicture.setScaleType(ImageView.ScaleType.FIT_XY);
-                addView(mIvPatchPicture);
-                mSearchView.bringToFront();
-            }
-
-            CancellableTaskDefinition<Void, Void> taskParams;
-
-            if (completeRedraw) {
-                taskParams = getDrawPageTaskParams(mPatchBmp,
-                        patchViewSize.x, patchViewSize.y,
-                        patchArea.left, patchArea.top,
-                        patchArea.width(), patchArea.height());
-            } else {
-                taskParams = getUpdatePageTaskParams(mPatchBmp,
-                        patchViewSize.x, patchViewSize.y,
-                        patchArea.left, patchArea.top,
-                        patchArea.width(), patchArea.height());
-            }
-
-            mDrawPatchTask = new CancellableAsyncTask<Void, Void>(taskParams) {
-
-                public void onPostExecute(Void result) {
-                    mPatchViewSize = patchViewSize;
-                    mPatchArea = patchArea;
-                    mIvPatchPicture.setImageBitmap(mPatchBmp);
-                    mIvPatchPicture.invalidate();
-                    mIvPatchPicture.layout(mPatchArea.left, mPatchArea.top, mPatchArea.right, mPatchArea.bottom);
-                }
-            };
-
-            mDrawPatchTask.execute();
-        }
-    }
-
-    public void removeHq() {
-        if (mDrawPatchTask != null) {
-            mDrawPatchTask.cancelAndWait();
-            mDrawPatchTask = null;
-        }
-
-        mPatchViewSize = null;
-        mPatchArea = null;
-        if (mIvPatchPicture != null) {
-            mIvPatchPicture.setImageBitmap(null);
-            mIvPatchPicture.invalidate();
-        }
-    }
-
-    public int getPage() {
-        return mPageNumber;
-    }
-
     @Override
     public boolean isOpaque() {
         return true;
     }
+
 }

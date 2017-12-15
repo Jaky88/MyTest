@@ -31,7 +31,7 @@ import com.jaky.mupdf.data.LinkInfo;
 import com.jaky.mupdf.data.ReaderConstants;
 import com.jaky.mupdf.data.TextWord;
 import com.jaky.mupdf.task.AsyncTask;
-import com.jaky.mupdf.task.CancellableTaskDefinition;
+import com.jaky.mupdf.task.AsyncTaskImpl;
 import com.jaky.mupdf.task.MuPDFCancellableTaskDefinition;
 import com.jaky.mupdf.ui.views.baseview.MuPDFView;
 
@@ -527,8 +527,8 @@ public class MuPDFPageView extends PageView implements MuPDFView {
 
 
     @Override
-    protected CancellableTaskDefinition<Void, Void> getDrawPageTaskParams(final Bitmap bitmap, final int sizeX, final int sizeY,
-                                                                          final int patchX, final int patchY, final int patchWidth, final int patchHeight) {
+    protected AsyncTaskImpl<Void, Void> doDrawPage(final Bitmap bitmap, final int sizeX, final int sizeY,
+                                                   final int patchX, final int patchY, final int patchWidth, final int patchHeight) {
         return new MuPDFCancellableTaskDefinition<Void, Void>(mCore) {
             @Override
             public Void doInBackground(MuPDFCore.Cookie cookie, Void... params) {
@@ -545,10 +545,10 @@ public class MuPDFPageView extends PageView implements MuPDFView {
     }
 
     //绘制页面过程
-    protected CancellableTaskDefinition<Void, Void> getUpdatePageTaskParams(final Bitmap bitmap,
-                                                                            final int sizeX, final int sizeY,
-                                                                            final int patchX, final int patchY,
-                                                                            final int patchWidth, final int patchHeight) {
+    protected AsyncTaskImpl<Void, Void> doUpdatePage(final Bitmap bitmap,
+                                                     final int sizeX, final int sizeY,
+                                                     final int patchX, final int patchY,
+                                                     final int patchWidth, final int patchHeight) {
         return new MuPDFCancellableTaskDefinition<Void, Void>(mCore) {
 
             @Override
@@ -600,13 +600,13 @@ public class MuPDFPageView extends PageView implements MuPDFView {
     }
 
     @Override
-    public void setPage(final int page, PointF coreSize) {
+    public void setPage(final int pageNum, PointF pageSize) {
         loadAnnotations();
 
         mLoadWidgetAreas = new AsyncTask<Void, Void, RectF[]>() {
             @Override
             protected RectF[] doInBackground(Void... arg0) {
-                return mCore.getWidgetAreas(page);
+                return mCore.getWidgetAreas(pageNum);
             }
 
             @Override
@@ -617,7 +617,7 @@ public class MuPDFPageView extends PageView implements MuPDFView {
 
         mLoadWidgetAreas.execute();
 
-        super.setPage(page, coreSize);
+        super.setPage(pageNum, pageSize);
     }
 
     public void setScale(float scale) {
