@@ -70,6 +70,226 @@ public class MuPDFPageView extends PageView implements MuPDFView {
         mCore = core;
     }
 
+
+    //================================task=============================================
+
+    @Override
+    protected AsyncTaskImpl<Void, Void> doDrawPage(final Bitmap bitmap, final int sizeX, final int sizeY,
+                                                   final int patchX, final int patchY, final int patchWidth, final int patchHeight) {
+        return new MuPDFCancellableTaskDefinition<Void, Void>(mCore) {
+            @Override
+            public Void doInBackground(MuPDFCore.Cookie cookie, Void... params) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB && Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                    bitmap.eraseColor(0);
+                }
+
+                //绘制页面
+                mCore.drawPage(bitmap, mPageNumber, sizeX, sizeY, patchX, patchY, patchWidth, patchHeight, cookie);
+                return null;
+            }
+        };
+
+    }
+
+    @Override
+    protected AsyncTaskImpl<Void, Void> doUpdatePage(final Bitmap bitmap,
+                                                     final int sizeX, final int sizeY,
+                                                     final int patchX, final int patchY,
+                                                     final int patchWidth, final int patchHeight) {
+        return new MuPDFCancellableTaskDefinition<Void, Void>(mCore) {
+
+            @Override
+            public Void doInBackground(MuPDFCore.Cookie cookie, Void... params) {
+                // 11 <= sdk < 14
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB && Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                    bitmap.eraseColor(0);
+                }
+
+                mCore.updatePage(bitmap, mPageNumber, sizeX, sizeY, patchX, patchY, patchWidth, patchHeight, cookie);
+                return null;
+            }
+        };
+    }
+
+    @Override
+    protected LinkInfo[] getLinkInfo() {
+        return mCore.getPageLinks(mPageNumber);
+    }
+
+    @Override
+    protected TextWord[][] getText() {
+        return mCore.textLines(mPageNumber);
+    }
+
+    @Override
+    protected void addMarkup(PointF[] quadPoints, @Annotation.Type int type) {
+        mCore.addMarkupAnnotation(mPageNumber, quadPoints, type);
+    }
+
+    private void initAddStrikeOut(@Annotation.Type final int type) {
+        mAddStrikeOut = new AsyncTask<PointF[], Void, Void>() {
+            @Override
+            protected Void doInBackground(PointF[]... params) {
+                addMarkup(params[0], type);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void result) {
+                loadAnnotations();
+                update();
+            }
+        };
+    }
+
+    private void initHitTask(final float docRelX, final float docRelY) {
+        mPassClick = new AsyncTask<Void, Void, PassClickResult>() {
+            @Override
+            protected PassClickResult doInBackground(Void... arg0) {
+                return mCore.passClickEvent(mPageNumber, docRelX, docRelY);
+            }
+
+            @Override
+            protected void onPostExecute(PassClickResult result) {
+                if (result.changed) {
+                    changeReporter.run();
+                }
+
+                result.acceptVisitor(new PassClickResultVisitor() {
+                    @Override
+                    public void visitText(PassClickResultText result) {
+                        showTextDialog(result.text);
+                    }
+
+                    @Override
+                    public void visitChoice(PassClickResultChoice result) {
+                        showChoiceDialog(result.options);
+                    }
+
+                    @Override
+                    public void visitSignature(PassClickResultSignature result) {
+                        switch (result.state) {
+                            case ReaderConstants.NOSUPPORT:
+                                showNoSignatureSupportDialog();
+                                break;
+                            case ReaderConstants.UNSIGNED:
+                                showSigningDialog();
+                                break;
+                            case ReaderConstants.SIGNED:
+                                showSignatureCheckingDialog();
+                                break;
+                        }
+                    }
+                });
+            }
+        };
+    }
+
+    private void initAddLinkTask() {
+        mAddInk = new AsyncTask<PointF[][], Void, Void>() {
+            @Override
+            protected Void doInBackground(PointF[][]... params) {
+                mCore.addInkAnnotation(mPageNumber, params[0]);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void result) {
+                loadAnnotations();
+                update();
+            }
+
+        };
+    }
+
+    private void initLoadWidgetAreasTask(final int pageNum) {
+        mLoadWidgetAreas = new AsyncTask<Void, Void, RectF[]>() {
+            @Override
+            protected RectF[] doInBackground(Void... arg0) {
+                return mCore.getWidgetAreas(pageNum);
+            }
+
+            @Override
+            protected void onPostExecute(RectF[] result) {
+                mWidgetAreas = result;
+            }
+        };
+    }
+
+    private void initCheckSignatureTask() {
+        mCheckSignature = new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                return mCore.checkFocusedSignature();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Signature checked");
+                builder.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog report = builder.create();
+                report.setMessage(result);
+                report.show();
+            }
+        };
+    }
+
+    private void initSignTask(final Uri uri, final String password) {
+        mSign = new AsyncTask<Void, Void, Boolean>() {
+            @Override
+            protected Boolean doInBackground(Void... params) {
+                return mCore.signFocusedSignature(Uri.decode(uri.getEncodedPath()), password);
+            }
+
+            @Override
+            protected void onPostExecute(Boolean result) {
+                if (result) {
+                    changeReporter.run();
+                } else {
+                    mEtPassword.setText("");
+                    signWithKeyFile(uri);
+                }
+            }
+
+        };
+    }
+
+    private void initLoadAnnotationsTask() {
+        mLoadAnnotations = new AsyncTask<Void, Void, Annotation[]>() {
+            @Override
+            protected Annotation[] doInBackground(Void... params) {
+                return mCore.getAnnoations(mPageNumber);
+            }
+
+            @Override
+            protected void onPostExecute(Annotation[] result) {
+                mAnnotations = result;
+            }
+        };
+    }
+
+    private void initDeleteAnnotationTask() {
+        mDeleteAnnotation = new AsyncTask<Integer, Void, Void>() {
+            @Override
+            protected Void doInBackground(Integer... params) {
+                mCore.deleteAnnotation(mPageNumber, params[0]);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void result) {
+                loadAnnotations();
+                update();
+            }
+        };
+    }
+
     //==========================Dialog=================================
     private void createPwdEntryDialog(Context c) {
         mEtPassword = new EditText(c);
@@ -160,28 +380,7 @@ public class MuPDFPageView extends PageView implements MuPDFView {
     }
 
     private void showSignatureCheckingDialog() {
-        mCheckSignature = new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... params) {
-                return mCore.checkFocusedSignature();
-            }
-
-            @Override
-            protected void onPostExecute(String result) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Signature checked");
-                builder.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                AlertDialog report = builder.create();
-                report.setMessage(result);
-                report.show();
-            }
-        };
-
+        initCheckSignatureTask();
         mCheckSignature.execute();
     }
 
@@ -228,28 +427,9 @@ public class MuPDFPageView extends PageView implements MuPDFView {
     }
 
     private void signWithKeyFileAndPassword(final Uri uri, final String password) {
-        mSign = new AsyncTask<Void, Void, Boolean>() {
-            @Override
-            protected Boolean doInBackground(Void... params) {
-                return mCore.signFocusedSignature(Uri.decode(uri.getEncodedPath()), password);
-            }
-
-            @Override
-            protected void onPostExecute(Boolean result) {
-                if (result) {
-                    changeReporter.run();
-                } else {
-                    mEtPassword.setText("");
-                    signWithKeyFile(uri);
-                }
-            }
-
-        };
-
+        initSignTask(uri, password);
         mSign.execute();
     }
-
-
 
     private void showNoSignatureSupportDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -276,7 +456,6 @@ public class MuPDFPageView extends PageView implements MuPDFView {
         for (LinkInfo l : mLinks)
             if (l.rect.contains(docRelX, docRelY))
                 return l;
-
         return null;
     }
 
@@ -326,47 +505,7 @@ public class MuPDFPageView extends PageView implements MuPDFView {
         }
 
         if (hit) {
-            mPassClick = new AsyncTask<Void, Void, PassClickResult>() {
-                @Override
-                protected PassClickResult doInBackground(Void... arg0) {
-                    return mCore.passClickEvent(mPageNumber, docRelX, docRelY);
-                }
-
-                @Override
-                protected void onPostExecute(PassClickResult result) {
-                    if (result.changed) {
-                        changeReporter.run();
-                    }
-
-                    result.acceptVisitor(new PassClickResultVisitor() {
-                        @Override
-                        public void visitText(PassClickResultText result) {
-                            showTextDialog(result.text);
-                        }
-
-                        @Override
-                        public void visitChoice(PassClickResultChoice result) {
-                            showChoiceDialog(result.options);
-                        }
-
-                        @Override
-                        public void visitSignature(PassClickResultSignature result) {
-                            switch (result.state) {
-                                case ReaderConstants.NOSUPPORT:
-                                    showNoSignatureSupportDialog();
-                                    break;
-                                case ReaderConstants.UNSIGNED:
-                                    showSigningDialog();
-                                    break;
-                                case ReaderConstants.SIGNED:
-                                    showSignatureCheckingDialog();
-                                    break;
-                            }
-                        }
-                    });
-                }
-            };
-
+            initHitTask(docRelX, docRelY);
             mPassClick.execute();
             return ReaderConstants.WIDGET;
         }
@@ -418,17 +557,19 @@ public class MuPDFPageView extends PageView implements MuPDFView {
 
     public boolean markupSelection(final @Annotation.Type int type) {
         final ArrayList<PointF> quadPoints = new ArrayList<PointF>();
+
         processSelectedText(new TextProcessor() {
             RectF rect;
 
+            @Override
             public void onStartLine() {
                 rect = new RectF();
             }
-
+            @Override
             public void onWord(TextWord word) {
                 rect.union(word);
             }
-
+            @Override
             public void onEndLine() {
                 if (!rect.isEmpty()) {
                     quadPoints.add(new PointF(rect.left, rect.bottom));
@@ -442,48 +583,20 @@ public class MuPDFPageView extends PageView implements MuPDFView {
         if (quadPoints.size() == 0)
             return false;
 
-        mAddStrikeOut = new AsyncTask<PointF[], Void, Void>() {
-            @Override
-            protected Void doInBackground(PointF[]... params) {
-                addMarkup(params[0], type);
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void result) {
-                loadAnnotations();
-                update();
-            }
-        };
-
+        initAddStrikeOut(type);
         mAddStrikeOut.execute(quadPoints.toArray(new PointF[quadPoints.size()]));
 
         deselectText();
-
         return true;
     }
 
     public void deleteSelectedAnnotation() {
         if (mSelectedAnnotationIndex != -1) {
-            if (mDeleteAnnotation != null)
+            if (mDeleteAnnotation != null){
                 mDeleteAnnotation.cancel(true);
-
-            mDeleteAnnotation = new AsyncTask<Integer, Void, Void>() {
-                @Override
-                protected Void doInBackground(Integer... params) {
-                    mCore.deleteAnnotation(mPageNumber, params[0]);
-                    return null;
-                }
-
-                @Override
-                protected void onPostExecute(Void result) {
-                    loadAnnotations();
-                    update();
-                }
-            };
-
+            }
+            initDeleteAnnotationTask();
             mDeleteAnnotation.execute(mSelectedAnnotationIndex);
-
             mSelectedAnnotationIndex = -1;
             setItemSelectBox(null);
         }
@@ -504,117 +617,25 @@ public class MuPDFPageView extends PageView implements MuPDFView {
             mAddInk.cancel(true);
             mAddInk = null;
         }
-        mAddInk = new AsyncTask<PointF[][], Void, Void>() {
-            @Override
-            protected Void doInBackground(PointF[][]... params) {
-                mCore.addInkAnnotation(mPageNumber, params[0]);
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void result) {
-                loadAnnotations();
-                update();
-            }
-
-        };
-
+        initAddLinkTask();
         mAddInk.execute(getDraw());
         cancelDraw();
 
         return true;
     }
 
-
-    @Override
-    protected AsyncTaskImpl<Void, Void> doDrawPage(final Bitmap bitmap, final int sizeX, final int sizeY,
-                                                   final int patchX, final int patchY, final int patchWidth, final int patchHeight) {
-        return new MuPDFCancellableTaskDefinition<Void, Void>(mCore) {
-            @Override
-            public Void doInBackground(MuPDFCore.Cookie cookie, Void... params) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB && Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-                    bitmap.eraseColor(0);
-                }
-
-                //绘制页面
-                mCore.drawPage(bitmap, mPageNumber, sizeX, sizeY, patchX, patchY, patchWidth, patchHeight, cookie);
-                return null;
-            }
-        };
-
-    }
-
-    //绘制页面过程
-    protected AsyncTaskImpl<Void, Void> doUpdatePage(final Bitmap bitmap,
-                                                     final int sizeX, final int sizeY,
-                                                     final int patchX, final int patchY,
-                                                     final int patchWidth, final int patchHeight) {
-        return new MuPDFCancellableTaskDefinition<Void, Void>(mCore) {
-
-            @Override
-            public Void doInBackground(MuPDFCore.Cookie cookie, Void... params) {
-                // 11 <= sdk < 14
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB && Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-                    bitmap.eraseColor(0);
-                }
-
-                //更新页面
-                mCore.updatePage(bitmap, mPageNumber, sizeX, sizeY, patchX, patchY, patchWidth, patchHeight, cookie);
-                return null;
-            }
-        };
-    }
-
-    @Override
-    protected LinkInfo[] getLinkInfo() {
-        return mCore.getPageLinks(mPageNumber);
-    }
-
-    @Override
-    protected TextWord[][] getText() {
-        return mCore.textLines(mPageNumber);
-    }
-
-    @Override
-    protected void addMarkup(PointF[] quadPoints, @Annotation.Type int type) {
-        mCore.addMarkupAnnotation(mPageNumber, quadPoints, type);
-    }
-
     private void loadAnnotations() {
         mAnnotations = null;
         if (mLoadAnnotations != null)
             mLoadAnnotations.cancel(true);
-        mLoadAnnotations = new AsyncTask<Void, Void, Annotation[]>() {
-            @Override
-            protected Annotation[] doInBackground(Void... params) {
-                return mCore.getAnnoations(mPageNumber);
-            }
-
-            @Override
-            protected void onPostExecute(Annotation[] result) {
-                mAnnotations = result;
-            }
-        };
-
+        initLoadAnnotationsTask();
         mLoadAnnotations.execute();
     }
 
     @Override
     public void setPage(final int pageNum, PointF pageSize) {
         loadAnnotations();
-
-        mLoadWidgetAreas = new AsyncTask<Void, Void, RectF[]>() {
-            @Override
-            protected RectF[] doInBackground(Void... arg0) {
-                return mCore.getWidgetAreas(pageNum);
-            }
-
-            @Override
-            protected void onPostExecute(RectF[] result) {
-                mWidgetAreas = result;
-            }
-        };
-
+        initLoadWidgetAreasTask(pageNum);
         mLoadWidgetAreas.execute();
 
         super.setPage(pageNum, pageSize);

@@ -118,34 +118,33 @@ public abstract class PageView extends ViewGroup {
     public void update() {
         cancelDrawEntireTask();
         cancelDrawPatchTask();
+        //绘制整体区
         initUpdateEntirePictureTask();
         mDrawEntireTask.execute();
         updateHq(true);
     }
 
-    public void blank(int page) {
-        reinit();
-        mPageNumber = page;
-        showLoadingBar();
-        setBackgroundColor(BACKGROUND_COLOR);
-    }
-
     public void updateHq(boolean update) {
         Rect viewArea = new Rect(getLeft(), getTop(), getRight(), getBottom());
+
         if (viewArea.width() == mPageSize.x || viewArea.height() == mPageSize.y) {
+            //可见区域与未缩放区域大小一致
             showEmptyPatchPicture();
         } else {
             final Point patchViewSize = new Point(viewArea.width(), viewArea.height());
             final Rect patchArea = new Rect(0, 0, mViewPortSize.x, mViewPortSize.y);
 
+            //相交并测试是否有交集
             if (!patchArea.intersect(viewArea)) {
                 return;
             }
 
+            //偏移修补区域相对于左上角的视图
             patchArea.offset(-viewArea.left, -viewArea.top);
 
             boolean area_unchanged = patchArea.equals(mPatchArea) && patchViewSize.equals(mPatchViewSize);
 
+            //如果被要求与上次相同的区域，而不是因为更新，那么没有什么可做的
             if (area_unchanged && !update) {
                 return;
             }
@@ -154,18 +153,25 @@ public abstract class PageView extends ViewGroup {
 
             cancelDrawPatchTask();
             showPatchPicture();
-            initDrawPatchPicture(patchViewSize, patchArea, completeRedraw);
 
+            //绘制补丁区
+            initDrawPatchPicture(patchViewSize, patchArea, completeRedraw);
             mDrawPatchTask.execute();
         }
     }
 
     public void removeHq() {
         cancelDrawPatchTask();
-
         mPatchViewSize = null;
         mPatchArea = null;
         showEmptyPatchPicture();
+    }
+
+    public void blank(int page) {
+        reinit();
+        mPageNumber = page;
+        showLoadingBar();
+        setBackgroundColor(BACKGROUND_COLOR);
     }
 
     //==================init task==============================
@@ -530,50 +536,6 @@ public abstract class PageView extends ViewGroup {
         }
     }
 
-    public void startDraw(float x, float y) {
-        float scale = mSrcScale * (float) getWidth() / (float) mPageSize.x;
-        float docRelX = (x - getLeft()) / scale;
-        float docRelY = (y - getTop()) / scale;
-        if (mDrawingSizeList == null) {
-            mDrawingSizeList = new ArrayList<ArrayList<PointF>>();
-        }
-
-        ArrayList<PointF> arc = new ArrayList<PointF>();
-        arc.add(new PointF(docRelX, docRelY));
-        mDrawingSizeList.add(arc);
-        mSearchView.invalidate();
-    }
-
-    public void continueDraw(float x, float y) {
-        float scale = mSrcScale * (float) getWidth() / (float) mPageSize.x;
-        float docRelX = (x - getLeft()) / scale;
-        float docRelY = (y - getTop()) / scale;
-
-        if (mDrawingSizeList != null && mDrawingSizeList.size() > 0) {
-            ArrayList<PointF> arc = mDrawingSizeList.get(mDrawingSizeList.size() - 1);
-            arc.add(new PointF(docRelX, docRelY));
-            mSearchView.invalidate();
-        }
-    }
-
-    public void cancelDraw() {
-        mDrawingSizeList = null;
-        mSearchView.invalidate();
-    }
-
-    protected PointF[][] getDraw() {
-        if (mDrawingSizeList == null) {
-            return null;
-        }
-        PointF[][] path = new PointF[mDrawingSizeList.size()][];
-
-        for (int i = 0; i < mDrawingSizeList.size(); i++) {
-            ArrayList<PointF> arc = mDrawingSizeList.get(i);
-            path[i] = arc.toArray(new PointF[arc.size()]);
-        }
-        return path;
-    }
-
     protected void processSelectedText(TextProcessor tp) {
         (new TextSelector(mText, mSelectArea)).select(tp);
     }
@@ -582,6 +544,7 @@ public abstract class PageView extends ViewGroup {
         mItemSelectArea = rect;
         updateSearchView();
     }
+
 
     //============================ViewGroup========================================
 
@@ -645,6 +608,52 @@ public abstract class PageView extends ViewGroup {
 
             mLoadingBar.layout((w - bw) / 2, (h - bh) / 2, (w + bw) / 2, (h + bh) / 2);
         }
+    }
+
+    //============================onTouch========================================
+
+    public void startDraw(float x, float y) {
+        float scale = mSrcScale * (float) getWidth() / (float) mPageSize.x;
+        float docRelX = (x - getLeft()) / scale;
+        float docRelY = (y - getTop()) / scale;
+        if (mDrawingSizeList == null) {
+            mDrawingSizeList = new ArrayList<ArrayList<PointF>>();
+        }
+
+        ArrayList<PointF> arc = new ArrayList<PointF>();
+        arc.add(new PointF(docRelX, docRelY));
+        mDrawingSizeList.add(arc);
+        mSearchView.invalidate();
+    }
+
+    public void continueDraw(float x, float y) {
+        float scale = mSrcScale * (float) getWidth() / (float) mPageSize.x;
+        float docRelX = (x - getLeft()) / scale;
+        float docRelY = (y - getTop()) / scale;
+
+        if (mDrawingSizeList != null && mDrawingSizeList.size() > 0) {
+            ArrayList<PointF> arc = mDrawingSizeList.get(mDrawingSizeList.size() - 1);
+            arc.add(new PointF(docRelX, docRelY));
+            mSearchView.invalidate();
+        }
+    }
+
+    public void cancelDraw() {
+        mDrawingSizeList = null;
+        mSearchView.invalidate();
+    }
+
+    protected PointF[][] getDraw() {
+        if (mDrawingSizeList == null) {
+            return null;
+        }
+        PointF[][] path = new PointF[mDrawingSizeList.size()][];
+
+        for (int i = 0; i < mDrawingSizeList.size(); i++) {
+            ArrayList<PointF> arc = mDrawingSizeList.get(i);
+            path[i] = arc.toArray(new PointF[arc.size()]);
+        }
+        return path;
     }
 
     //====================================================================
