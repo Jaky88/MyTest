@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<color name="canvas">#33000000</color>
-	<color name="toolbar">#33000000</color>
+	<color name="toolbar">#FFFFFF</color>
 	<color name="page_indicator">#33000000</color>
 	<color name="busy_indicator">#33000000</color>
 	<color name="button_normal">#33000000</color>

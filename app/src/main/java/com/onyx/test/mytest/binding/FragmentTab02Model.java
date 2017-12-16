@@ -8,6 +8,7 @@ import android.databinding.Bindable;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
+
 import android.provider.Settings;
 import android.view.View;
 
@@ -16,6 +17,10 @@ import com.onyx.test.mytest.BR;
 import com.onyx.test.mytest.R;
 import com.onyx.test.mytest.model.bean.ReaderSlideshowBean;
 import com.onyx.test.mytest.model.manager.ConfigManager;
+
+import static android.content.Context.POWER_SERVICE;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 
 import static android.provider.Settings.System.SCREEN_OFF_TIMEOUT;
 
@@ -38,6 +43,8 @@ public class FragmentTab02Model extends BaseObservable {
     private final ContentResolver resolver;
 
     public FragmentTab02Model(Context context) {
+        PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+        WakeLock wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "WifiSettings_WakeLock");
         this.context = context;
         this.config = ConfigManager.getConfig(context).getReaderSlideshowBean();
         resolver = context.getContentResolver();
@@ -50,6 +57,9 @@ public class FragmentTab02Model extends BaseObservable {
     private void initData() {
         screenTimeout = String.valueOf(Settings.System.getInt(resolver, Settings.System.SCREEN_OFF_TIMEOUT, DEFAULT_SCREEN_OFF_TIMEOUT));
         poweroffTimeout = String.valueOf(Settings.System.getInt(resolver, AUTO_POWEROFF_TIMEOUT, DEFAULT_SCREEN_OFF_TIMEOUT));
+//        setInfo("screenTimeout: "+screenTimeout +", poweroffTimeout: "+poweroffTimeout);
+        int a = Integer.MAX_VALUE;
+        setInfo("screenTimeout: "+screenTimeout +", poweroffTimeout: "+poweroffTimeout +" ,a: "+ a);
     }
 
     public String getPoweroffTimeout() {

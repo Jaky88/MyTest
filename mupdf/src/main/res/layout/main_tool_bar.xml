@@ -95,7 +95,7 @@
                     android:layout_toLeftOf="@+id/moreButton"
                     android:background="@drawable/button"
                     android:contentDescription="@string/search_document"
-                    android:src="@drawable/ic_magnifying_glass"
+                    android:src="@drawable/search_open_icon"
                     android:visibility="@{toolBarModel.canProof ? View.VISIBLE : View.INVISIBLE}" />
 
                 <ImageButton
@@ -107,7 +107,7 @@
                     android:background="@drawable/button"
                     android:contentDescription="@string/more"
                     android:onClick="OnMoreButtonClick"
-                    android:src="@drawable/ic_more"
+                    android:src="@drawable/more"
                     android:visibility="@{toolBarModel.canProof ? View.VISIBLE : View.INVISIBLE}" />
 
             </RelativeLayout>
@@ -266,7 +266,7 @@
                     android:background="@drawable/button"
                     android:contentDescription="@string/delete"
                     android:onClick="OnDeleteButtonClick"
-                    android:src="@drawable/ic_trash" />
+                    android:src="@drawable/ic_dele" />
 
             </RelativeLayout>
 
@@ -320,7 +320,7 @@
                     android:background="@drawable/button"
                     android:contentDescription="@string/copy_text_to_the_clipboard"
                     android:onClick="OnCopyTextButtonClick"
-                    android:src="@drawable/ic_clipboard" />
+                    android:src="@drawable/selection_copy_default" />
 
                 <ImageButton
                     android:id="@+id/editAnnotButton"
@@ -331,7 +331,7 @@
                     android:background="@drawable/button"
                     android:contentDescription="@string/edit_annotations"
                     android:onClick="OnEditAnnotButtonClick"
-                    android:src="@drawable/ic_annotation" />
+                    android:src="@drawable/selection_bookmark_default" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -382,9 +382,9 @@
             layout="@layout/main_tool_bar_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            bind:toolBarModel="@{toolBarModel}"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            bind:toolBarModel="@{toolBarModel}" />
 
         <TextView
             android:id="@+id/tv_info"
