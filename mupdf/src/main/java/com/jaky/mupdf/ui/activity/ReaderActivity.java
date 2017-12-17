@@ -154,7 +154,7 @@ public class ReaderActivity extends Activity implements FilePicker.FilePickerSup
             if (core == null) {
                 return;
             }
-            readerBinding.toolBar.bottomBar.tvPageNumber.setText(String.format("%d / %d", i + 1,
+            readerBinding.toolBar.bottomBar.tvPageNumber.setText(String.format("%d/%d", i + 1,
                     core.countPages()));
             readerBinding.toolBar.bottomBar.sbPageSlider.setMax((core.countPages() - 1) * mPageSliderRes);
             readerBinding.toolBar.bottomBar.sbPageSlider.setProgress(i * mPageSliderRes);

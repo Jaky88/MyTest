@@ -39,8 +39,7 @@
                     android:paddingLeft="16dp"
                     android:singleLine="true"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold" />
+                    android:textColor="@color/text_normal" />
 
                 <ImageButton
                     android:id="@+id/sepsButton"
@@ -62,7 +61,7 @@
                     android:layout_toLeftOf="@+id/reflowButton"
                     android:background="@drawable/button"
                     android:contentDescription="@string/toggle_links"
-                    android:src="@drawable/ic_link"
+                    android:src="@drawable/link"
                     android:visibility="@{toolBarModel.canProof ? View.VISIBLE : View.INVISIBLE}" />
 
                 <ImageButton
@@ -73,7 +72,7 @@
                     android:layout_toLeftOf="@+id/outlineButton"
                     android:background="@drawable/button"
                     android:contentDescription="@string/toggle_reflow_mode"
-                    android:src="@drawable/ic_reflow"
+                    android:src="@drawable/reflow"
                     android:visibility="@{toolBarModel.canProof ? View.VISIBLE : View.INVISIBLE}" />
 
                 <ImageButton
@@ -84,7 +83,7 @@
                     android:layout_toLeftOf="@+id/searchButton"
                     android:background="@drawable/button"
                     android:contentDescription="@string/outline_title"
-                    android:src="@drawable/ic_list"
+                    android:src="@drawable/list"
                     android:visibility="@{toolBarModel.canProof ? View.VISIBLE : View.INVISIBLE}" />
 
                 <ImageButton
@@ -95,7 +94,7 @@
                     android:layout_toLeftOf="@+id/moreButton"
                     android:background="@drawable/button"
                     android:contentDescription="@string/search_document"
-                    android:src="@drawable/search_open_icon"
+                    android:src="@drawable/ic_search"
                     android:visibility="@{toolBarModel.canProof ? View.VISIBLE : View.INVISIBLE}" />
 
                 <ImageButton
@@ -127,7 +126,7 @@
                     android:background="@drawable/button"
                     android:contentDescription="@string/cancel"
                     android:onClick="OnCancelSearchButtonClick"
-                    android:src="@drawable/ic_cancel" />
+                    android:src="@drawable/back" />
 
                 <EditText
                     android:id="@+id/et_Search"
@@ -149,7 +148,7 @@
                     android:layout_toLeftOf="@+id/btnsSearchForward"
                     android:background="@drawable/button"
                     android:contentDescription="@string/search_backwards"
-                    android:src="@drawable/ic_arrow_left" />
+                    android:src="@drawable/backward" />
 
                 <ImageButton
                     android:id="@+id/btnsSearchForward"
@@ -159,7 +158,7 @@
                     android:layout_centerVertical="true"
                     android:background="@drawable/button"
                     android:contentDescription="@string/search_forwards"
-                    android:src="@drawable/ic_arrow_right" />
+                    android:src="@drawable/forward" />
 
             </RelativeLayout>
 
@@ -178,7 +177,7 @@
                     android:background="@drawable/button"
                     android:contentDescription="@string/cancel"
                     android:onClick="OnCancelAnnotButtonClick"
-                    android:src="@drawable/ic_cancel" />
+                    android:src="@drawable/back" />
 
                 <ImageButton
                     android:id="@+id/highlightButton"
@@ -189,7 +188,7 @@
                     android:background="@drawable/button"
                     android:contentDescription="@string/highlight"
                     android:onClick="OnHighlightButtonClick"
-                    android:src="@drawable/ic_highlight" />
+                    android:src="@drawable/highlight" />
 
                 <ImageButton
                     android:id="@+id/underlineButton"
@@ -200,7 +199,7 @@
                     android:background="@drawable/button"
                     android:contentDescription="@string/underline"
                     android:onClick="OnUnderlineButtonClick"
-                    android:src="@drawable/ic_underline" />
+                    android:src="@drawable/underline" />
 
                 <ImageButton
                     android:id="@+id/strikeOutButton"
@@ -211,7 +210,7 @@
                     android:background="@drawable/button"
                     android:contentDescription="@string/strike_out"
                     android:onClick="OnStrikeOutButtonClick"
-                    android:src="@drawable/ic_strike" />
+                    android:src="@drawable/strike" />
 
                 <ImageButton
                     android:id="@+id/inkButton"
@@ -222,7 +221,7 @@
                     android:background="@drawable/button"
                     android:contentDescription="@string/ink"
                     android:onClick="OnInkButtonClick"
-                    android:src="@drawable/ic_pen" />
+                    android:src="@drawable/draw" />
 
             </RelativeLayout>
 
@@ -241,7 +240,7 @@
                     android:background="@drawable/button"
                     android:contentDescription="@string/cancel"
                     android:onClick="OnCancelDeleteButtonClick"
-                    android:src="@drawable/ic_cancel" />
+                    android:src="@drawable/back" />
 
                 <TextView
                     android:id="@+id/tv_delete"
@@ -266,7 +265,7 @@
                     android:background="@drawable/button"
                     android:contentDescription="@string/delete"
                     android:onClick="OnDeleteButtonClick"
-                    android:src="@drawable/ic_dele" />
+                    android:src="@drawable/delete_8e" />
 
             </RelativeLayout>
 
@@ -285,7 +284,7 @@
                     android:background="@drawable/button"
                     android:contentDescription="@string/cancel"
                     android:onClick="OnCancelMoreButtonClick"
-                    android:src="@drawable/ic_cancel" />
+                    android:src="@drawable/back" />
 
                 <ImageButton
                     android:id="@+id/proofButton"
@@ -308,7 +307,7 @@
                     android:background="@drawable/button"
                     android:contentDescription="@string/print"
                     android:onClick="OnPrintButtonClick"
-                    android:src="@drawable/ic_print" />
+                    android:src="@drawable/print" />
 
                 <ImageButton
                     android:id="@+id/copyTextButton"
@@ -320,7 +319,7 @@
                     android:background="@drawable/button"
                     android:contentDescription="@string/copy_text_to_the_clipboard"
                     android:onClick="OnCopyTextButtonClick"
-                    android:src="@drawable/selection_copy_default" />
+                    android:src="@drawable/copy" />
 
                 <ImageButton
                     android:id="@+id/editAnnotButton"
@@ -331,7 +330,7 @@
                     android:background="@drawable/button"
                     android:contentDescription="@string/edit_annotations"
                     android:onClick="OnEditAnnotButtonClick"
-                    android:src="@drawable/selection_bookmark_default" />
+                    android:src="@drawable/note" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -349,7 +348,7 @@
                     android:background="@drawable/button"
                     android:contentDescription="@string/cancel"
                     android:onClick="OnCancelAcceptButtonClick"
-                    android:src="@drawable/ic_cancel" />
+                    android:src="@drawable/back" />
 
                 <TextView
                     android:id="@+id/tv_annot_type"
@@ -373,7 +372,7 @@
                     android:background="@drawable/button"
                     android:contentDescription="@string/accept"
                     android:onClick="OnAcceptButtonClick"
-                    android:src="@drawable/ic_check" />
+                    android:src="@drawable/ok" />
             </RelativeLayout>
         </ViewAnimator>
 

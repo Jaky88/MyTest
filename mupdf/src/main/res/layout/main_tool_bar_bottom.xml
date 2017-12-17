@@ -12,7 +12,9 @@
         android:id="@+id/lowerButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@color/toolbar"
+        android:gravity="center_vertical">
 
         <SeekBar
             android:id="@+id/sb_page_slider"
@@ -34,12 +36,12 @@
         <TextView
             android:id="@+id/tv_page_number"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingRight="8dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="16dp"
-            android:background="@color/toolbar"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text_normal"
             android:visibility="invisible" />
 
     </LinearLayout>
